@@ -3,18 +3,26 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
+  --accent: #C8DC2E;
+  --dark:   #172E22;
+  --bg:     #F0F4F0;
+  --bg2:    #E2ECE6;
+  --muted:  #5A6B60;
+  --border: #C4D5CA;
+  --ok:     #1A8A50;
+  --warn:   #D97706;
+  --err:    #DC2626;
 }
 
 body {
-  @apply bg-stone-950 text-stone-100 antialiased;
+  font-family: var(--font-jakarta), 'Plus Jakarta Sans', system-ui, sans-serif;
+  background: var(--bg);
+  color: #1a1a1a;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
-  @apply bg-amber-400 text-stone-950;
+  background: #C8DC2E;
+  color: #172E22;
 }
-
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { @apply bg-stone-900; }
-::-webkit-scrollbar-thumb { @apply bg-stone-700 rounded; }

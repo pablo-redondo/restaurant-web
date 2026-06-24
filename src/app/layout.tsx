@@ -1,8 +1,29 @@
 import type { Metadata } from 'next';
+import { Barlow_Condensed, Syne, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/context/AuthContext';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import PublicShell from './PublicShell';
+
+const barlowCondensed = Barlow_Condensed({
+  weight: ['800'],
+  subsets: ['latin'],
+  variable: '--font-barlow',
+  display: 'swap',
+});
+
+const syne = Syne({
+  weight: ['400', '600', '700', '800'],
+  subsets: ['latin'],
+  variable: '--font-syne',
+  display: 'swap',
+});
+
+const plusJakarta = Plus_Jakarta_Sans({
+  weight: ['300', '400', '500', '600', '700'],
+  subsets: ['latin'],
+  variable: '--font-jakarta',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'Restaurante Marqués',
@@ -11,12 +32,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es">
-      <body className="min-h-screen flex flex-col">
+    <html
+      lang="es"
+      className={`${barlowCondensed.variable} ${syne.variable} ${plusJakarta.variable}`}
+    >
+      <body className="flex flex-col min-h-screen bg-[#F0F4F0]">
         <AuthProvider>
-          <Navbar />
-          <main className="flex-1 pt-16">{children}</main>
-          <Footer />
+          <PublicShell>{children}</PublicShell>
         </AuthProvider>
       </body>
     </html>
