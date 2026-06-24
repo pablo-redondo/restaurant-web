@@ -6,6 +6,11 @@ import { reservationsApi } from '@/lib/api';
 import type { Reservation } from '@/types';
 import StatusBadge from '@/components/StatusBadge';
 
+function formatDate(date: string) {
+  return new Date(String(date).substring(0, 10) + 'T12:00:00')
+    .toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+}
+
 export default function AdminReservationsPage() {
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [loading, setLoading] = useState(true);
@@ -91,7 +96,7 @@ export default function AdminReservationsPage() {
               {reservations.map(r => (
                 <tr key={r.id} className="hover:bg-[#F0F4F0] transition-colors">
                   <td className="px-4 py-3 text-[#5A6B60]">{r.id}</td>
-                  <td className="px-4 py-3 text-[#172E22]">{r.date}</td>
+                  <td className="px-4 py-3 text-[#172E22]">{formatDate(r.date)}</td>
                   <td className="px-4 py-3 text-[#172E22]">{r.time}</td>
                   <td className="px-4 py-3 text-[#172E22]">#{r.table_id}</td>
                   <td className="px-4 py-3 text-[#172E22]">{r.guests}</td>
