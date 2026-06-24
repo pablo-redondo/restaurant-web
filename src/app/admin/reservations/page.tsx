@@ -1,5 +1,6 @@
 'use client';
 
+import type { CSSProperties } from 'react';
 import { useEffect, useState } from 'react';
 import { reservationsApi } from '@/lib/api';
 import type { Reservation } from '@/types';
@@ -36,13 +37,13 @@ export default function AdminReservationsPage() {
   };
 
   const STATUS_TABS = [
-    { value: '',           label: 'Todas',       style: '' },
-    { value: 'pending',    label: 'Pendientes',  style: 'pending' },
-    { value: 'confirmed',  label: 'Confirmadas', style: 'confirmed' },
-    { value: 'cancelled',  label: 'Canceladas',  style: 'cancelled' },
+    { value: '',          label: 'Todas' },
+    { value: 'pending',   label: 'Pendientes' },
+    { value: 'confirmed', label: 'Confirmadas' },
+    { value: 'cancelled', label: 'Canceladas' },
   ];
 
-  const tabStyle: Record<string, React.CSSProperties> = {
+  const tabActive: Record<string, CSSProperties> = {
     '':          { background: '#172E22', color: '#fff' },
     pending:     { background: 'rgba(217,119,6,0.12)',  color: '#92400E' },
     confirmed:   { background: 'rgba(13,146,84,0.10)',  color: '#065F3A' },
@@ -51,7 +52,6 @@ export default function AdminReservationsPage() {
 
   return (
     <div>
-      {/* Filters */}
       <div className="flex flex-wrap gap-3 mb-5">
         <input
           type="date"
@@ -60,12 +60,12 @@ export default function AdminReservationsPage() {
           className="border border-[#C4D5CA] rounded-btn px-3 py-2 text-[#172E22] text-sm focus:outline-none focus:border-[#172E22] transition-colors bg-white"
         />
         <div className="flex bg-white border border-[#C4D5CA] rounded-card overflow-hidden">
-          {STATUS_TABS.map(({ value, label, style }) => (
+          {STATUS_TABS.map(({ value, label }) => (
             <button
               key={value}
               onClick={() => { setStatusFilter(value); setPage(1); }}
               className="px-4 py-2 text-sm font-medium border-r border-[#C4D5CA] last:border-r-0 transition-colors"
-              style={statusFilter === value ? tabStyle[value] : { color: '#5A6B60' }}
+              style={statusFilter === value ? tabActive[value] : { color: '#5A6B60' }}
             >
               {label}
             </button>
@@ -73,7 +73,6 @@ export default function AdminReservationsPage() {
         </div>
       </div>
 
-      {/* Table */}
       <div className="bg-white border border-[#C4D5CA] rounded-card overflow-hidden">
         {loading ? (
           <p className="text-[#5A6B60] p-8 text-center">Cargando...</p>
@@ -102,7 +101,7 @@ export default function AdminReservationsPage() {
                       {r.status !== 'confirmed' && r.status !== 'cancelled' && (
                         <button
                           onClick={() => updateStatus(r.id, 'confirmed')}
-                          className="px-2.5 py-1 rounded text-xs font-medium transition-colors"
+                          className="px-2.5 py-1 rounded text-xs font-medium"
                           style={{ background: 'rgba(13,146,84,0.10)', color: '#065F3A' }}
                         >
                           Confirmar
@@ -111,7 +110,7 @@ export default function AdminReservationsPage() {
                       {r.status !== 'cancelled' && (
                         <button
                           onClick={() => updateStatus(r.id, 'cancelled')}
-                          className="px-2.5 py-1 rounded text-xs font-medium transition-colors"
+                          className="px-2.5 py-1 rounded text-xs font-medium"
                           style={{ background: 'rgba(220,38,38,0.10)', color: '#991B1B' }}
                         >
                           Cancelar
