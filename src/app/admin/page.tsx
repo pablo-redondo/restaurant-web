@@ -4,11 +4,10 @@ import { useEffect, useState } from 'react';
 import { reservationsApi, tablesApi, reviewsApi } from '@/lib/api';
 
 interface Stats {
-  totalReservations: number;
-  pendingReservations: number;
-  confirmedReservations: number;
+  pending: number;
+  confirmed: number;
   totalTables: number;
-  averageRating: number | null;
+  avgRating: number | null;
 }
 
 export default function AdminDashboard() {
@@ -16,44 +15,48 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     Promise.all([
-      reservationsApi.listAll({ limit: 1 }),
-      reservationsApi.listAll({ status: 'pending', limit: 1 }),
-      reservationsApi.listAll({ status: 'confirmed', limit: 1 }),
+      reservationsApi.listAll({ status: 'pending',   limit: 100 }),
+      reservationsApi.listAll({ status: 'confirmed', limit: 100 }),
       tablesApi.list(),
       reviewsApi.list({ limit: 1 }),
-    ]).then(([all, pending, confirmed, tables, reviews]) => {
+    ]).then(([p, c, t, r]) => {
       setStats({
-        totalReservations: all.reservations.length,
-        pendingReservations: pending.reservations.length,
-        confirmedReservations: confirmed.reservations.length,
-        totalTables: tables.total,
-        averageRating: reviews.average_rating,
+        pending:     p.reservations.length,
+        confirmed:   c.reservations.length,
+        totalTables: t.total,
+        avgRating:   r.average_rating,
       });
     }).catch(() => {});
   }, []);
 
   const cards = stats ? [
-    { label: 'Mesas activas', value: stats.totalTables, color: 'text-amber-400' },
-    { label: 'Reservas pendientes', value: stats.pendingReservations, color: 'text-yellow-400' },
-    { label: 'Reservas confirmadas', value: stats.confirmedReservations, color: 'text-emerald-400' },
-    { label: 'Rating promedio', value: stats.averageRating !== null ? stats.averageRating.toFixed(1) + ' / 5' : 'N/A', color: 'text-amber-400' },
+    { label: 'Mesas activas',       value: stats.totalTables,                                  accent: false },
+    { label: 'Reservas pendientes', value: stats.pending,                                       accent: true  },
+    { label: 'Confirmadas',         value: stats.confirmed,                                     accent: false },
+    { label: 'Rating medio',        value: stats.avgRating !== null ? stats.avgRating.toFixed(1) + ' / 5' : '—', accent: true },
   ] : [];
 
   return (
     <div>
-      <h2 className="font-serif text-2xl mb-6">Vista general</h2>
-      {!stats ? (
-        <p className="text-stone-400">Cargando datos...</p>
-      ) : (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {cards.map((c) => (
-            <div key={c.label} className="bg-stone-900 border border-stone-800 rounded-xl p-6">
-              <p className={`font-serif text-4xl mb-2 ${c.color}`}>{c.value}</p>
-              <p className="text-stone-400 text-sm">{c.label}</p>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {!stats ? (
+          Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="bg-white border border-[#C4D5CA] rounded-card p-6 h-[100px] animate-pulse" />
+          ))
+        ) : (
+          cards.map(({ label, value, accent }) => (
+            <div key={label} className="bg-white border border-[#C4D5CA] rounded-card p-6">
+              <p className="text-[#5A6B60] text-[10px] font-bold uppercase tracking-[2.5px] font-body mb-3">{label}</p>
+              <p
+                className="font-heading font-bold text-[30px]"
+                style={{ color: accent ? '#B07010' : '#172E22' }}
+              >
+                {value}
+              </p>
             </div>
-          ))}
-        </div>
-      )}
+          ))
+        )}
+      </div>
     </div>
   );
 }
