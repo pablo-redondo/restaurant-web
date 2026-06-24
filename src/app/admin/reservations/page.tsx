@@ -87,7 +87,7 @@ export default function AdminReservationsPage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-[#F0F4F0] border-b border-[#C4D5CA] text-left">
-                {['#', 'Fecha', 'Hora', 'Mesa', 'Com.', 'Estado', 'Acciones'].map(h => (
+                {['#', 'Cliente', 'Fecha', 'Hora', 'Mesa', 'Com.', 'Estado', 'Acciones'].map(h => (
                   <th key={h} className="px-4 py-3 text-[10px] font-bold text-[#5A6B60] uppercase tracking-[2px] font-body">{h}</th>
                 ))}
               </tr>
@@ -96,6 +96,10 @@ export default function AdminReservationsPage() {
               {reservations.map(r => (
                 <tr key={r.id} className="hover:bg-[#F0F4F0] transition-colors">
                   <td className="px-4 py-3 text-[#5A6B60]">{r.id}</td>
+                  <td className="px-4 py-3">
+                    <p className="text-[#172E22] font-medium">{r.user_name ?? '—'}</p>
+                    <p className="text-[#5A6B60] text-xs">{r.user_email ?? ''}</p>
+                  </td>
                   <td className="px-4 py-3 text-[#172E22]">{formatDate(r.date)}</td>
                   <td className="px-4 py-3 text-[#172E22]">{r.time}</td>
                   <td className="px-4 py-3 text-[#172E22]">#{r.table_id}</td>

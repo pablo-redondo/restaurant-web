@@ -49,7 +49,8 @@ export default function ReviewsSection() {
             {r.comment && (
               <p className="text-[#172E22] text-[14px] leading-relaxed mt-3 mb-4">“{r.comment}”</p>
             )}
-            <p className="text-[#5A6B60] text-xs">
+            <p className="text-[#172E22] text-sm font-semibold mt-3">{r.user_name ?? 'Cliente'}</p>
+            <p className="text-[#5A6B60] text-xs mt-0.5">
               {new Date(r.created_at).toLocaleDateString('es-ES')}
             </p>
           </div>

@@ -24,6 +24,9 @@ export interface Reservation {
   status: 'pending' | 'confirmed' | 'cancelled';
   notes?: string;
   created_at: string;
+  user_name?: string;
+  user_email?: string;
+  table_number?: number;
 }
 
 export interface Review {
