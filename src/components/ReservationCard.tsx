@@ -8,9 +8,10 @@ interface Props {
 }
 
 export default function ReservationCard({ reservation, showActions = true }: Props) {
-  const dateStr = new Date(reservation.date + 'T00:00:00').toLocaleDateString('es-ES', {
-    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
-  });
+  const dateStr = new Date(String(reservation.date).substring(0, 10) + 'T12:00:00')
+    .toLocaleDateString('es-ES', {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+    });
 
   return (
     <div className="bg-white border border-[#C4D5CA] rounded-card p-5 flex flex-col gap-3">
