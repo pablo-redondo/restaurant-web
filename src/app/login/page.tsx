@@ -29,36 +29,48 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center px-4">
+    <div className="min-h-[calc(100vh-58px)] flex items-center justify-center px-4 bg-[#F0F4F0]">
       <div className="w-full max-w-md">
-        <h1 className="font-serif text-3xl text-center mb-2">Bienvenido</h1>
-        <p className="text-stone-400 text-center mb-8">Accede a tu cuenta para gestionar reservas</p>
+        <div className="text-center mb-8">
+          <p className="text-[#5A6B60] text-[11px] font-bold tracking-[2.5px] uppercase font-body mb-3">Acceso</p>
+          <h1 className="font-heading font-bold text-[38px] tracking-[-0.5px] text-[#172E22]">Bienvenido</h1>
+          <p className="text-[#5A6B60] text-[14px] mt-2">Accede a tu cuenta para gestionar reservas</p>
+        </div>
 
-        <form onSubmit={handleSubmit} className="bg-stone-900 border border-stone-800 rounded-xl p-8 space-y-5">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white border border-[#C4D5CA] rounded-card p-8 space-y-5"
+        >
           {error && (
-            <div className="bg-red-900/40 border border-red-700 text-red-300 rounded p-3 text-sm">{error}</div>
+            <div className="bg-[rgba(220,38,38,0.08)] border border-[rgba(220,38,38,0.3)] text-[#991B1B] rounded-btn p-3 text-sm">
+              {error}
+            </div>
           )}
 
           <div>
-            <label className="block text-sm text-stone-300 mb-1.5">Email</label>
+            <label className="block text-[11px] font-bold text-[#5A6B60] uppercase tracking-[2px] mb-2 font-body">
+              Email
+            </label>
             <input
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-stone-800 border border-stone-700 rounded-lg px-4 py-2.5 text-stone-100 placeholder-stone-500 focus:outline-none focus:border-amber-400 transition-colors"
+              className="w-full border border-[#C4D5CA] rounded-btn px-4 py-2.5 text-[#172E22] text-[14px] placeholder-[#C4D5CA] focus:outline-none focus:border-[#172E22] transition-colors"
               placeholder="tu@email.com"
             />
           </div>
 
           <div>
-            <label className="block text-sm text-stone-300 mb-1.5">Contraseña</label>
+            <label className="block text-[11px] font-bold text-[#5A6B60] uppercase tracking-[2px] mb-2 font-body">
+              Contraseña
+            </label>
             <input
               type="password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-stone-800 border border-stone-700 rounded-lg px-4 py-2.5 text-stone-100 placeholder-stone-500 focus:outline-none focus:border-amber-400 transition-colors"
+              className="w-full border border-[#C4D5CA] rounded-btn px-4 py-2.5 text-[#172E22] text-[14px] placeholder-[#C4D5CA] focus:outline-none focus:border-[#172E22] transition-colors"
               placeholder="••••••"
             />
           </div>
@@ -66,14 +78,14 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 bg-amber-500 text-stone-950 font-semibold rounded-lg hover:bg-amber-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="w-full py-3 rounded-btn bg-[#172E22] text-white font-semibold text-sm font-body hover:bg-[#1A3D2D] disabled:opacity-50 transition-colors"
           >
             {loading ? 'Entrando...' : 'Iniciar sesión'}
           </button>
 
-          <p className="text-center text-stone-500 text-sm">
+          <p className="text-center text-[#5A6B60] text-sm">
             ¿No tienes cuenta?{' '}
-            <Link href="/register" className="text-amber-400 hover:text-amber-300">
+            <Link href="/register" className="text-[#172E22] font-semibold hover:underline">
               Regístrate
             </Link>
           </p>
