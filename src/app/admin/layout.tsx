@@ -55,6 +55,19 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               </Link>
             );
           })}
+
+          <div className="mt-4 pt-4 border-t border-[#1A3D2D] px-1">
+            <Link
+              href="/"
+              className="flex items-center gap-3 px-3 py-2.5 rounded-btn text-[14px] transition-colors"
+              style={{ color: '#4A6A58' }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = '#7AAD94'; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = '#4A6A58'; }}
+            >
+              <span className="text-base w-4 shrink-0">←</span>
+              Ver web
+            </Link>
+          </div>
         </nav>
 
         <div className="p-4 border-t border-[#1A3D2D]">
