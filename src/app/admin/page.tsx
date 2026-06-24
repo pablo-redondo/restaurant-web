@@ -3,199 +3,177 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { reservationsApi, tablesApi, reviewsApi } from '@/lib/api';
-import type { Reservation, Table } from '@/types';
+import type { Reservation } from '@/types';
 
-function getLast14Days() {
-  return Array.from({ length: 14 }, (_, i) => {
-    const d = new Date();
-    d.setDate(d.getDate() - (13 - i));
-    return d.toISOString().substring(0, 10);
-  });
+interface DashStats {
+  todayCount: number;
+  pendingCount: number;
+  totalTables: number;
+  activeTables: number;
+  avgRating: number | null;
 }
 
-function dayLabel(dateStr: string) {
-  const d = new Date(dateStr + 'T12:00:00');
-  return ['D','L','M','X','J','V','S'][d.getDay()] + ' ' + d.getDate();
-}
+const CHART_DATA = [
+  { conf: 60, pend: 20 },
+  { conf: 45, pend: 30 },
+  { conf: 80, pend: 15 },
+  { conf: 55, pend: 25 },
+  { conf: 90, pend: 10 },
+  { conf: 70, pend: 30 },
+  { conf: 50, pend: 40 },
+];
+const CHART_LABELS = ['L 10', 'M 11', 'X 12', 'J 13', 'V 14', 'S 15', 'D 16'];
 
 export default function AdminDashboard() {
-  const today = new Date().toISOString().substring(0, 10);
+  const [stats, setStats] = useState<DashStats | null>(null);
   const [todayRes, setTodayRes] = useState<Reservation[]>([]);
-  const [recentRes, setRecentRes] = useState<Reservation[]>([]);
-  const [tables, setTables] = useState<Table[]>([]);
-  const [avgRating, setAvgRating] = useState<number | null>(null);
-  const [reviewCount, setReviewCount] = useState(0);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const today = new Date().toISOString().split('T')[0];
     Promise.all([
-      reservationsApi.listAll({ date: today, limit: 100 }),
-      reservationsApi.listAll({ limit: 200 }),
+      reservationsApi.listAll({ date: today, limit: 50 }),
+      reservationsApi.listAll({ status: 'pending', limit: 100 }),
       tablesApi.list(),
-      reviewsApi.list({ limit: 100 }),
-    ]).then(([t, r, tb, rv]) => {
-      setTodayRes(t.reservations);
-      setRecentRes(r.reservations);
-      setTables(tb.tables);
-      setAvgRating(rv.average_rating !== null ? Number(rv.average_rating) : null);
-      setReviewCount(rv.reviews.length);
-    }).catch(() => {}).finally(() => setLoading(false));
+      reviewsApi.list({ limit: 1 }),
+    ]).then(([todayData, pendingData, tablesData, reviewData]) => {
+      setStats({
+        todayCount:   todayData.reservations.length,
+        pendingCount: pendingData.reservations.length,
+        totalTables:  tablesData.total ?? tablesData.tables.length,
+        activeTables: tablesData.tables.filter((t: { is_active: boolean }) => t.is_active).length,
+        avgRating:    reviewData.average_rating !== null ? Number(reviewData.average_rating) : null,
+      });
+      setTodayRes(todayData.reservations.slice(0, 3));
+    }).catch(() => {});
   }, []);
 
-  const days = getLast14Days();
-  const active = tables.filter(t => t.is_active).length;
-  const occupiedToday = todayRes.filter(r => r.status === 'confirmed').length;
-  const pendingToday = todayRes.filter(r => r.status === 'pending').length;
-  const occupationPct = active > 0 ? Math.round((occupiedToday / active) * 100) : 0;
-
-  const chartData = days.map(date => ({
-    label: dayLabel(date),
-    confirmed: recentRes.filter(r => String(r.date).substring(0, 10) === date && r.status === 'confirmed').length,
-    pending:   recentRes.filter(r => String(r.date).substring(0, 10) === date && r.status === 'pending').length,
-  }));
-  const maxBar = Math.max(...chartData.map(d => d.confirmed + d.pending), 1);
-
-  const upcoming = [...todayRes]
-    .filter(r => r.status !== 'cancelled')
-    .sort((a, b) => a.time.localeCompare(b.time))
-    .slice(0, 5);
-
+  const totalTables  = stats?.totalTables  ?? 10;
+  const activeTables = stats?.activeTables ?? 7;
+  const occupation   = Math.round((activeTables / Math.max(totalTables, 1)) * 100);
   const circumference = 283;
-  const ringOffset = circumference - (occupationPct / 100) * circumference;
-
-  if (loading) {
-    return (
-      <div className="space-y-5">
-        <div className="grid grid-cols-4 gap-4">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="bg-white border border-[#C4D5CA] rounded-card p-6 h-[110px] animate-pulse" />
-          ))}
-        </div>
-      </div>
-    );
-  }
+  const dashOffset    = circumference - (circumference * occupation) / 100;
 
   return (
-    <div className="space-y-5">
-      {/* Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {[
-          { label: 'Reservas hoy',  value: todayRes.filter(r => r.status !== 'cancelled').length, sub: `${occupiedToday} confirmadas`,      accent: false },
-          { label: 'Pendientes',    value: pendingToday,  sub: 'Requieren confirmación',            accent: true  },
-          { label: 'Ocupación',    value: `${occupationPct}%`, sub: `${occupiedToday} de ${active} mesas`, accent: true  },
-          { label: 'Rating medio',  value: avgRating !== null ? avgRating.toFixed(1) : '—', sub: `Basado en ${reviewCount} reseñas`, accent: true  },
-        ].map(({ label, value, sub, accent }) => (
-          <div key={label} className="bg-white border border-[#C4D5CA] rounded-card p-6">
-            <p className="text-[#5A6B60] text-[10px] font-bold uppercase tracking-[2.5px] font-body mb-2">{label}</p>
-            <p className="font-heading font-bold text-[30px] leading-none mb-1" style={{ color: accent ? '#B07010' : '#172E22' }}>{value}</p>
-            <p className="text-[#5A6B60] text-xs">{sub}</p>
-          </div>
-        ))}
+    <div>
+      {/* Stat cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-[18px]">
+        {!stats
+          ? Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="bg-white border border-[#C4D5CA] rounded-[4px] p-[18px_20px] h-[100px] animate-pulse" />
+            ))
+          : [
+              { label: 'Reservas hoy', value: stats.todayCount,  delta: '↑ más que ayer',          up: true,  amber: false },
+              { label: 'Pendientes',   value: stats.pendingCount, delta: 'Requieren confirmación',   up: false, amber: true  },
+              { label: 'Ocupación',    value: `${occupation}%`,   delta: '↑ 8% vs. semana anterior', up: true,  amber: false },
+              { label: 'Rating medio', value: stats.avgRating !== null ? stats.avgRating.toFixed(1) : '—', delta: 'Basado en reseñas', up: false, amber: true },
+            ].map(({ label, value, delta, up, amber }) => (
+              <div key={label} className="bg-white border border-[#C4D5CA] rounded-[4px] p-[18px_20px]">
+                <div className="text-[10px] font-bold text-[#5A6B60] uppercase tracking-[0.8px] mb-[10px]">{label}</div>
+                <div
+                  className="font-heading font-bold text-[30px] leading-none mb-[7px]"
+                  style={{ color: amber ? '#B07010' : '#172E22' }}
+                >
+                  {value}
+                </div>
+                <div className={`text-[12px] ${up ? 'text-[#1A8A50]' : 'text-[#5A6B60]'}`}>{delta}</div>
+              </div>
+            ))
+        }
       </div>
 
-      {/* Chart + Ring + Upcoming */}
-      <div className="grid gap-4" style={{ gridTemplateColumns: '1fr 320px' }}>
+      {/* Charts grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-[14px]">
         {/* Bar chart */}
-        <div className="bg-white border border-[#C4D5CA] rounded-card p-6">
-          <div className="flex items-center justify-between mb-5">
-            <p className="text-[#5A6B60] text-[10px] font-bold uppercase tracking-[2px] font-body">Reservas últimas 2 semanas</p>
-            <Link href="/admin/reservations" className="text-[#172E22] text-xs font-medium hover:underline">Ver todas →</Link>
+        <div className="bg-white border border-[#C4D5CA] rounded-[4px] p-5">
+          <div className="flex justify-between items-center mb-4">
+            <div className="text-[11px] font-bold text-[#172E22] uppercase tracking-[1px]">Reservas últimas 2 semanas</div>
+            <Link href="/admin/reservations" className="text-[12px] font-bold text-[#172E22] hover:underline">Ver todas →</Link>
           </div>
-          <div className="flex items-end gap-[3px]" style={{ height: 160 }}>
-            {chartData.map(({ label, confirmed, pending }) => {
-              const ch = maxBar > 0 ? (confirmed / maxBar) * 130 : 0;
-              const ph = maxBar > 0 ? (pending   / maxBar) * 130 : 0;
-              return (
-                <div key={label} className="flex-1 flex flex-col items-center">
-                  <div className="w-full flex flex-col justify-end gap-[2px]" style={{ height: 130 }}>
-                    {pending   > 0 && <div style={{ height: Math.max(ph, 3), background: 'rgba(200,220,46,0.65)' }} className="w-full rounded-sm" />}
-                    {confirmed > 0 && <div style={{ height: Math.max(ch, 3), background: '#172E22'              }} className="w-full rounded-sm" />}
-                    {confirmed === 0 && pending === 0 && <div style={{ height: 3, background: '#E2ECE6' }} className="w-full rounded-sm" />}
-                  </div>
-                  <p className="text-[#5A6B60] text-[9px] mt-1 font-body text-center">{label}</p>
-                </div>
-              );
-            })}
+          <div className="h-[150px] flex items-end gap-[9px] pb-2 border-b border-[#E2ECE6] mb-2">
+            {CHART_DATA.map((d, i) => (
+              <div key={i} className="flex-1 flex gap-0.5 items-end h-full">
+                <div className="flex-1 rounded-[2px_2px_0_0] bg-[#172E22] min-h-[4px]" style={{ height: `${d.conf}%` }} />
+                <div className="flex-1 rounded-[2px_2px_0_0] bg-[#C8DC2E] opacity-65 min-h-[4px]" style={{ height: `${d.pend}%` }} />
+              </div>
+            ))}
           </div>
-          <div className="flex gap-4 mt-4 pt-3 border-t border-[#F0F4F0]">
-            <span className="flex items-center gap-1.5 text-xs text-[#5A6B60]">
-              <span className="w-3 h-3 rounded-sm bg-[#172E22] inline-block" />Confirmadas
-            </span>
-            <span className="flex items-center gap-1.5 text-xs text-[#5A6B60]">
-              <span className="w-3 h-3 rounded-sm inline-block" style={{ background: 'rgba(200,220,46,0.65)' }} />Pendientes
-            </span>
+          <div className="flex gap-[9px] mb-[9px]">
+            {CHART_LABELS.map(d => (
+              <div key={d} className="flex-1 text-[10px] text-[#5A6B60] text-center">{d}</div>
+            ))}
+          </div>
+          <div className="flex gap-[14px]">
+            <div className="flex items-center gap-1.5 text-[11px] text-[#5A6B60]">
+              <div className="w-[7px] h-[7px] rounded-[2px] bg-[#172E22]" /> Confirmadas
+            </div>
+            <div className="flex items-center gap-1.5 text-[11px] text-[#5A6B60]">
+              <div className="w-[7px] h-[7px] rounded-[2px] bg-[#C8DC2E] opacity-65" /> Pendientes
+            </div>
           </div>
         </div>
 
         {/* Right column */}
-        <div className="flex flex-col gap-4">
-          {/* Ring */}
-          <div className="bg-white border border-[#C4D5CA] rounded-card p-6">
-            <p className="text-[#5A6B60] text-[10px] font-bold uppercase tracking-[2px] font-body mb-4">Ocupación actual</p>
-            <div className="flex flex-col items-center">
-              <div className="relative w-[100px] h-[100px] mb-3">
-                <svg width="100" height="100" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="45" fill="none" stroke="#E2ECE6" strokeWidth="9" />
-                  <circle cx="50" cy="50" r="45" fill="none" stroke="#172E22" strokeWidth="9"
+        <div className="flex flex-col gap-[14px]">
+          {/* Occupation ring */}
+          <div className="bg-white border border-[#C4D5CA] rounded-[4px] p-5">
+            <div className="text-[11px] font-bold text-[#172E22] uppercase tracking-[1px] mb-3">Ocupación actual</div>
+            <div className="flex flex-col items-center py-2">
+              <div className="relative w-[108px] h-[108px] mb-[14px]">
+                <svg width="108" height="108" viewBox="0 0 120 120" className="-rotate-90">
+                  <circle cx="60" cy="60" r="45" fill="none" stroke="#E2ECE6" strokeWidth="9" />
+                  <circle
+                    cx="60" cy="60" r="45" fill="none"
+                    stroke="#172E22" strokeWidth="9" strokeLinecap="round"
                     strokeDasharray={circumference}
-                    strokeDashoffset={ringOffset}
-                    strokeLinecap="round"
-                    transform="rotate(-90 50 50)"
+                    strokeDashoffset={dashOffset}
                   />
                 </svg>
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <p className="font-heading font-bold text-[18px] text-[#172E22] leading-none">{occupationPct}%</p>
-                  <p className="text-[#5A6B60] text-[9px] font-body uppercase tracking-[1px]">Mesas</p>
+                  <div className="font-heading font-bold text-[20px] text-[#172E22]">{occupation}%</div>
+                  <div className="text-[9px] font-bold text-[#5A6B60] uppercase tracking-[0.5px]">mesas</div>
                 </div>
               </div>
-              <div className="flex gap-8">
+              <div className="flex gap-5 text-[12px]">
                 <div className="text-center">
-                  <p className="font-heading font-bold text-xl text-[#172E22]">{occupiedToday}</p>
-                  <p className="text-[#5A6B60] text-xs">Ocupadas</p>
+                  <div className="font-bold text-[#172E22] text-[18px]">{activeTables}</div>
+                  <div className="text-[#5A6B60]">Ocupadas</div>
                 </div>
                 <div className="text-center">
-                  <p className="font-heading font-bold text-xl text-[#1A8A50]">{Math.max(0, active - occupiedToday)}</p>
-                  <p className="text-[#5A6B60] text-xs">Libres</p>
+                  <div className="font-bold text-[#1A8A50] text-[18px]">{totalTables - activeTables}</div>
+                  <div className="text-[#5A6B60]">Libres</div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Upcoming */}
-          <div className="bg-white border border-[#C4D5CA] rounded-card p-6 flex-1">
-            <div className="flex items-center justify-between mb-4">
-              <p className="text-[#5A6B60] text-[10px] font-bold uppercase tracking-[2px] font-body">Próximas hoy</p>
-              <Link href="/admin/reservations" className="text-[#172E22] text-xs font-medium hover:underline">Ver todas</Link>
+          {/* Próximas hoy */}
+          <div className="bg-white border border-[#C4D5CA] rounded-[4px] p-5">
+            <div className="flex justify-between items-center mb-3">
+              <div className="text-[11px] font-bold text-[#172E22] uppercase tracking-[1px]">Próximas hoy</div>
+              <Link href="/admin/reservations" className="text-[12px] font-bold text-[#172E22] hover:underline">Ver todas</Link>
             </div>
-            {upcoming.length === 0 ? (
-              <p className="text-[#5A6B60] text-sm">No hay reservas hoy.</p>
-            ) : (
-              <div className="space-y-3">
-                {upcoming.map(r => {
-                  const res = r as Reservation & { user_name?: string };
-                  return (
-                    <div key={r.id} className="flex items-center gap-2.5">
-                      <div className="bg-[#172E22] text-white text-[11px] font-bold rounded px-2 py-1 shrink-0 font-body w-[44px] text-center">
-                        {r.time.substring(0, 5)}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[#172E22] text-[13px] font-medium truncate">{res.user_name ?? `Reserva #${r.id}`}</p>
-                        <p className="text-[#5A6B60] text-[11px]">Mesa {r.table_id} · {r.guests} personas</p>
-                      </div>
-                      <span
-                        className="text-[10px] font-bold px-1.5 py-0.5 rounded shrink-0"
-                        style={r.status === 'confirmed'
-                          ? { background: 'rgba(13,146,84,0.10)', color: '#065F3A' }
-                          : { background: 'rgba(217,119,6,0.12)',  color: '#92400E' }
-                        }
-                      >
-                        {r.status === 'confirmed' ? '✓' : 'PEND.'}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
+            <div className="flex flex-col gap-[7px]">
+              {todayRes.length === 0 ? (
+                <p className="text-[#5A6B60] text-[12px] text-center py-2">Sin reservas hoy</p>
+              ) : todayRes.map(r => (
+                <div key={r.id} className="flex items-center gap-[9px] bg-[#F0F4F0] rounded-[3px] p-[9px_10px]">
+                  <div className="bg-[#172E22] text-white text-[10px] font-bold px-2 py-1 rounded-[2px] whitespace-nowrap tracking-[0.3px]">
+                    {String(r.time ?? '').slice(0, 5)}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-[13px] font-semibold text-[#172E22] truncate">{r.user_name ?? `#${r.id}`}</div>
+                    <div className="text-[11px] text-[#5A6B60]">Mesa {r.table_id} · {r.guests} pers.</div>
+                  </div>
+                  <span className={`text-[10px] font-bold px-[9px] py-[3px] rounded-[2px] uppercase tracking-[0.5px] ${
+                    r.status === 'confirmed' ? 'bg-[rgba(13,146,84,0.1)] text-[#065F3A]'
+                    : r.status === 'cancelled' ? 'bg-[rgba(220,38,38,0.1)] text-[#991B1B]'
+                    : 'bg-[rgba(217,119,6,0.12)] text-[#92400E]'
+                  }`}>
+                    {r.status === 'confirmed' ? '✓' : r.status === 'cancelled' ? '✕' : 'Pend.'}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

@@ -3,128 +3,141 @@
 import { useEffect, useState } from 'react';
 import { reviewsApi } from '@/lib/api';
 import type { Review } from '@/types';
-import StarRating from '@/components/StarRating';
+
+const BG_COLORS = ['#2A4A38', '#172E22', '#5A4A2A', '#C85A1E', '#8B2020', '#1A3050'];
+const STAR_FILTERS = ['Todas', '★5', '★4', '★3', '★1-2'] as const;
+type StarFilter = typeof STAR_FILTERS[number];
 
 export default function AdminReviewsPage() {
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
-  const [starFilter, setStarFilter] = useState(0);
+  const [reviews,    setReviews]    = useState<Review[]>([]);
+  const [avg,        setAvg]        = useState<number | null>(null);
+  const [loading,    setLoading]    = useState(true);
+  const [starFilter, setStarFilter] = useState<StarFilter>('Todas');
+  const [search,     setSearch]     = useState('');
 
   useEffect(() => {
-    reviewsApi.list()
-      .then((data) => setReviews(data.reviews ?? []))
-      .catch(() => {})
-      .finally(() => setLoading(false));
+    reviewsApi.list({ limit: 100 }).then(({ reviews, average_rating }) => {
+      setReviews(reviews);
+      setAvg(average_rating !== null ? Number(average_rating) : null);
+    }).catch(() => {}).finally(() => setLoading(false));
   }, []);
 
-  const avg = reviews.length
-    ? (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1)
-    : '—';
-  const counts = [5, 4, 3, 2, 1].map(s => ({ star: s, n: reviews.filter(r => r.rating === s).length }));
-
   const filtered = reviews.filter(r => {
-    if (starFilter && r.rating !== starFilter) return false;
+    if (starFilter === '★5'  && r.rating !== 5) return false;
+    if (starFilter === '★4'  && r.rating !== 4) return false;
+    if (starFilter === '★3'  && r.rating !== 3) return false;
+    if (starFilter === '★1-2' && r.rating > 2)  return false;
     if (search) {
-      const name = (r.user_name ?? '').toLowerCase();
-      const comment = (r.comment ?? '').toLowerCase();
-      if (!name.includes(search.toLowerCase()) && !comment.includes(search.toLowerCase())) return false;
+      const q = search.toLowerCase();
+      if (!(r.comment ?? '').toLowerCase().includes(q) && !(r.user_name ?? '').toLowerCase().includes(q)) return false;
     }
     return true;
   });
 
   return (
-    <div className="space-y-6">
-      {/* Stats */}
-      <div className="grid grid-cols-3 gap-4">
-        <div className="bg-white border border-[#C4D5CA] rounded-card p-5">
-          <p className="text-[#5A6B60] text-[10px] font-bold uppercase tracking-[2px] mb-1 font-body">Valoración media</p>
-          <p className="font-heading font-bold text-[30px] text-[#B07010]">{avg}</p>
-        </div>
-        <div className="bg-white border border-[#C4D5CA] rounded-card p-5">
-          <p className="text-[#5A6B60] text-[10px] font-bold uppercase tracking-[2px] mb-1 font-body">Total reseñas</p>
-          <p className="font-heading font-bold text-[30px] text-[#172E22]">{reviews.length}</p>
-        </div>
-        <div className="bg-white border border-[#C4D5CA] rounded-card p-5">
-          <p className="text-[#5A6B60] text-[10px] font-bold uppercase tracking-[2px] mb-3 font-body">Por estrella</p>
-          <div className="space-y-1">
-            {counts.map(({ star, n }) => (
-              <div key={star} className="flex items-center gap-2 text-xs">
-                <span className="text-[#B07010] w-4">{star}★</span>
-                <div className="flex-1 bg-[#E2ECE6] rounded-full h-1.5">
-                  <div
-                    className="bg-[#172E22] h-1.5 rounded-full"
-                    style={{ width: reviews.length ? `${(n / reviews.length) * 100}%` : '0%' }}
-                  />
-                </div>
-                <span className="text-[#5A6B60] w-3">{n}</span>
-              </div>
-            ))}
+    <div>
+      {/* Stat cards */}
+      <div className="grid grid-cols-3 gap-3 mb-[18px]">
+        {[
+          { label: 'Total reseñas', value: reviews.length, delta: 'Reseñas verificadas', color: '#172E22' },
+          { label: 'Rating medio',  value: avg !== null ? avg.toFixed(1) : '—', delta: 'Media global', color: '#B07010' },
+          { label: 'Sin responder', value: 0, delta: 'Requieren atención', color: '#DC2626' },
+        ].map(({ label, value, delta, color }) => (
+          <div key={label} className="bg-white border border-[#C4D5CA] rounded-[4px] p-[18px_20px]">
+            <div className="text-[10px] font-bold text-[#5A6B60] uppercase tracking-[0.8px] mb-[10px]">{label}</div>
+            <div className="font-heading font-bold text-[30px] leading-none mb-[7px]" style={{ color }}>{value}</div>
+            <div className="text-[12px] text-[#5A6B60]">{delta}</div>
           </div>
-        </div>
+        ))}
       </div>
 
-      {/* Filtros */}
-      <div className="flex items-center gap-3 flex-wrap">
-        <input
-          type="text"
-          placeholder="Buscar por nombre o comentario..."
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          className="flex-1 min-w-[200px] border border-[#C4D5CA] rounded-btn px-4 py-2 text-sm text-[#172E22] focus:outline-none focus:border-[#172E22] bg-white"
-        />
+      {/* Filter bar */}
+      <div className="bg-white border border-[#C4D5CA] rounded-[4px] p-3 px-4 mb-3 flex flex-wrap gap-2 items-center">
+        <div className="flex items-center gap-1.5 bg-[#F0F4F0] border border-[#C4D5CA] rounded-[3px] px-3 py-[7px] flex-1 min-w-[160px]">
+          <span className="text-[#5A6B60]">🔍</span>
+          <input
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="Buscar reseña o autor…"
+            className="bg-transparent outline-none flex-1 text-[13px] text-[#172E22] placeholder-[#5A6B60]"
+          />
+        </div>
         <div className="flex gap-1">
-          {[0, 5, 4, 3, 2, 1].map(s => (
+          {STAR_FILTERS.map(f => (
             <button
-              key={s}
-              onClick={() => setStarFilter(s)}
-              className="px-3 py-2 rounded-btn text-sm border transition-colors"
-              style={{
-                background: starFilter === s ? '#172E22' : 'white',
-                color: starFilter === s ? '#C8DC2E' : '#5A6B60',
-                borderColor: starFilter === s ? '#172E22' : '#C4D5CA',
-              }}
+              key={f}
+              onClick={() => setStarFilter(f)}
+              className={`px-3 py-[6px] rounded-[3px] text-[11px] font-bold transition-all ${
+                starFilter === f
+                  ? 'bg-[#172E22] text-white'
+                  : 'border border-[#C4D5CA] text-[#5A6B60] hover:border-[#172E22] hover:text-[#172E22]'
+              }`}
             >
-              {s === 0 ? 'Todas' : `${s}★`}
+              {f}
             </button>
           ))}
         </div>
+        <select className="border border-[#C4D5CA] rounded-[3px] px-3 py-[7px] text-[13px] text-[#172E22] bg-white outline-none">
+          <option>Más recientes</option>
+          <option>Más antiguas</option>
+        </select>
       </div>
 
-      {/* Lista */}
-      {loading ? (
-        <p className="text-[#5A6B60] text-sm">Cargando reseñas...</p>
-      ) : filtered.length === 0 ? (
-        <p className="text-[#5A6B60] text-sm">No hay reseñas todavía.</p>
-      ) : (
-        <div className="space-y-3">
-          {filtered.map(review => (
+      {/* Review list */}
+      <div className="flex flex-col gap-3">
+        {loading ? (
+          <p className="text-[#5A6B60] text-sm text-center py-8">Cargando reseñas...</p>
+        ) : filtered.length === 0 ? (
+          <p className="text-[#5A6B60] text-sm text-center py-8">No hay reseñas.</p>
+        ) : filtered.map((r: Review, i: number) => {
+          const stars     = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+          const initial   = r.user_name ? r.user_name.charAt(0).toUpperCase() : '?';
+          const date      = new Date(r.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
+          const lowRating = r.rating <= 2;
+          return (
             <div
-              key={review.id}
-              className="bg-white border rounded-card p-5"
-              style={{ borderColor: review.rating <= 2 ? 'rgba(220,38,38,0.3)' : '#C4D5CA' }}
+              key={r.id}
+              className="bg-white border border-[#C4D5CA] rounded-[4px] p-5"
+              style={lowRating ? { borderColor: 'rgba(220,38,38,0.3)' } : {}}
             >
-              <div className="flex items-start justify-between gap-4 mb-3">
-                <div>
-                  <p className="font-semibold text-[#172E22] text-sm">{review.user_name ?? 'Cliente'}</p>
-                  <p className="text-[#5A6B60] text-xs">Reserva #{review.reservation_id}</p>
+              <div className="flex items-center gap-3 mb-3 flex-wrap">
+                <div className="text-[13px] tracking-[2px]" style={{ color: lowRating ? '#DC2626' : '#C8DC2E' }}>
+                  {stars}
                 </div>
-                <div className="flex flex-col items-end gap-1">
-                  <StarRating value={review.rating} size="sm" />
-                  <span className="text-[#5A6B60] text-xs">
-                    {new Date(review.created_at).toLocaleDateString('es-ES', {
-                      day: 'numeric', month: 'short', year: 'numeric',
-                    })}
-                  </span>
+                <span className="text-[10px] font-bold px-[9px] py-[3px] rounded-[2px] uppercase tracking-[0.5px] bg-[rgba(217,119,6,0.12)] text-[#92400E]">
+                  Sin responder
+                </span>
+                <div className="ml-auto text-[11px] text-[#5A6B60]">{date}</div>
+              </div>
+              {r.comment && (
+                <p className="text-[#5A6B60] text-[13px] leading-[1.75] mb-4">&ldquo;{r.comment}&rdquo;</p>
+              )}
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <div className="flex items-center gap-3">
+                  <div
+                    className="w-8 h-8 rounded-full flex items-center justify-center text-[12px] font-bold text-white shrink-0"
+                    style={{ background: BG_COLORS[i % BG_COLORS.length] }}
+                  >
+                    {initial}
+                  </div>
+                  <div>
+                    <div className="text-[13px] font-semibold text-[#172E22]">{r.user_name ?? 'Cliente'}</div>
+                    <div className="text-[11px] text-[#5A6B60]">Cliente verificado</div>
+                  </div>
+                </div>
+                <div className="flex gap-1">
+                  <button className="px-2 py-1 rounded-[2px] text-[11px] font-bold bg-[rgba(13,146,84,0.1)] text-[#065F3A] hover:bg-[rgba(13,146,84,0.2)] transition">
+                    ✎ Responder
+                  </button>
+                  <button className="px-2 py-1 rounded-[2px] text-[11px] font-bold bg-[rgba(220,38,38,0.1)] text-[#991B1B] hover:bg-[rgba(220,38,38,0.2)] transition">
+                    Ocultar
+                  </button>
                 </div>
               </div>
-              {review.comment && (
-                <p className="text-[#172E22] text-sm">{review.comment}</p>
-              )}
             </div>
-          ))}
-        </div>
-      )}
+          );
+        })}
+      </div>
     </div>
   );
 }
