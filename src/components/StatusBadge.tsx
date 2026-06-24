@@ -1,20 +1,23 @@
 type Status = 'pending' | 'confirmed' | 'cancelled';
 
-const styles: Record<Status, string> = {
-  pending: 'bg-yellow-900/50 text-yellow-300 border border-yellow-700',
-  confirmed: 'bg-emerald-900/50 text-emerald-300 border border-emerald-700',
-  cancelled: 'bg-red-900/50 text-red-300 border border-red-700',
+const styles: Record<Status, React.CSSProperties> = {
+  pending:   { background: 'rgba(217,119,6,0.12)',  color: '#92400E' },
+  confirmed: { background: 'rgba(13,146,84,0.10)',  color: '#065F3A' },
+  cancelled: { background: 'rgba(220,38,38,0.10)',  color: '#991B1B' },
 };
 
 const labels: Record<Status, string> = {
-  pending: 'Pendiente',
+  pending:   'Pendiente',
   confirmed: 'Confirmada',
   cancelled: 'Cancelada',
 };
 
 export default function StatusBadge({ status }: { status: Status }) {
   return (
-    <span className={`inline-block px-2.5 py-0.5 rounded text-xs font-medium ${styles[status]}`}>
+    <span
+      className="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold font-body"
+      style={styles[status]}
+    >
       {labels[status]}
     </span>
   );
