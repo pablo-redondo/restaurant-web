@@ -2,7 +2,7 @@
   "framework": "nextjs",
   "build": {
     "env": {
-      "NEXT_PUBLIC_API_URL": "https://restaurant-api-production.up.railway.app"
+      "NEXT_PUBLIC_API_URL": "https://restaurant-api-v5rh.onrender.com"
     }
   }
 }
