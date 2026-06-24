@@ -16,11 +16,8 @@ export default function ReservationDetailPage() {
   const [reservation, setReservation] = useState<Reservation | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-
-  // Cancel
   const [cancelling, setCancelling] = useState(false);
 
-  // Review form
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
   const [reviewLoading, setReviewLoading] = useState(false);
@@ -37,17 +34,13 @@ export default function ReservationDetailPage() {
   }, [id, user, authLoading, router]);
 
   const handleCancel = async () => {
-    if (!reservation) return;
-    if (!confirm('¿Cancelar esta reserva?')) return;
+    if (!reservation || !confirm('¿Cancelar esta reserva?')) return;
     setCancelling(true);
     try {
       const { reservation: updated } = await reservationsApi.update(reservation.id, { status: 'cancelled' });
       setReservation(updated);
-    } catch {
-      alert('Error al cancelar');
-    } finally {
-      setCancelling(false);
-    }
+    } catch { alert('Error al cancelar'); }
+    finally { setCancelling(false); }
   };
 
   const handleReview = async (e: React.FormEvent) => {
@@ -61,13 +54,13 @@ export default function ReservationDetailPage() {
     } catch (err: unknown) {
       const e = err as { error?: string };
       setReviewError(e?.error ?? 'Error al enviar la reseña');
-    } finally {
-      setReviewLoading(false);
-    }
+    } finally { setReviewLoading(false); }
   };
 
-  if (authLoading || loading) return <div className="text-center py-20 text-stone-400">Cargando...</div>;
-  if (error) return <div className="text-center py-20 text-red-400">{error}</div>;
+  if (authLoading || loading) {
+    return <div className="text-center py-20 text-[#5A6B60]">Cargando...</div>;
+  }
+  if (error) return <div className="text-center py-20 text-[#991B1B]">{error}</div>;
   if (!reservation) return null;
 
   const dateStr = new Date(reservation.date + 'T00:00:00').toLocaleDateString('es-ES', {
@@ -76,37 +69,35 @@ export default function ReservationDetailPage() {
 
   return (
     <div className="max-w-xl mx-auto px-4 py-12">
-      <button onClick={() => router.back()} className="text-stone-500 hover:text-stone-300 text-sm mb-6">
+      <button onClick={() => router.back()} className="text-[#5A6B60] hover:text-[#172E22] text-sm mb-6 transition-colors">
         ← Volver
       </button>
 
-      <div className="bg-stone-900 border border-stone-800 rounded-xl p-8">
+      <div className="bg-white border border-[#C4D5CA] rounded-card p-8">
         <div className="flex items-start justify-between mb-6">
-          <h1 className="font-serif text-2xl">Reserva #{reservation.id}</h1>
+          <div>
+            <p className="text-[#5A6B60] text-[10px] font-bold uppercase tracking-[2px] mb-1 font-body">Reserva</p>
+            <h1 className="font-heading font-bold text-2xl text-[#172E22]">#{reservation.id}</h1>
+          </div>
           <StatusBadge status={reservation.status} />
         </div>
 
         <dl className="space-y-3 text-sm">
-          <div className="flex justify-between">
-            <dt className="text-stone-500">Fecha</dt>
-            <dd className="capitalize text-stone-200">{dateStr}</dd>
-          </div>
-          <div className="flex justify-between">
-            <dt className="text-stone-500">Hora</dt>
-            <dd className="text-stone-200">{reservation.time}</dd>
-          </div>
-          <div className="flex justify-between">
-            <dt className="text-stone-500">Comensales</dt>
-            <dd className="text-stone-200">{reservation.guests}</dd>
-          </div>
-          <div className="flex justify-between">
-            <dt className="text-stone-500">Mesa</dt>
-            <dd className="text-stone-200">#{reservation.table_id}</dd>
-          </div>
+          {[
+            { label: 'Fecha', value: <span className="capitalize">{dateStr}</span> },
+            { label: 'Hora', value: reservation.time },
+            { label: 'Comensales', value: reservation.guests },
+            { label: 'Mesa', value: `#${reservation.table_id}` },
+          ].map(({ label, value }) => (
+            <div key={label} className="flex justify-between">
+              <dt className="text-[#5A6B60]">{label}</dt>
+              <dd className="text-[#172E22] font-medium">{value}</dd>
+            </div>
+          ))}
           {reservation.notes && (
-            <div className="pt-3 border-t border-stone-800">
-              <dt className="text-stone-500 mb-1">Notas</dt>
-              <dd className="text-stone-300">{reservation.notes}</dd>
+            <div className="pt-3 border-t border-[#C4D5CA]">
+              <dt className="text-[#5A6B60] mb-1">Notas</dt>
+              <dd className="text-[#172E22]">{reservation.notes}</dd>
             </div>
           )}
         </dl>
@@ -115,43 +106,40 @@ export default function ReservationDetailPage() {
           <button
             onClick={handleCancel}
             disabled={cancelling}
-            className="mt-8 w-full py-2.5 border border-red-800 text-red-400 rounded-lg hover:bg-red-900/30 disabled:opacity-50 transition-colors text-sm"
+            className="mt-8 w-full py-2.5 rounded-btn border border-[rgba(220,38,38,0.3)] text-[#991B1B] hover:bg-[rgba(220,38,38,0.05)] disabled:opacity-50 transition-colors text-sm"
           >
             {cancelling ? 'Cancelando...' : 'Cancelar reserva'}
           </button>
         )}
       </div>
 
-      {/* Review form — only for confirmed reservations */}
       {reservation.status === 'confirmed' && (
-        <div className="mt-8 bg-stone-900 border border-stone-800 rounded-xl p-8">
-          <h2 className="font-serif text-xl mb-5">Dejar una reseña</h2>
+        <div className="mt-6 bg-white border border-[#C4D5CA] rounded-card p-8">
+          <h2 className="font-heading font-bold text-xl text-[#172E22] mb-5">Dejar una reseña</h2>
           {reviewDone ? (
-            <p className="text-emerald-400">¡Gracias por tu valoración!</p>
+            <p className="text-[#1A8A50] font-medium">¡Gracias por tu valoración!</p>
           ) : (
             <form onSubmit={handleReview} className="space-y-4">
               <div>
-                <label className="block text-sm text-stone-300 mb-2">Valoración</label>
+                <label className="block text-[11px] font-bold text-[#5A6B60] uppercase tracking-[2px] mb-2 font-body">Valoración</label>
                 <StarRating value={rating} onChange={setRating} size="lg" />
               </div>
               <div>
-                <label className="block text-sm text-stone-300 mb-1.5">Comentario (opcional)</label>
+                <label className="block text-[11px] font-bold text-[#5A6B60] uppercase tracking-[2px] mb-2 font-body">Comentario (opcional)</label>
                 <textarea
                   rows={3}
                   maxLength={1000}
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
-                  className="w-full bg-stone-800 border border-stone-700 rounded-lg px-4 py-2.5 text-stone-100 placeholder-stone-500 focus:outline-none focus:border-amber-400 transition-colors resize-none"
+                  className="w-full border border-[#C4D5CA] rounded-btn px-4 py-3 text-[#172E22] text-[14px] placeholder-[#C4D5CA] focus:outline-none focus:border-[#172E22] transition-colors resize-none"
                   placeholder="Cuente su experiencia..."
                 />
               </div>
-              {reviewError && (
-                <p className="text-red-400 text-sm">{reviewError}</p>
-              )}
+              {reviewError && <p className="text-[#991B1B] text-sm">{reviewError}</p>}
               <button
                 type="submit"
                 disabled={reviewLoading || rating === 0}
-                className="px-6 py-2.5 bg-amber-500 text-stone-950 font-semibold rounded-lg hover:bg-amber-400 disabled:opacity-50 transition-colors"
+                className="px-6 py-2.5 rounded-btn bg-[#172E22] text-white font-semibold text-sm hover:bg-[#1A3D2D] disabled:opacity-50 transition-colors"
               >
                 {reviewLoading ? 'Enviando...' : 'Enviar reseña'}
               </button>
