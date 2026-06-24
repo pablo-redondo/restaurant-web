@@ -44,7 +44,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Features ── */}
-      <section className="bg-[#F0F4F0] py-[88px] px-[52px]">
+      <section id="caracteristicas" className="bg-[#F0F4F0] py-[88px] px-[52px]">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-[52px]">
             <p className="text-[#172E22] text-[10px] font-bold tracking-[2.5px] uppercase mb-[10px]">
@@ -86,7 +86,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Reviews ── */}
-      <section className="bg-[#172E22] py-[88px] px-[52px]">
+      <section id="resenas" className="bg-[#172E22] py-[88px] px-[52px]">
         <div className="max-w-5xl mx-auto">
           <p className="text-[#C8DC2E] text-[10px] font-bold tracking-[2.5px] uppercase mb-[10px]">
             Lo que dicen

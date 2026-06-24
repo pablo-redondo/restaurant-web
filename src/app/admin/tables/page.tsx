@@ -42,7 +42,9 @@ export default function AdminTablesPage() {
   const [createError, setCreateError] = useState('');
 
   useEffect(() => {
-    tablesApi.list().then(({ tables }) => setTables(tables)).finally(() => setLoading(false));
+    tablesApi.list({ includeInactive: true })
+      .then(({ tables }) => setTables(tables))
+      .finally(() => setLoading(false));
   }, []);
 
   const handleCreate = async (e: React.FormEvent) => {

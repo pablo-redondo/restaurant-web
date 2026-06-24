@@ -8,14 +8,19 @@ const BG_COLORS = ['#2A4A38', '#C85A1E', '#5A4A2A', '#172E22', '#8B2020', '#1A30
 
 export default function ReviewsSection() {
   const [reviews, setReviews] = useState<Review[]>([]);
-  const [avg, setAvg] = useState<number | null>(null);
+  const [avg,     setAvg]     = useState<number | null>(null);
+  const [total,   setTotal]   = useState<number | null>(null);
 
   useEffect(() => {
-    reviewsApi.list({ limit: 6 }).then(({ reviews, average_rating }) => {
+    reviewsApi.list({ limit: 6 }).then(({ reviews, average_rating, total }) => {
       setReviews(reviews);
       setAvg(average_rating !== null ? Number(average_rating) : null);
+      setTotal(total ?? null);
     }).catch(() => {});
   }, []);
+
+  const avgRounded = avg !== null ? Math.min(5, Math.max(0, Math.round(avg))) : 5;
+  const avgStars   = '★'.repeat(avgRounded) + '☆'.repeat(5 - avgRounded);
 
   return (
     <div>
@@ -24,9 +29,11 @@ export default function ReviewsSection() {
         <span className="font-heading font-bold text-[48px] leading-none text-[#C8DC2E]">
           {avg !== null ? avg.toFixed(1) : '—'}
         </span>
-        <div className="text-[#6A9A80] text-[13px] leading-[1.6]">
-          ★★★★★<br />
-          Más de {reviews.length > 0 ? reviews.length : 240}+ reseñas verificadas
+        <div className="text-[13px] leading-[1.6]">
+          <span className="text-[#C8DC2E] tracking-[2px]">{avgStars}</span><br />
+          <span className="text-[#6A9A80]">
+            {total !== null ? `${total} reseñas verificadas` : 'Reseñas verificadas'}
+          </span>
         </div>
       </div>
 
@@ -36,11 +43,11 @@ export default function ReviewsSection() {
         <div className="grid md:grid-cols-3 gap-[14px]">
           {reviews.slice(0, 3).map((r: Review, i: number) => {
             const initial = r.user_name ? r.user_name.charAt(0).toUpperCase() : '?';
-            const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
-            const date = new Date(r.created_at).toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
+            const rStars  = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+            const date    = new Date(r.created_at).toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
             return (
               <div key={r.id} className="bg-white border border-white/15 rounded-[4px] p-[28px]">
-                <div className="text-[#C8DC2E] text-[12px] tracking-[3px] mb-[14px]">{stars}</div>
+                <div className="text-[#C8DC2E] text-[12px] tracking-[3px] mb-[14px]">{rStars}</div>
                 {r.comment && (
                   <p className="text-[#5A6B60] text-[13px] leading-[1.75] mb-[22px]">&ldquo;{r.comment}&rdquo;</p>
                 )}

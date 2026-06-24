@@ -40,12 +40,13 @@ export const authApi = {
 
 // Tables
 export const tablesApi = {
-  list: (params?: { date?: string; time?: string; guests?: number; location?: string }) => {
+  list: (params?: { date?: string; time?: string; guests?: number; location?: string; includeInactive?: boolean }) => {
     const qs = new URLSearchParams();
-    if (params?.date) qs.set('date', params.date);
-    if (params?.time) qs.set('time', params.time);
-    if (params?.guests) qs.set('guests', String(params.guests));
-    if (params?.location) qs.set('location', params.location);
+    if (params?.date)            qs.set('date',            params.date);
+    if (params?.time)            qs.set('time',            params.time);
+    if (params?.guests)          qs.set('guests',          String(params.guests));
+    if (params?.location)        qs.set('location',        params.location);
+    if (params?.includeInactive) qs.set('includeInactive', 'true');
     return request<{ tables: import('@/types').Table[]; total: number }>(
       `/api/tables${qs.toString() ? '?' + qs.toString() : ''}`
     );
@@ -71,18 +72,18 @@ export const reservationsApi = {
     }),
   listAll: (params?: { date?: string; status?: string; page?: number; limit?: number }) => {
     const qs = new URLSearchParams();
-    if (params?.date) qs.set('date', params.date);
+    if (params?.date)   qs.set('date',   params.date);
     if (params?.status) qs.set('status', params.status);
-    if (params?.page) qs.set('page', String(params.page));
-    if (params?.limit) qs.set('limit', String(params.limit));
-    return request<{ reservations: import('@/types').Reservation[]; page: number }>(
+    if (params?.page)   qs.set('page',   String(params.page));
+    if (params?.limit)  qs.set('limit',  String(params.limit));
+    return request<{ reservations: import('@/types').Reservation[]; page: number; total: number }>(
       `/api/reservations${qs.toString() ? '?' + qs.toString() : ''}`
     );
   },
   listMine: (params?: { status?: string; page?: number }) => {
     const qs = new URLSearchParams();
     if (params?.status) qs.set('status', params.status);
-    if (params?.page) qs.set('page', String(params.page));
+    if (params?.page)   qs.set('page',   String(params.page));
     return request<{ reservations: import('@/types').Reservation[]; page: number }>(
       `/api/reservations/me${qs.toString() ? '?' + qs.toString() : ''}`
     );
@@ -100,9 +101,9 @@ export const reservationsApi = {
 export const reviewsApi = {
   list: (params?: { page?: number; limit?: number }) => {
     const qs = new URLSearchParams();
-    if (params?.page) qs.set('page', String(params.page));
+    if (params?.page)  qs.set('page',  String(params.page));
     if (params?.limit) qs.set('limit', String(params.limit));
-    return request<{ reviews: import('@/types').Review[]; average_rating: number | null; page: number }>(
+    return request<{ reviews: import('@/types').Review[]; average_rating: number | null; total: number; page: number }>(
       `/api/reviews${qs.toString() ? '?' + qs.toString() : ''}`
     );
   },

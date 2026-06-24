@@ -20,7 +20,7 @@ const LIMIT = 10;
 
 export default function AdminReservationsPage() {
   const [reservations, setReservations] = useState<Reservation[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading,      setLoading]      = useState(true);
   const [statusFilter, setStatusFilter] = useState('');
   const [dateFilter,   setDateFilter]   = useState('');
   const [search,       setSearch]       = useState('');
@@ -34,13 +34,13 @@ export default function AdminReservationsPage() {
       date:   dateFilter   || undefined,
       page,
       limit: LIMIT,
-    }).then((res: { reservations: Reservation[]; total?: number }) => {
+    }).then((res) => {
       setReservations(res.reservations);
-      setTotal(res.total ?? res.reservations.length);
+      setTotal(res.total);
     }).catch(() => {}).finally(() => setLoading(false));
   };
 
-  useEffect(() => { load(); }, [statusFilter, dateFilter, page]);
+  useEffect(() => { load(); }, [statusFilter, dateFilter, page]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const updateStatus = async (id: number, status: string) => {
     try {
