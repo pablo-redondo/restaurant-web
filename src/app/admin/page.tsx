@@ -24,16 +24,16 @@ export default function AdminDashboard() {
         pending:     p.reservations.length,
         confirmed:   c.reservations.length,
         totalTables: t.total,
-        avgRating:   r.average_rating,
+        avgRating:   r.average_rating !== null ? Number(r.average_rating) : null,
       });
     }).catch(() => {});
   }, []);
 
   const cards = stats ? [
-    { label: 'Mesas activas',       value: stats.totalTables,                                  accent: false },
-    { label: 'Reservas pendientes', value: stats.pending,                                       accent: true  },
-    { label: 'Confirmadas',         value: stats.confirmed,                                     accent: false },
-    { label: 'Rating medio',        value: stats.avgRating !== null ? stats.avgRating.toFixed(1) + ' / 5' : '—', accent: true },
+    { label: 'Mesas activas',       value: stats.totalTables,                                                    accent: false },
+    { label: 'Reservas pendientes', value: stats.pending,                                                         accent: true  },
+    { label: 'Confirmadas',         value: stats.confirmed,                                                       accent: false },
+    { label: 'Rating medio',        value: stats.avgRating !== null ? stats.avgRating.toFixed(1) + ' / 5' : '—', accent: true  },
   ] : [];
 
   return (
