@@ -3,7 +3,18 @@
 import { useEffect, useState } from 'react';
 import { reviewsApi } from '@/lib/api';
 import type { Review } from '@/types';
-import StarRating from '@/components/StarRating';
+
+function Stars({ value, onDark = false }: { value: number; onDark?: boolean }) {
+  const filled = onDark ? '#C8DC2E' : '#B07010';
+  const empty  = onDark ? '#4A6A58'  : '#C4D5CA';
+  return (
+    <span className="inline-flex gap-0.5 text-sm">
+      {Array.from({ length: 5 }, (_, i) => (
+        <span key={i} style={{ color: i < value ? filled : empty }}>★</span>
+      ))}
+    </span>
+  );
+}
 
 export default function ReviewsSection() {
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -17,24 +28,28 @@ export default function ReviewsSection() {
   }, []);
 
   if (!reviews.length) {
-    return <p className="text-center text-stone-500">Aún no hay reseñas disponibles.</p>;
+    return <p className="text-center text-[#4A6A58]">Aún no hay reseñas disponibles.</p>;
   }
 
   return (
-    <div className="space-y-6">
+    <div>
       {avg !== null && (
-        <div className="flex items-center justify-center gap-3 mb-8">
-          <StarRating value={Math.round(avg)} size="lg" />
-          <span className="text-amber-400 text-2xl font-serif">{avg.toFixed(1)}</span>
-          <span className="text-stone-500">/ 5</span>
+        <div className="text-center mb-12">
+          <p className="font-heading font-bold text-[#C8DC2E] leading-none mb-2" style={{ fontSize: 72 }}>
+            {avg.toFixed(1)}
+          </p>
+          <Stars value={Math.round(avg)} onDark />
+          <p className="text-[#4A6A58] text-sm mt-2">{reviews.length}+ reseñas verificadas</p>
         </div>
       )}
-      <div className="grid md:grid-cols-2 gap-4">
-        {reviews.map((r) => (
-          <div key={r.id} className="bg-stone-900 border border-stone-800 rounded-xl p-5">
-            <StarRating value={r.rating} size="sm" />
-            {r.comment && <p className="text-stone-300 mt-3 text-sm leading-relaxed">“{r.comment}”</p>}
-            <p className="text-stone-600 text-xs mt-3">
+      <div className="grid md:grid-cols-3 gap-4">
+        {reviews.slice(0, 3).map((r) => (
+          <div key={r.id} className="bg-white rounded-card p-6">
+            <Stars value={r.rating} />
+            {r.comment && (
+              <p className="text-[#172E22] text-[14px] leading-relaxed mt-3 mb-4">“{r.comment}”</p>
+            )}
+            <p className="text-[#5A6B60] text-xs">
               {new Date(r.created_at).toLocaleDateString('es-ES')}
             </p>
           </div>
