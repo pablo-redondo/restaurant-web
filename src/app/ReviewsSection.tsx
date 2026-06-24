@@ -23,7 +23,7 @@ export default function ReviewsSection() {
   useEffect(() => {
     reviewsApi.list({ limit: 6 }).then(({ reviews, average_rating }) => {
       setReviews(reviews);
-      setAvg(average_rating);
+      setAvg(average_rating !== null ? Number(average_rating) : null);
     }).catch(() => {});
   }, []);
 
