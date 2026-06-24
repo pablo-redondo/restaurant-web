@@ -9,6 +9,7 @@ const NAV = [
   { href: '/admin',              label: 'Dashboard', icon: '◫' },
   { href: '/admin/reservations', label: 'Reservas',  icon: '≡' },
   { href: '/admin/tables',       label: 'Mesas',     icon: '⊟' },
+  { href: '/admin/reviews',      label: 'Reseñas',   icon: '★' },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -26,23 +27,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <div className="flex min-h-screen">
-      {/* Sidebar */}
       <aside className="fixed top-0 left-0 h-full w-[230px] bg-[#172E22] flex flex-col z-50">
-        {/* Logo */}
         <div className="h-[58px] flex items-center px-6 border-b border-[#1A3D2D]">
-          <Link
-            href="/admin"
-            className="font-heading font-bold text-[17px] tracking-[2.5px] uppercase text-white"
-          >
+          <Link href="/admin" className="font-heading font-bold text-[17px] tracking-[2.5px] uppercase text-white">
             MARQUÉS
           </Link>
         </div>
 
-        {/* Nav */}
         <nav className="flex-1 py-5 px-3">
-          <p className="text-[#4A6A58] text-[10px] font-bold uppercase tracking-[2px] px-3 mb-2 font-body">
-            Panel
-          </p>
+          <p className="text-[#4A6A58] text-[10px] font-bold uppercase tracking-[2px] px-3 mb-2 font-body">Panel</p>
           {NAV.map(({ href, label, icon }) => {
             const active = pathname === href;
             return (
@@ -64,7 +57,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           })}
         </nav>
 
-        {/* User footer */}
         <div className="p-4 border-t border-[#1A3D2D]">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-[#C8DC2E] flex items-center justify-center text-[#172E22] font-bold text-sm font-heading shrink-0">
@@ -85,12 +77,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
       </aside>
 
-      {/* Main */}
       <div className="ml-[230px] flex-1 min-h-screen bg-[#F0F4F0]">
         <header className="h-[58px] bg-white border-b border-[#C4D5CA] flex items-center px-8 sticky top-0 z-40">
-          <h1 className="font-heading font-bold text-[17px] tracking-[-0.3px] text-[#172E22]">
-            {currentLabel}
-          </h1>
+          <h1 className="font-heading font-bold text-[17px] tracking-[-0.3px] text-[#172E22]">{currentLabel}</h1>
         </header>
         <div className="p-8">{children}</div>
       </div>

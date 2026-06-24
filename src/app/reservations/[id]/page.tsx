@@ -63,9 +63,8 @@ export default function ReservationDetailPage() {
   if (error) return <div className="text-center py-20 text-[#991B1B]">{error}</div>;
   if (!reservation) return null;
 
-  const dateStr = new Date(reservation.date + 'T00:00:00').toLocaleDateString('es-ES', {
-    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
-  });
+  const dateStr = new Date(String(reservation.date).substring(0, 10) + 'T12:00:00')
+    .toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
   return (
     <div className="max-w-xl mx-auto px-4 py-12">
