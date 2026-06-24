@@ -33,6 +33,7 @@ export interface Review {
   rating: number;
   comment?: string;
   created_at: string;
+  user_name?: string;
 }
 
 export interface ApiError {

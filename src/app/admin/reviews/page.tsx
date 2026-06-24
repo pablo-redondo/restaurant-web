@@ -2,17 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { reviewsApi } from '@/lib/api';
+import type { Review } from '@/types';
 import StarRating from '@/components/StarRating';
-
-interface Review {
-  id: number;
-  rating: number;
-  comment?: string;
-  created_at: string;
-  user_name: string;
-  user_email: string;
-  reservation_id: number;
-}
 
 export default function AdminReviewsPage() {
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -27,12 +18,18 @@ export default function AdminReviewsPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  const avg = reviews.length ? (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1) : '—';
+  const avg = reviews.length
+    ? (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1)
+    : '—';
   const counts = [5, 4, 3, 2, 1].map(s => ({ star: s, n: reviews.filter(r => r.rating === s).length }));
 
   const filtered = reviews.filter(r => {
     if (starFilter && r.rating !== starFilter) return false;
-    if (search && !r.user_name.toLowerCase().includes(search.toLowerCase()) && !(r.comment ?? '').toLowerCase().includes(search.toLowerCase())) return false;
+    if (search) {
+      const name = (r.user_name ?? '').toLowerCase();
+      const comment = (r.comment ?? '').toLowerCase();
+      if (!name.includes(search.toLowerCase()) && !comment.includes(search.toLowerCase())) return false;
+    }
     return true;
   });
 
@@ -53,9 +50,12 @@ export default function AdminReviewsPage() {
           <div className="space-y-1">
             {counts.map(({ star, n }) => (
               <div key={star} className="flex items-center gap-2 text-xs">
-                <span className="text-[#B07010] w-3">{star}★</span>
+                <span className="text-[#B07010] w-4">{star}★</span>
                 <div className="flex-1 bg-[#E2ECE6] rounded-full h-1.5">
-                  <div className="bg-[#172E22] h-1.5 rounded-full" style={{ width: reviews.length ? `${(n / reviews.length) * 100}%` : '0%' }} />
+                  <div
+                    className="bg-[#172E22] h-1.5 rounded-full"
+                    style={{ width: reviews.length ? `${(n / reviews.length) * 100}%` : '0%' }}
+                  />
                 </div>
                 <span className="text-[#5A6B60] w-3">{n}</span>
               </div>
@@ -65,16 +65,16 @@ export default function AdminReviewsPage() {
       </div>
 
       {/* Filtros */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 flex-wrap">
         <input
           type="text"
           placeholder="Buscar por nombre o comentario..."
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="flex-1 border border-[#C4D5CA] rounded-btn px-4 py-2 text-sm text-[#172E22] focus:outline-none focus:border-[#172E22] bg-white"
+          className="flex-1 min-w-[200px] border border-[#C4D5CA] rounded-btn px-4 py-2 text-sm text-[#172E22] focus:outline-none focus:border-[#172E22] bg-white"
         />
         <div className="flex gap-1">
-          {[0,5,4,3,2,1].map(s => (
+          {[0, 5, 4, 3, 2, 1].map(s => (
             <button
               key={s}
               onClick={() => setStarFilter(s)}
@@ -95,7 +95,7 @@ export default function AdminReviewsPage() {
       {loading ? (
         <p className="text-[#5A6B60] text-sm">Cargando reseñas...</p>
       ) : filtered.length === 0 ? (
-        <p className="text-[#5A6B60] text-sm">No hay reseñas.</p>
+        <p className="text-[#5A6B60] text-sm">No hay reseñas todavía.</p>
       ) : (
         <div className="space-y-3">
           {filtered.map(review => (
@@ -106,20 +106,21 @@ export default function AdminReviewsPage() {
             >
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div>
-                  <p className="font-semibold text-[#172E22] text-sm">{review.user_name}</p>
-                  <p className="text-[#5A6B60] text-xs">{review.user_email}</p>
+                  <p className="font-semibold text-[#172E22] text-sm">{review.user_name ?? 'Cliente'}</p>
+                  <p className="text-[#5A6B60] text-xs">Reserva #{review.reservation_id}</p>
                 </div>
                 <div className="flex flex-col items-end gap-1">
                   <StarRating value={review.rating} size="sm" />
                   <span className="text-[#5A6B60] text-xs">
-                    {new Date(review.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })}
+                    {new Date(review.created_at).toLocaleDateString('es-ES', {
+                      day: 'numeric', month: 'short', year: 'numeric',
+                    })}
                   </span>
                 </div>
               </div>
               {review.comment && (
                 <p className="text-[#172E22] text-sm">{review.comment}</p>
               )}
-              <p className="text-[#5A6B60] text-xs mt-2">Reserva #{review.reservation_id}</p>
             </div>
           ))}
         </div>
