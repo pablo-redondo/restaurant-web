@@ -5,83 +5,80 @@ export default function HomePage() {
   return (
     <>
       {/* ── Hero ── */}
-      <section className="min-h-[86vh] bg-[#172E22] flex items-center">
-        <div className="max-w-6xl mx-auto px-8 md:px-14 w-full grid md:grid-cols-[55fr_45fr] gap-16 items-center py-20">
-          <div>
-            <p className="text-[#C8DC2E] text-[11px] font-bold tracking-[2.5px] uppercase font-body mb-5">
-              Madrid · Desde 1987
-            </p>
-            <h1 className="font-hero text-[60px] leading-[1.0] font-[800] text-white mb-6">
-              ALTA COCINA<br />ESPAÑOLA EN<br />EL CORAZÓN<br />DE MADRID
-            </h1>
-            <p className="text-[#A8CCBA] text-[15px] leading-relaxed mb-10 max-w-md font-body">
-              Carta de temporada, producto local y una sala íntima donde la gastronomía
-              y el silencio conviven. Dos soles Repsol desde 2011.
-            </p>
-            <div className="flex gap-3 flex-wrap">
-              <Link
-                href="/reservations"
-                className="px-6 py-3 rounded-btn bg-[#C8DC2E] text-[#172E22] font-semibold text-sm font-body hover:brightness-105 transition"
-              >
-                Reservar mesa
-              </Link>
-              <Link
-                href="#caracteristicas"
-                className="px-6 py-3 rounded-btn border border-[rgba(255,255,255,0.15)] text-white text-sm font-body hover:bg-white/5 transition"
-              >
-                Conoce más
-              </Link>
-            </div>
+      <section className="bg-[#172E22] grid md:grid-cols-[55fr_45fr] min-h-[86vh]">
+        <div className="flex flex-col justify-center px-[64px] py-20 border-r border-[#1E1E1E]">
+          <p className="text-[#6A9A80] text-[11px] font-bold tracking-[2.5px] uppercase mb-8">
+            Desde 1987 · Madrid
+          </p>
+          <h1 className="font-hero font-[800] text-[60px] leading-[1.05] text-white mb-6">
+            Una experiencia<br />que{' '}
+            <em className="not-italic text-[#C8DC2E]">no olvidarás</em>
+          </h1>
+          <p className="text-[#8AB5A0] text-[16px] leading-[1.65] mb-11 max-w-[380px]">
+            Cocina de temporada, ingredientes de mercado y una terraza que enamora
+            en cada estación del año.
+          </p>
+          <div className="flex gap-3 flex-wrap">
+            <Link
+              href="/reservations"
+              className="px-[30px] py-[14px] bg-[#C8DC2E] text-[#172E22] font-bold text-[14px] rounded-[3px] hover:brightness-105 transition"
+            >
+              Reservar mesa →
+            </Link>
+            <button className="px-[30px] py-[14px] border border-[#2A2A2A] text-white text-[14px] rounded-[3px] hover:bg-white/5 transition">
+              Ver carta
+            </button>
           </div>
-
-          <div className="hidden md:block h-[460px] rounded-card overflow-hidden bg-[#0A160F]">
-            <img
-              src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=85"
-              alt="Sala Marqués"
-              className="w-full h-full object-cover opacity-80"
-            />
+        </div>
+        <div className="hidden md:block relative overflow-hidden">
+          <div
+            className="absolute inset-0"
+            style={{ background: 'repeating-linear-gradient(-45deg,#181818,#181818 3px,#141414 3px,#141414 18px)' }}
+          />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <p className="text-[#2E2E28] text-[11px] font-mono tracking-widest text-center leading-[1.8] uppercase">
+              foto del restaurante
+            </p>
           </div>
         </div>
       </section>
 
       {/* ── Features ── */}
-      <section id="caracteristicas" className="bg-[#F0F4F0] py-[88px] px-[52px]">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-14">
-            <p className="text-[#5A6B60] text-[11px] font-bold tracking-[2.5px] uppercase font-body mb-3">
-              Por qué Marqués
+      <section className="bg-[#F0F4F0] py-[88px] px-[52px]">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-[52px]">
+            <p className="text-[#172E22] text-[10px] font-bold tracking-[2.5px] uppercase mb-[10px]">
+              ¿Por qué Marqués?
             </p>
             <h2 className="font-heading font-bold text-[38px] tracking-[-0.5px] text-[#172E22] mb-4">
-              Tres décadas de excelencia
+              Todo pensado para ti
             </h2>
-            <p className="text-[#5A6B60] text-[15px] max-w-lg mx-auto">
-              Fundado en 1987, Marqués ha sido durante treinta años referente de la alta cocina
-              madrileña.
+            <p className="text-[#5A6B60] text-[15px] leading-[1.65] max-w-[460px] mx-auto">
+              Reserva en segundos, elige tu rincón favorito y disfruta sin preocupaciones.
             </p>
           </div>
-
-          <div className="grid md:grid-cols-3 gap-5">
+          <div className="grid md:grid-cols-3 gap-4">
             {[
               {
                 num: '01',
-                title: 'Producto de temporada',
-                desc: 'Trabajamos con productores locales. La carta cambia cada semana según lo que el mercado nos ofrece en su mejor momento.',
+                title: 'Reserva en 60 segundos',
+                desc: 'Selecciona fecha, hora y mesa directamente desde la web. Sin llamadas, sin esperas.',
               },
               {
                 num: '02',
-                title: 'Bodega propia',
-                desc: 'Más de 400 referencias seleccionadas por nuestra sumiller. Maridajes personalizados para cada menú degustación.',
+                title: 'Elige tu rincón',
+                desc: 'Terraza soleada o sala interior con luz tamizada. Tú decides el ambiente.',
               },
               {
                 num: '03',
-                title: 'Experiencia íntima',
-                desc: 'Solo 80 plazas. El tamaño exacto para que cada servicio reciba la atención que merece, sin excepciones.',
+                title: 'Valoraciones reales',
+                desc: 'Solo opinan clientes verificados. Transparencia total para que confíes antes de venir.',
               },
             ].map(({ num, title, desc }) => (
-              <div key={num} className="bg-white border-t-[3px] border-t-[#C8DC2E] rounded-card p-8">
-                <p className="font-heading font-bold text-[#B07010] text-lg mb-3">{num}</p>
-                <h3 className="font-heading font-bold text-[#172E22] text-xl mb-3">{title}</h3>
-                <p className="text-[#5A6B60] text-[14px] leading-relaxed">{desc}</p>
+              <div key={num} className="bg-white border-t-[3px] border-t-[#C8DC2E] rounded-[4px] p-9">
+                <p className="font-heading text-[11px] font-bold text-[#B07010] tracking-[1.5px] mb-[18px]">{num}</p>
+                <h3 className="text-[17px] font-bold text-[#172E22] mb-[10px]">{title}</h3>
+                <p className="text-[13px] text-[#5A6B60] leading-[1.65]">{desc}</p>
               </div>
             ))}
           </div>
@@ -89,37 +86,16 @@ export default function HomePage() {
       </section>
 
       {/* ── Reviews ── */}
-      <section id="resenas" className="bg-[#172E22] py-[88px] px-[52px]">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-[#4A6A58] text-[11px] font-bold tracking-[2.5px] uppercase font-body mb-3">
-              Opiniones
-            </p>
-            <h2 className="font-heading font-bold text-[38px] tracking-[-0.5px] text-white mb-4">
-              Lo que dicen nuestros clientes
-            </h2>
-          </div>
+      <section className="bg-[#172E22] py-[88px] px-[52px]">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-[#C8DC2E] text-[10px] font-bold tracking-[2.5px] uppercase mb-[10px]">
+            Lo que dicen
+          </p>
+          <h2 className="font-heading font-bold text-[38px] tracking-[-0.5px] text-white mb-0">
+            Nuestros clientes
+          </h2>
           <ReviewsSection />
         </div>
-      </section>
-
-      {/* ── CTA ── */}
-      <section className="bg-[#F0F4F0] py-20 text-center px-4">
-        <p className="text-[#5A6B60] text-[11px] font-bold tracking-[2.5px] uppercase font-body mb-3">
-          Reserve ahora
-        </p>
-        <h2 className="font-heading font-bold text-[38px] tracking-[-0.5px] text-[#172E22] mb-4">
-          ¿Listo para su visita?
-        </h2>
-        <p className="text-[#5A6B60] mb-8 text-[15px]">
-          Consulte disponibilidad en tiempo real y asegure su mesa en segundos.
-        </p>
-        <Link
-          href="/reservations"
-          className="inline-block px-8 py-3.5 rounded-btn bg-[#172E22] text-white font-semibold text-sm font-body hover:bg-[#1A3D2D] transition-colors"
-        >
-          Ver disponibilidad
-        </Link>
       </section>
     </>
   );
