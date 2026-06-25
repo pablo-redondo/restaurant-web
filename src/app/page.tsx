@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import ReviewsSection from './ReviewsSection';
 
 export default function HomePage() {
@@ -30,15 +31,15 @@ export default function HomePage() {
             </button>
           </div>
         </div>
-        <div className="hidden md:flex relative overflow-hidden items-center justify-center bg-[#122518]">
-          {/* Reemplaza este div con: <img src="/hero.jpg" alt="Restaurante" className="absolute inset-0 w-full h-full object-cover opacity-80" /> */}
-          <div
-            className="absolute inset-0"
-            style={{ background: 'repeating-linear-gradient(-45deg,#161e17,#161e17 3px,#121a13 3px,#121a13 18px)' }}
+        <div className="hidden md:block relative overflow-hidden">
+          <Image
+            src="/hero.webp"
+            alt="Interior del restaurante Marqués"
+            fill
+            className="object-cover object-center"
+            priority
           />
-          <p className="relative text-[#2E4030] text-[11px] font-mono tracking-widest text-center leading-[2] uppercase">
-            Imagen del restaurante<br />900 × 1200 px (retrato)<br />o 1200 × 1600 px para alta res
-          </p>
+          <div className="absolute inset-0 bg-[#172E22]/10" />
         </div>
       </section>
 
