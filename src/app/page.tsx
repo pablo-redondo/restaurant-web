@@ -4,9 +4,9 @@ import ReviewsSection from './ReviewsSection';
 export default function HomePage() {
   return (
     <>
-      {/* ── Hero ── */}
-      <section className="bg-[#172E22] grid md:grid-cols-[55fr_45fr] min-h-[86vh]">
-        <div className="flex flex-col justify-center px-[64px] py-20 border-r border-[#1E1E1E]">
+      {/* ── Hero (full-screen, se extiende detrás del navbar transparente) ── */}
+      <section className="-mt-[58px] bg-[#172E22] grid md:grid-cols-[55fr_45fr] min-h-screen">
+        <div className="flex flex-col justify-center px-[64px] pt-[96px] pb-20 border-r border-[#1E3020]">
           <p className="text-[#6A9A80] text-[11px] font-bold tracking-[2.5px] uppercase mb-8">
             Desde 1987 · Madrid
           </p>
@@ -25,21 +25,20 @@ export default function HomePage() {
             >
               Reservar mesa →
             </Link>
-            <button className="px-[30px] py-[14px] border border-[#2A2A2A] text-white text-[14px] rounded-[3px] hover:bg-white/5 transition">
+            <button className="px-[30px] py-[14px] border border-white/15 text-white text-[14px] rounded-[3px] hover:bg-white/5 transition">
               Ver carta
             </button>
           </div>
         </div>
-        <div className="hidden md:block relative overflow-hidden">
+        <div className="hidden md:flex relative overflow-hidden items-center justify-center bg-[#122518]">
+          {/* Reemplaza este div con: <img src="/hero.jpg" alt="Restaurante" className="absolute inset-0 w-full h-full object-cover opacity-80" /> */}
           <div
             className="absolute inset-0"
-            style={{ background: 'repeating-linear-gradient(-45deg,#181818,#181818 3px,#141414 3px,#141414 18px)' }}
+            style={{ background: 'repeating-linear-gradient(-45deg,#161e17,#161e17 3px,#121a13 3px,#121a13 18px)' }}
           />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <p className="text-[#2E2E28] text-[11px] font-mono tracking-widest text-center leading-[1.8] uppercase">
-              foto del restaurante
-            </p>
-          </div>
+          <p className="relative text-[#2E4030] text-[11px] font-mono tracking-widest text-center leading-[2] uppercase">
+            Imagen del restaurante<br />900 × 1200 px (retrato)<br />o 1200 × 1600 px para alta res
+          </p>
         </div>
       </section>
 
