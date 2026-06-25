@@ -9,9 +9,9 @@ export default function HomePage() {
       <section className="-mt-[58px] bg-[#172E22] grid md:grid-cols-[55fr_45fr] h-screen">
 
         {/* Columna izquierda */}
-        <div className="flex flex-col h-full px-[64px] pt-[58px] border-r border-[#1E3020]">
+        <div className="flex flex-col h-full px-[52px] pt-[58px] border-r border-[#1E3020]">
 
-          {/* Contenido principal centrado */}
+          {/* Contenido principal centrado verticalmente */}
           <div className="flex-1 flex flex-col justify-center">
             <p className="text-[#6A9A80] text-[11px] font-bold tracking-[2.5px] uppercase mb-8">
               Desde 1987 · Madrid
@@ -20,7 +20,7 @@ export default function HomePage() {
               Una experiencia<br />que{' '}
               <em className="not-italic text-[#C8DC2E]">no olvidarás</em>
             </h1>
-            <p className="text-[#8AB5A0] text-[16px] leading-[1.7] mb-12 max-w-[360px]">
+            <p className="text-[#8AB5A0] text-[16px] leading-[1.7] mb-12 max-w-[380px]">
               Cocina de temporada, ingredientes de mercado y una terraza que
               enamora en cada estación del año.
             </p>
@@ -37,7 +37,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Stats en la parte inferior */}
+          {/* Stats — parte inferior */}
           <div className="border-t border-white/10 py-8 flex gap-10">
             <div>
               <p className="font-heading font-bold text-[26px] text-white">35+</p>

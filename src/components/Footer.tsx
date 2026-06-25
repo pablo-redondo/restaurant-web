@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
-    <footer className="bg-[#172E22] py-10">
-      <div className="max-w-6xl mx-auto px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
+    <footer className="bg-[#172E22] border-t border-white/10 py-10">
+      <div className="px-[52px] flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
         <p className="font-heading font-bold text-[17px] tracking-[2.5px] uppercase text-[#C8DC2E]">
           MARQUÉS
         </p>

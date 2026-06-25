@@ -27,12 +27,12 @@ export default function Navbar() {
     <header
       className="fixed top-0 inset-x-0 z-50 h-[58px] border-b transition-all duration-300"
       style={{
-        background:    dark ? 'transparent'              : 'rgba(241,239,233,0.94)',
+        background:     dark ? 'transparent'             : 'rgba(241,239,233,0.94)',
         backdropFilter: dark ? 'none'                    : 'blur(14px)',
-        borderColor:   dark ? 'rgba(255,255,255,0.08)'  : '#C4D5CA',
+        borderColor:    dark ? 'rgba(255,255,255,0.08)' : '#C4D5CA',
       }}
     >
-      <nav className="max-w-6xl mx-auto px-8 h-full flex items-center justify-between">
+      <nav className="px-[52px] h-full flex items-center justify-between">
         <Link
           href="/"
           className="font-heading font-bold text-[17px] tracking-[2.5px] uppercase transition-colors duration-300"
@@ -81,8 +81,8 @@ export default function Navbar() {
                   onClick={() => { logout(); router.push('/'); }}
                   className="px-4 py-2 rounded-btn text-sm transition-all duration-300"
                   style={{
-                    border:      `1px solid ${dark ? 'rgba(255,255,255,0.25)' : '#C4D5CA'}`,
-                    color:       dark ? '#A8CCBA' : '#5A6B60',
+                    border: `1px solid ${dark ? 'rgba(255,255,255,0.25)' : '#C4D5CA'}`,
+                    color:  dark ? '#A8CCBA' : '#5A6B60',
                   }}
                 >
                   Salir
