@@ -5,17 +5,17 @@ import ReviewsSection from './ReviewsSection';
 export default function HomePage() {
   return (
     <>
-      {/* ── Hero (full-screen, se extiende detrás del navbar transparente) ── */}
+      {/* ── Hero ── */}
       <section className="-mt-[58px] bg-[#172E22] grid md:grid-cols-[55fr_45fr] min-h-screen">
-        <div className="flex flex-col justify-center px-[64px] pt-[96px] pb-20 border-r border-[#1E3020]">
+        <div className="flex flex-col px-[64px] pt-[148px] pb-24 border-r border-[#1E3020]">
           <p className="text-[#6A9A80] text-[11px] font-bold tracking-[2.5px] uppercase mb-8">
             Desde 1987 · Madrid
           </p>
-          <h1 className="font-hero font-[800] text-[60px] leading-[1.05] text-white mb-6">
+          <h1 className="font-hero font-[800] text-[68px] leading-[1.0] text-white mb-6">
             Una experiencia<br />que{' '}
             <em className="not-italic text-[#C8DC2E]">no olvidarás</em>
           </h1>
-          <p className="text-[#8AB5A0] text-[16px] leading-[1.65] mb-11 max-w-[380px]">
+          <p className="text-[#8AB5A0] text-[16px] leading-[1.7] mb-12 max-w-[360px]">
             Cocina de temporada, ingredientes de mercado y una terraza que enamora
             en cada estación del año.
           </p>
