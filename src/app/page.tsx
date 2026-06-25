@@ -8,37 +8,43 @@ export default function HomePage() {
       {/* ── Hero ── */}
       <section className="-mt-[58px] h-screen relative overflow-hidden">
 
-        {/* Imagen de fondo */}
+        {/* Imagen — enfocada en la parte superior con las lámparas */}
         <Image
           src="/hero.webp"
           alt="Interior del restaurante Marqués"
           fill
-          className="object-cover object-center"
+          className="object-cover"
+          style={{ objectPosition: 'center 15%' }}
           priority
         />
 
-        {/* Overlay: oscurece de izquierda (texto) a derecha (imagen visible) */}
+        {/* Overlay izquierda→derecha: oscuro para texto, neutro hacia la foto */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(to right, rgba(18,37,24,0.96) 0%, rgba(18,37,24,0.88) 38%, rgba(18,37,24,0.45) 65%, rgba(18,37,24,0.10) 100%)',
+              'linear-gradient(to right, rgba(14,28,18,0.94) 0%, rgba(14,28,18,0.84) 25%, rgba(14,28,18,0.28) 52%, rgba(0,0,0,0.04) 100%)',
           }}
         />
-        {/* Overlay superior: separa visualmente el navbar de la imagen */}
+        {/* Overlay superior: navbar legible sin tinte fuerte */}
         <div
           className="absolute inset-0"
           style={{
-            background:
-              'linear-gradient(to bottom, rgba(18,37,24,0.55) 0%, rgba(18,37,24,0) 22%)',
+            background: 'linear-gradient(to bottom, rgba(0,0,0,0.38) 0%, transparent 18%)',
+          }}
+        />
+        {/* Viñeta inferior suave */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(to top, rgba(14,28,18,0.50) 0%, transparent 30%)',
           }}
         />
 
         {/* Contenido */}
         <div className="relative h-full flex flex-col px-[52px] pt-[58px]">
 
-          {/* Texto centrado verticalmente */}
-          <div className="flex-1 flex flex-col justify-center max-w-[540px]">
+          <div className="flex-1 flex flex-col justify-center max-w-[520px]">
             <p className="text-[#6A9A80] text-[11px] font-bold tracking-[2.5px] uppercase mb-8">
               Desde 1987 · Madrid
             </p>
@@ -63,7 +69,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Stats en la parte inferior */}
+          {/* Stats */}
           <div className="border-t border-white/10 py-8 flex gap-10">
             <div>
               <p className="font-heading font-bold text-[26px] text-white">35+</p>
