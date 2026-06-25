@@ -6,45 +6,14 @@ export default function HomePage() {
   return (
     <>
       {/* ── Hero ── */}
-      <section className="-mt-[58px] h-screen relative overflow-hidden">
+      <section
+        className="bg-[#172E22] grid md:grid-cols-[55fr_45fr]"
+        style={{ minHeight: 'calc(100vh - 58px)' }}
+      >
+        {/* Columna izquierda — texto */}
+        <div className="flex flex-col px-[52px] py-16 border-r border-[#1E3020]">
 
-        {/* Imagen — enfocada en la parte superior con las lámparas */}
-        <Image
-          src="/hero.webp"
-          alt="Interior del restaurante Marqués"
-          fill
-          className="object-cover"
-          style={{ objectPosition: 'center 15%' }}
-          priority
-        />
-
-        {/* Overlay izquierda→derecha: oscuro para texto, neutro hacia la foto */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              'linear-gradient(to right, rgba(14,28,18,0.94) 0%, rgba(14,28,18,0.84) 25%, rgba(14,28,18,0.28) 52%, rgba(0,0,0,0.04) 100%)',
-          }}
-        />
-        {/* Overlay superior: navbar legible sin tinte fuerte */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(to bottom, rgba(0,0,0,0.38) 0%, transparent 18%)',
-          }}
-        />
-        {/* Viñeta inferior suave */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(to top, rgba(14,28,18,0.50) 0%, transparent 30%)',
-          }}
-        />
-
-        {/* Contenido */}
-        <div className="relative h-full flex flex-col px-[52px] pt-[58px]">
-
-          <div className="flex-1 flex flex-col justify-center max-w-[520px]">
+          <div className="flex-1 flex flex-col justify-center">
             <p className="text-[#6A9A80] text-[11px] font-bold tracking-[2.5px] uppercase mb-8">
               Desde 1987 · Madrid
             </p>
@@ -52,7 +21,7 @@ export default function HomePage() {
               Una experiencia<br />que{' '}
               <em className="not-italic text-[#C8DC2E]">no olvidarás</em>
             </h1>
-            <p className="text-[#B8D8C8] text-[16px] leading-[1.75] mb-12 max-w-[400px]">
+            <p className="text-[#8AB5A0] text-[16px] leading-[1.75] mb-12 max-w-[400px]">
               Cocina de temporada, ingredientes de mercado y una terraza que
               enamora en cada estación del año.
             </p>
@@ -63,27 +32,39 @@ export default function HomePage() {
               >
                 Reservar mesa →
               </Link>
-              <button className="px-[30px] py-[14px] border border-white/25 text-white text-[14px] rounded-[3px] hover:bg-white/10 transition">
+              <button className="px-[30px] py-[14px] border border-white/15 text-white text-[14px] rounded-[3px] hover:bg-white/5 transition">
                 Ver carta
               </button>
             </div>
           </div>
 
           {/* Stats */}
-          <div className="border-t border-white/10 py-8 flex gap-10">
+          <div className="border-t border-white/10 pt-6 flex gap-10">
             <div>
               <p className="font-heading font-bold text-[26px] text-white">35+</p>
-              <p className="text-[#5A8A70] text-[10px] font-bold tracking-[1.5px] uppercase mt-1">Años de historia</p>
+              <p className="text-[#4A7A60] text-[10px] font-bold tracking-[1.5px] uppercase mt-1">Años de historia</p>
             </div>
             <div>
               <p className="font-heading font-bold text-[26px] text-white">4.8★</p>
-              <p className="text-[#5A8A70] text-[10px] font-bold tracking-[1.5px] uppercase mt-1">Valoración media</p>
+              <p className="text-[#4A7A60] text-[10px] font-bold tracking-[1.5px] uppercase mt-1">Valoración media</p>
             </div>
             <div>
               <p className="font-heading font-bold text-[26px] text-white">2.000+</p>
-              <p className="text-[#5A8A70] text-[10px] font-bold tracking-[1.5px] uppercase mt-1">Clientes al mes</p>
+              <p className="text-[#4A7A60] text-[10px] font-bold tracking-[1.5px] uppercase mt-1">Clientes al mes</p>
             </div>
           </div>
+        </div>
+
+        {/* Columna derecha — imagen */}
+        <div className="hidden md:block relative overflow-hidden">
+          <Image
+            src="/hero.webp"
+            alt="Interior del restaurante Marqués"
+            fill
+            className="object-cover"
+            style={{ objectPosition: 'center 15%' }}
+            priority
+          />
         </div>
       </section>
 
