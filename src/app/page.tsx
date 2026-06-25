@@ -7,39 +7,38 @@ export default function HomePage() {
     <>
       {/* ── Hero ── */}
       <section
-        className="bg-[#172E22] grid md:grid-cols-[55fr_45fr]"
+        className="bg-[#172E22] grid md:grid-cols-[44fr_56fr]"
         style={{ minHeight: 'calc(100vh - 58px)' }}
       >
         {/* Columna izquierda — texto */}
-        <div className="flex flex-col px-[52px] py-16 border-r border-[#1E3020]">
+        <div className="flex flex-col px-[52px] pt-[56px] pb-10 border-r border-[#1E3020]">
 
-          <div className="flex-1 flex flex-col justify-center">
-            <p className="text-[#6A9A80] text-[11px] font-bold tracking-[2.5px] uppercase mb-8">
-              Desde 1987 · Madrid
-            </p>
-            <h1 className="font-hero font-[800] text-[72px] leading-[1.0] text-white mb-6">
-              Una experiencia<br />que{' '}
-              <em className="not-italic text-[#C8DC2E]">no olvidarás</em>
-            </h1>
-            <p className="text-[#8AB5A0] text-[16px] leading-[1.75] mb-12 max-w-[400px]">
-              Cocina de temporada, ingredientes de mercado y una terraza que
-              enamora en cada estación del año.
-            </p>
-            <div className="flex gap-3 flex-wrap">
-              <Link
-                href="/reservations"
-                className="px-[30px] py-[14px] bg-[#C8DC2E] text-[#172E22] font-bold text-[14px] rounded-[3px] hover:brightness-105 transition"
-              >
-                Reservar mesa →
-              </Link>
-              <button className="px-[30px] py-[14px] border border-white/15 text-white text-[14px] rounded-[3px] hover:bg-white/5 transition">
-                Ver carta
-              </button>
-            </div>
+          {/* Contenido principal */}
+          <p className="text-[#6A9A80] text-[11px] font-bold tracking-[2.5px] uppercase mb-8">
+            Desde 1987 · Madrid
+          </p>
+          <h1 className="font-hero font-[800] text-[68px] leading-[1.0] text-white mb-6">
+            Una experiencia<br />que{' '}
+            <em className="not-italic text-[#C8DC2E]">no olvidarás</em>
+          </h1>
+          <p className="text-[#8AB5A0] text-[16px] leading-[1.75] mb-12">
+            Cocina de temporada, ingredientes de mercado y una terraza que
+            enamora en cada estación del año.
+          </p>
+          <div className="flex gap-3 flex-wrap">
+            <Link
+              href="/reservations"
+              className="px-[30px] py-[14px] bg-[#C8DC2E] text-[#172E22] font-bold text-[14px] rounded-[3px] hover:brightness-105 transition"
+            >
+              Reservar mesa →
+            </Link>
+            <button className="px-[30px] py-[14px] border border-white/15 text-white text-[14px] rounded-[3px] hover:bg-white/5 transition">
+              Ver carta
+            </button>
           </div>
 
-          {/* Stats */}
-          <div className="border-t border-white/10 pt-6 flex gap-10">
+          {/* Stats pegados al fondo */}
+          <div className="mt-auto border-t border-white/10 pt-6 flex gap-10">
             <div>
               <p className="font-heading font-bold text-[26px] text-white">35+</p>
               <p className="text-[#4A7A60] text-[10px] font-bold tracking-[1.5px] uppercase mt-1">Años de historia</p>
