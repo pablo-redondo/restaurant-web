@@ -37,6 +37,10 @@ export const metadata: Metadata = {
   description:
     'Restaurante Marqués, cocina de temporada en el corazón de Madrid desde 1987. Ingredientes de mercado, dos generaciones en la cocina y una sala única en Gran Vía.',
   keywords: ['restaurante madrid', 'restaurante gran vía', 'cocina de temporada madrid', 'marqués restaurante', 'reservar mesa madrid'],
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+  },
   openGraph: {
     siteName: 'Restaurante Marqués',
     locale: 'es_ES',

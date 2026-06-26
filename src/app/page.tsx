@@ -19,14 +19,27 @@ export default function HomePage() {
     <>
       {/* ── Hero ── */}
       <section
-        className="bg-[#172E22] grid md:grid-cols-2"
+        className="relative bg-[#172E22] grid md:grid-cols-2"
         style={{ minHeight: 'calc(100vh - 58px)' }}
       >
-        <div className="flex flex-col justify-center px-[52px] py-14 border-r border-[#1E3020]">
+        {/* Fondo sutil en móvil */}
+        <div className="absolute inset-0 md:hidden overflow-hidden">
+          <Image
+            src="/hero.webp"
+            alt=""
+            fill
+            className="object-cover opacity-[0.15]"
+            style={{ objectPosition: 'center 15%' }}
+            priority
+          />
+        </div>
+
+        {/* Columna texto */}
+        <div className="relative flex flex-col justify-center px-[52px] py-14 border-r border-[#1E3020]">
           <p className="text-[#6A9A80] text-[11px] font-bold tracking-[2.5px] uppercase mb-7">
             Desde 1987 · Madrid
           </p>
-          <h1 className="font-hero font-[800] text-[80px] leading-[1.02] text-white mb-7">
+          <h1 className="font-hero font-[800] text-[clamp(48px,7vw,80px)] leading-[1.02] text-white mb-7">
             Una experiencia<br />que{' '}
             <em className="not-italic text-[#C8DC2E]">no olvidarás</em>
           </h1>
@@ -63,6 +76,8 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+
+        {/* Columna imagen — solo desktop */}
         <div className="hidden md:block relative overflow-hidden">
           <Image
             src="/hero.webp"
@@ -87,9 +102,7 @@ export default function HomePage() {
           />
         </div>
         <div className="bg-[#F1EFE9] flex flex-col justify-center px-[52px] py-16">
-          <p className="text-[#172E22] text-[10px] font-bold tracking-[2.5px] uppercase mb-6">
-            Cocina con alma
-          </p>
+          <p className="text-[#172E22] text-[10px] font-bold tracking-[2.5px] uppercase mb-6">Cocina con alma</p>
           <h2 className="font-hero font-[800] text-[52px] leading-[1.05] text-[#172E22] mb-6">
             El sabor de<br />lo auténtico
           </h2>
@@ -115,9 +128,7 @@ export default function HomePage() {
       <section className="bg-[#172E22] py-[88px] px-[52px]">
         <div className="flex items-end justify-between mb-[52px]">
           <div>
-            <p className="text-[#C8DC2E] text-[10px] font-bold tracking-[2.5px] uppercase mb-3">
-              Nuestra carta
-            </p>
+            <p className="text-[#C8DC2E] text-[10px] font-bold tracking-[2.5px] uppercase mb-3">Nuestra carta</p>
             <h2 className="font-heading font-bold text-[38px] tracking-[-0.5px] text-white leading-[1.2]">
               Platos que cuentan<br />una historia
             </h2>
@@ -131,9 +142,9 @@ export default function HomePage() {
         </div>
         <div className="grid md:grid-cols-3 divide-x divide-white/10 border border-white/10 rounded-[4px] overflow-hidden">
           {[
-            { tag: 'Firma', nombre: 'Tataki de atún rojo', desc: 'Aguacate cremoso, ponzu de yuzu y microbrotes de rábano', precio: '28€' },
-            { tag: 'Temporada', nombre: 'Carrillera de ternera', desc: 'Cocinada 12 horas, puré de chirivía y salsa Pedro Ximénez', precio: '26€' },
-            { tag: 'Clásico', nombre: 'Tarta de queso La Viña', desc: 'Nuestra versión con coulis de frambuesa y miel de azahar', precio: '10€' },
+            { tag: 'Firma',     nombre: 'Tataki de atún rojo',      desc: 'Aguacate cremoso, ponzu de yuzu y microbrotes de rábano',      precio: '28€' },
+            { tag: 'Temporada', nombre: 'Carrillera de ternera',    desc: 'Cocinada 12 horas, puré de chirivía y salsa Pedro Ximénez', precio: '26€' },
+            { tag: 'Clásico',   nombre: 'Tarta de queso La Viña', desc: 'Nuestra versión con coulis de frambuesa y miel de azahar',   precio: '10€' },
           ].map(({ tag, nombre, desc, precio }) => (
             <div key={nombre} className="p-8 hover:bg-[#1C3828] transition group cursor-default">
               <span className="inline-block text-[10px] font-bold tracking-[2px] uppercase px-[10px] py-[4px] rounded-[2px] mb-6 bg-[#C8DC2E]/10 text-[#C8DC2E]">
