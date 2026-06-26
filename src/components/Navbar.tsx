@@ -23,13 +23,13 @@ export default function Navbar() {
 
         <ul className="flex items-center gap-6 text-[14px] text-[#5A6B60]">
           <li>
-            <Link href="/#caracteristicas" className="hover:opacity-75 transition-opacity">
+            <Link href="/nosotros" className="hover:opacity-75 transition-opacity">
               Nosotros
             </Link>
           </li>
           <li>
-            <Link href="/#resenas" className="hover:opacity-75 transition-opacity">
-              Reseñas
+            <Link href="/carta" className="hover:opacity-75 transition-opacity">
+              Carta
             </Link>
           </li>
 
