@@ -10,7 +10,7 @@ export default function HomePage() {
         className="bg-[#172E22] grid md:grid-cols-[44fr_56fr]"
         style={{ minHeight: 'calc(100vh - 58px)' }}
       >
-        {/* Columna izquierda */}
+        {/* Columna izquierda — texto */}
         <div className="flex flex-col justify-center px-[52px] py-14 border-r border-[#1E3020]">
           <p className="text-[#6A9A80] text-[11px] font-bold tracking-[2.5px] uppercase mb-7">
             Desde 1987 · Madrid
@@ -54,7 +54,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Columna derecha — imagen */}
+        {/* Columna derecha — imagen hero */}
         <div className="hidden md:block relative overflow-hidden">
           <Image
             src="/hero.webp"
@@ -68,8 +68,19 @@ export default function HomePage() {
       </section>
 
       {/* ── Editorial split ── */}
-      <section className="grid md:grid-cols-2" style={{ minHeight: '540px' }}>
-        {/* Texto */}
+      {/* grid-cols-[44fr_56fr] = misma proporción que el hero → la línea divisoria coincide */}
+      <section className="grid md:grid-cols-[44fr_56fr]" style={{ minHeight: '540px' }}>
+        {/* Columna izquierda — imagen interior */}
+        <div className="hidden md:block relative overflow-hidden">
+          <Image
+            src="/interior.webp"
+            alt="Sala con banquetas de terciopelo verde en Marqués"
+            fill
+            className="object-cover"
+            style={{ objectPosition: 'center 40%' }}
+          />
+        </div>
+        {/* Columna derecha — texto */}
         <div className="bg-[#F1EFE9] flex flex-col justify-center px-[52px] py-16">
           <p className="text-[#172E22] text-[10px] font-bold tracking-[2.5px] uppercase mb-6">
             Cocina con alma
@@ -92,20 +103,6 @@ export default function HomePage() {
           >
             Nuestra historia →
           </Link>
-        </div>
-        {/* Imagen */}
-        <div className="relative" style={{ minHeight: '380px' }}>
-          <Image
-            src="/hero.webp"
-            alt="Sala interior del restaurante Marqués"
-            fill
-            className="object-cover"
-            style={{ objectPosition: 'center 60%' }}
-          />
-          <div
-            className="absolute inset-0"
-            style={{ background: 'linear-gradient(to right, rgba(241,239,233,0.12), transparent)' }}
-          />
         </div>
       </section>
 
@@ -150,8 +147,7 @@ export default function HomePage() {
             },
           ].map(({ tag, nombre, desc, precio }) => (
             <div key={nombre} className="p-8 hover:bg-[#1C3828] transition group cursor-default">
-              <span className="inline-block text-[10px] font-bold tracking-[2px] uppercase px-[10px] py-[4px] rounded-[2px] mb-6
-                bg-[#C8DC2E]/10 text-[#C8DC2E]">
+              <span className="inline-block text-[10px] font-bold tracking-[2px] uppercase px-[10px] py-[4px] rounded-[2px] mb-6 bg-[#C8DC2E]/10 text-[#C8DC2E]">
                 {tag}
               </span>
               <h3 className="font-heading font-bold text-[20px] text-white mb-2 group-hover:text-[#C8DC2E] transition">
