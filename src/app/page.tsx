@@ -10,21 +10,23 @@ export default function HomePage() {
         className="bg-[#172E22] grid md:grid-cols-[44fr_56fr]"
         style={{ minHeight: 'calc(100vh - 58px)' }}
       >
-        {/* Columna izquierda — texto */}
-        <div className="flex flex-col px-[52px] pt-[56px] pb-10 border-r border-[#1E3020]">
+        {/* Columna izquierda */}
+        <div className="flex flex-col justify-center px-[52px] py-14 border-r border-[#1E3020]">
 
-          {/* Contenido principal */}
-          <p className="text-[#6A9A80] text-[11px] font-bold tracking-[2.5px] uppercase mb-8">
+          <p className="text-[#6A9A80] text-[11px] font-bold tracking-[2.5px] uppercase mb-7">
             Desde 1987 · Madrid
           </p>
-          <h1 className="font-hero font-[800] text-[68px] leading-[1.0] text-white mb-6">
+
+          <h1 className="font-hero font-[800] text-[80px] leading-[1.02] text-white mb-7">
             Una experiencia<br />que{' '}
             <em className="not-italic text-[#C8DC2E]">no olvidarás</em>
           </h1>
-          <p className="text-[#8AB5A0] text-[16px] leading-[1.75] mb-12">
+
+          <p className="text-[#8AB5A0] text-[16px] leading-[1.75] mb-9">
             Cocina de temporada, ingredientes de mercado y una terraza que
             enamora en cada estación del año.
           </p>
+
           <div className="flex gap-3 flex-wrap">
             <Link
               href="/reservations"
@@ -37,18 +39,18 @@ export default function HomePage() {
             </button>
           </div>
 
-          {/* Stats pegados al fondo */}
-          <div className="mt-auto border-t border-white/10 pt-6 flex gap-10">
+          {/* Stats — parte del mismo bloque centrado, sin salto enorme */}
+          <div className="mt-12 pt-6 border-t border-white/10 flex gap-10">
             <div>
-              <p className="font-heading font-bold text-[26px] text-white">35+</p>
+              <p className="font-heading font-bold text-[28px] text-white">35+</p>
               <p className="text-[#4A7A60] text-[10px] font-bold tracking-[1.5px] uppercase mt-1">Años de historia</p>
             </div>
             <div>
-              <p className="font-heading font-bold text-[26px] text-white">4.8★</p>
+              <p className="font-heading font-bold text-[28px] text-white">4.8★</p>
               <p className="text-[#4A7A60] text-[10px] font-bold tracking-[1.5px] uppercase mt-1">Valoración media</p>
             </div>
             <div>
-              <p className="font-heading font-bold text-[26px] text-white">2.000+</p>
+              <p className="font-heading font-bold text-[28px] text-white">2.000+</p>
               <p className="text-[#4A7A60] text-[10px] font-bold tracking-[1.5px] uppercase mt-1">Clientes al mes</p>
             </div>
           </div>
