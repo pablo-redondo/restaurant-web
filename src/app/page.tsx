@@ -34,12 +34,15 @@ export default function HomePage() {
             >
               Reservar mesa →
             </Link>
-            <button className="px-[30px] py-[14px] border border-white/15 text-white text-[14px] rounded-[3px] hover:bg-white/5 transition">
+            <Link
+              href="/carta"
+              className="px-[30px] py-[14px] border border-white/15 text-white text-[14px] rounded-[3px] hover:bg-white/5 transition"
+            >
               Ver carta
-            </button>
+            </Link>
           </div>
 
-          {/* Stats — parte del mismo bloque centrado, sin salto enorme */}
+          {/* Stats */}
           <div className="mt-12 pt-6 border-t border-white/10 flex gap-10">
             <div>
               <p className="font-heading font-bold text-[28px] text-white">35+</p>
