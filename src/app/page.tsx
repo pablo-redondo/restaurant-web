@@ -7,7 +7,7 @@ export default function HomePage() {
     <>
       {/* ── Hero ── */}
       <section
-        className="bg-[#172E22] grid md:grid-cols-[44fr_56fr]"
+        className="bg-[#172E22] grid md:grid-cols-2"
         style={{ minHeight: 'calc(100vh - 58px)' }}
       >
         {/* Columna izquierda — texto */}
@@ -68,8 +68,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Editorial split ── */}
-      {/* grid-cols-[44fr_56fr] = misma proporción que el hero → la línea divisoria coincide */}
-      <section className="grid md:grid-cols-[44fr_56fr]" style={{ minHeight: '540px' }}>
+      <section className="grid md:grid-cols-2" style={{ minHeight: '540px' }}>
         {/* Columna izquierda — imagen interior */}
         <div className="hidden md:block relative overflow-hidden">
           <Image
