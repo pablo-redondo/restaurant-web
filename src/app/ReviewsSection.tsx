@@ -26,12 +26,12 @@ export default function ReviewsSection() {
     <div>
       {/* Rating row */}
       <div className="flex items-center gap-4 mt-3 mb-11">
-        <span className="font-heading font-bold text-[48px] leading-none text-[#C8DC2E]">
+        <span className="font-heading font-bold text-[48px] leading-none text-[#172E22]">
           {avg !== null ? avg.toFixed(1) : '—'}
         </span>
         <div className="text-[13px] leading-[1.6]">
-          <span className="text-[#C8DC2E] tracking-[2px]">{avgStars}</span><br />
-          <span className="text-[#6A9A80]">
+          <span className="text-[#172E22] tracking-[2px]">{avgStars}</span><br />
+          <span className="text-[#5A6B60]">
             {total !== null ? `${total} reseñas verificadas` : 'Reseñas verificadas'}
           </span>
         </div>
@@ -46,8 +46,8 @@ export default function ReviewsSection() {
             const rStars  = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
             const date    = new Date(r.created_at).toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
             return (
-              <div key={r.id} className="bg-white border border-white/15 rounded-[4px] p-[28px]">
-                <div className="text-[#C8DC2E] text-[12px] tracking-[3px] mb-[14px]">{rStars}</div>
+              <div key={r.id} className="bg-white border border-[#E0E8E4] rounded-[4px] p-[28px]">
+                <div className="text-[#172E22] text-[12px] tracking-[3px] mb-[14px]">{rStars}</div>
                 {r.comment && (
                   <p className="text-[#5A6B60] text-[13px] leading-[1.75] mb-[22px]">&ldquo;{r.comment}&rdquo;</p>
                 )}
