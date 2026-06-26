@@ -26,8 +26,27 @@ const plusJakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'Restaurante Marqués',
-  description: 'Alta cocina en el corazón de Madrid. Reserve su mesa en Marqués.',
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')
+  ),
+  title: {
+    default: 'Restaurante Marqués — Alta cocina en Madrid desde 1987',
+    template: '%s · Restaurante Marqués',
+  },
+  description:
+    'Restaurante Marqués, cocina de temporada en el corazón de Madrid desde 1987. Ingredientes de mercado, dos generaciones en la cocina y una sala única en Gran Vía.',
+  keywords: ['restaurante madrid', 'restaurante gran vía', 'cocina de temporada madrid', 'marqués restaurante', 'reservar mesa madrid'],
+  openGraph: {
+    siteName: 'Restaurante Marqués',
+    locale: 'es_ES',
+    type: 'website',
+    images: [{ url: '/hero.webp', width: 896, height: 1200, alt: 'Interior del restaurante Marqués' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/hero.webp'],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -22,34 +22,17 @@ export default function Navbar() {
         </Link>
 
         <ul className="flex items-center gap-6 text-[14px] text-[#5A6B60]">
-          <li>
-            <Link href="/nosotros" className="hover:opacity-75 transition-opacity">
-              Nosotros
-            </Link>
-          </li>
-          <li>
-            <Link href="/carta" className="hover:opacity-75 transition-opacity">
-              Carta
-            </Link>
-          </li>
+          <li><Link href="/nosotros" className="hover:opacity-75 transition-opacity">Nosotros</Link></li>
+          <li><Link href="/carta" className="hover:opacity-75 transition-opacity">Carta</Link></li>
+          <li><Link href="/contacto" className="hover:opacity-75 transition-opacity">Contacto</Link></li>
 
           {user ? (
             <>
-              <li>
-                <Link href="/reservations/me" className="hover:opacity-75 transition-opacity">
-                  Mis reservas
-                </Link>
-              </li>
+              <li><Link href="/reservations/me" className="hover:opacity-75 transition-opacity">Mis reservas</Link></li>
               {user.role === 'admin' && (
-                <li>
-                  <Link href="/admin" className="hover:opacity-75 transition-opacity">
-                    Admin
-                  </Link>
-                </li>
+                <li><Link href="/admin" className="hover:opacity-75 transition-opacity">Admin</Link></li>
               )}
-              <li className="font-medium text-[#172E22]">
-                {user.name.split(' ')[0]}
-              </li>
+              <li className="font-medium text-[#172E22]">{user.name.split(' ')[0]}</li>
               <li>
                 <button
                   onClick={() => { logout(); router.push('/'); }}
@@ -61,11 +44,7 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <li>
-                <Link href="/login" className="hover:opacity-75 transition-opacity">
-                  Entrar
-                </Link>
-              </li>
+              <li><Link href="/login" className="hover:opacity-75 transition-opacity">Entrar</Link></li>
               <li>
                 <Link
                   href="/reservations"
