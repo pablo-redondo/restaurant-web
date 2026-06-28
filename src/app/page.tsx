@@ -4,6 +4,7 @@ import Image from 'next/image';
 import ReviewsSection from './ReviewsSection';
 import AnimateIn from '@/components/AnimateIn';
 import MagneticEl from '@/components/MagneticEl';
+import CountUp from '@/components/CountUp';
 import ParallaxImage from '@/components/ParallaxImage';
 import TiltCard from '@/components/TiltCard';
 import SplitText from '@/components/SplitText';
@@ -59,16 +60,24 @@ export default function HomePage() {
             </MagneticEl>
           </div>
           <div className="anim-fade-up mt-12 pt-6 border-t border-white/10 flex gap-10" style={{ animationDelay: '0.54s' }}>
-            {[
-              { val: '35+',    label: 'Años de historia' },
-              { val: '4.8★',  label: 'Valoración media' },
-              { val: '2.000+', label: 'Clientes al mes' },
-            ].map(({ val, label }) => (
-              <div key={label}>
-                <p className="font-heading font-bold text-[28px] text-white">{val}</p>
-                <p className="text-[#4A7A60] text-[10px] font-bold tracking-[1.5px] uppercase mt-1">{label}</p>
-              </div>
-            ))}
+            <div>
+              <p className="font-heading font-bold text-[28px] text-white tabular-nums">
+                <CountUp to={35} suffix="+" startDelay={650} />
+              </p>
+              <p className="text-[#4A7A60] text-[10px] font-bold tracking-[1.5px] uppercase mt-1">Años de historia</p>
+            </div>
+            <div>
+              <p className="font-heading font-bold text-[28px] text-white tabular-nums">
+                <CountUp to={4.8} suffix="★" decimals={1} startDelay={700} />
+              </p>
+              <p className="text-[#4A7A60] text-[10px] font-bold tracking-[1.5px] uppercase mt-1">Valoración media</p>
+            </div>
+            <div>
+              <p className="font-heading font-bold text-[28px] text-white tabular-nums">
+                <CountUp to={2000} suffix="+" locale="es-ES" startDelay={750} />
+              </p>
+              <p className="text-[#4A7A60] text-[10px] font-bold tracking-[1.5px] uppercase mt-1">Clientes al mes</p>
+            </div>
           </div>
         </div>
 
