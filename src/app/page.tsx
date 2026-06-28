@@ -7,7 +7,6 @@ import MagneticEl from '@/components/MagneticEl';
 import ParallaxImage from '@/components/ParallaxImage';
 import TiltCard from '@/components/TiltCard';
 import SplitText from '@/components/SplitText';
-import Marquee from '@/components/Marquee';
 
 export const metadata: Metadata = {
   title: 'Restaurante Marqués — Alta cocina en Madrid desde 1987',
@@ -19,10 +18,6 @@ export const metadata: Metadata = {
   },
 };
 
-const marqueItems = [
-  'ALTA COCINA', 'MADRID 1987', 'GRAN VÍA 45', 'TEMPORADA 2024',
-  'BIB GOURMAND', 'RESERVAS DISPONIBLES', 'DOS GENERACIONES', 'PRODUCTO DE MERCADO',
-];
 
 const cartaCards = [
   { tag: 'Firma',     nombre: 'Tataki de atún rojo',   desc: 'Aguacate cremoso, ponzu de yuzu y microbrotes de rábano',   precio: '28€', delay: 0 },
@@ -91,18 +86,6 @@ export default function HomePage() {
           </ParallaxImage>
         </div>
       </section>
-
-      {/* ── Banda marquee ── */}
-      <div className="bg-[#172E22] border-y border-[#1E3020] py-[14px]">
-        <Marquee speed={36}>
-          {marqueItems.map(item => (
-            <span key={item} className="inline-flex items-center gap-6 px-6">
-              <span className="text-[#C8DC2E] text-[10px] font-bold tracking-[3px] uppercase">{item}</span>
-              <span className="w-[3px] h-[3px] rounded-full bg-[#3A5A48] shrink-0" />
-            </span>
-          ))}
-        </Marquee>
-      </div>
 
       {/* ── Editorial split ── */}
       <section className="grid md:grid-cols-2 overflow-hidden" style={{ minHeight: '540px' }}>
