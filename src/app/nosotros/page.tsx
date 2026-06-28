@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import AnimateIn from '@/components/AnimateIn';
+import TextScramble from '@/components/TextScramble';
 import CountUp from '@/components/CountUp';
 import MagneticEl from '@/components/MagneticEl';
 import ParallaxImage from '@/components/ParallaxImage';
@@ -50,7 +51,7 @@ export default function NosotrosPage() {
         </ParallaxImage>
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(14,28,18,0.90) 0%, rgba(14,28,18,0.60) 50%, rgba(14,28,18,0.20) 100%)' }} />
         <div className="relative h-full flex flex-col justify-end px-[52px] pb-16">
-          <p className="anim-fade-up text-[#C8DC2E] text-[11px] font-bold tracking-[2.5px] uppercase mb-4" style={{ animationDelay: '0.05s' }}>Desde 1987</p>
+          <p className="anim-fade-up text-[#C8DC2E] text-[11px] font-bold tracking-[2.5px] uppercase mb-4" style={{ animationDelay: '0.05s' }}><TextScramble text="Desde 1987" delay={50} /></p>
           <h1 className="anim-text-reveal font-hero font-[800] text-[clamp(44px,6vw,72px)] leading-[1.0] text-white mb-4" style={{ animationDelay: '0.18s' }}>Nuestra historia</h1>
           <p className="anim-fade-up text-[#B8D8C8] text-[17px] leading-[1.7] max-w-[480px]" style={{ animationDelay: '0.32s' }}>Casi cuatro décadas sirviendo Madrid con la misma pasión y los mismos valores con los que empezamos.</p>
         </div>
