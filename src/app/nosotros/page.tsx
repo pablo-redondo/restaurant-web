@@ -51,9 +51,15 @@ export default function NosotrosPage() {
         </ParallaxImage>
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(14,28,18,0.90) 0%, rgba(14,28,18,0.60) 50%, rgba(14,28,18,0.20) 100%)' }} />
         <div className="relative h-full flex flex-col justify-end px-[52px] pb-16">
-          <p className="anim-fade-up text-[#C8DC2E] text-[11px] font-bold tracking-[2.5px] uppercase mb-4" style={{ animationDelay: '0.05s' }}><TextScramble text="Desde 1987" delay={50} /></p>
-          <h1 className="anim-text-reveal font-hero font-[800] text-[clamp(44px,6vw,72px)] leading-[1.0] text-white mb-4" style={{ animationDelay: '0.18s' }}>Nuestra historia</h1>
-          <p className="anim-fade-up text-[#B8D8C8] text-[17px] leading-[1.7] max-w-[480px]" style={{ animationDelay: '0.32s' }}>Casi cuatro décadas sirviendo Madrid con la misma pasión y los mismos valores con los que empezamos.</p>
+          <p className="anim-fade-up text-[#C8DC2E] text-[11px] font-bold tracking-[2.5px] uppercase mb-4" style={{ animationDelay: '0.05s' }}>
+            <TextScramble text="Desde 1987" delay={50} />
+          </p>
+          <h1 className="anim-text-reveal font-heading font-bold text-[clamp(40px,5.5vw,68px)] tracking-[-1px] leading-[1.05] text-white mb-4" style={{ animationDelay: '0.18s' }}>
+            Nuestra historia
+          </h1>
+          <p className="anim-fade-up text-[#B8D8C8] text-[17px] leading-[1.7] max-w-[480px]" style={{ animationDelay: '0.32s' }}>
+            Casi cuatro décadas sirviendo Madrid con la misma pasión y los mismos valores con los que empezamos.
+          </p>
         </div>
       </section>
 
@@ -97,18 +103,20 @@ export default function NosotrosPage() {
         <ParallaxImage speed={0.15}>
           <Image src="/hero.webp" alt="Salón del restaurante Marqués" fill className="object-cover" style={{ objectPosition: 'center 70%' }} />
         </ParallaxImage>
-        <div className="absolute inset-0" style={{ background: 'rgba(14,28,18,0.50)' }} />
+        <div className="absolute inset-0" style={{ background: 'rgba(14,28,18,0.52)' }} />
         <div className="relative h-full flex items-center px-[52px]">
           <AnimateIn from="bottom">
             <blockquote className="max-w-[600px]">
-              <p className="font-hero font-[800] text-[clamp(24px,3vw,36px)] leading-[1.15] text-white mb-4">&ldquo;Cocinar bien es dar lo mejor de uno mismo en cada plato. No hay otra fórmula.&rdquo;</p>
+              <p className="font-heading font-bold text-[clamp(22px,2.8vw,34px)] leading-[1.2] text-white mb-4">
+                &ldquo;Cocinar bien es dar lo mejor de uno mismo en cada plato. No hay otra fórmula.&rdquo;
+              </p>
               <cite className="text-[#C8DC2E] text-[12px] font-bold tracking-[2px] uppercase not-italic">Alejandro Marqués, fundador</cite>
             </blockquote>
           </AnimateIn>
         </div>
       </section>
 
-      {/* Filosofía — cards con tilt 3D */}
+      {/* Filosofía */}
       <section className="bg-[#172E22] px-[52px] py-[88px]">
         <div className="max-w-5xl mx-auto">
           <AnimateIn>
@@ -179,10 +187,14 @@ export default function NosotrosPage() {
           </div>
           <div className="flex gap-3 flex-wrap">
             <MagneticEl>
-              <Link href="/reservations" className="inline-block px-[28px] py-[13px] bg-[#C8DC2E] text-[#172E22] font-bold text-[14px] rounded-[3px] hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] transition-all">Reservar mesa →</Link>
+              <Link href="/reservations" className="inline-block px-[28px] py-[13px] bg-[#C8DC2E] text-[#172E22] font-bold text-[14px] rounded-[3px] hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] transition-all">
+                Reservar mesa
+              </Link>
             </MagneticEl>
             <MagneticEl>
-              <Link href="/carta" className="inline-block px-[28px] py-[13px] border border-white/15 text-white text-[14px] rounded-[3px] hover:bg-white/10 hover:border-white/30 transition-all">Ver carta</Link>
+              <Link href="/carta" className="inline-block px-[28px] py-[13px] border border-white/15 text-white text-[14px] rounded-[3px] hover:bg-white/10 hover:border-white/30 transition-all">
+                Ver carta
+              </Link>
             </MagneticEl>
           </div>
         </AnimateIn>
