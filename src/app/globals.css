@@ -40,51 +40,33 @@ body {
   from { opacity: 0; transform: translateY(28px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-
 @keyframes fadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
-
 @keyframes scaleIn {
   from { opacity: 0; transform: scale(0.96); }
   to   { opacity: 1; transform: scale(1); }
 }
-
-/* Revelado cinematográfico: el texto sube desde detrás de una máscara */
 @keyframes textReveal {
-  from {
-    clip-path: inset(0 0 100% 0);
-    transform: translateY(18px);
-  }
-  to {
-    clip-path: inset(0 0 0% 0);
-    transform: translateY(0);
-  }
+  from { clip-path: inset(0 0 100% 0); transform: translateY(18px); }
+  to   { clip-path: inset(0 0 0% 0);   transform: translateY(0); }
+}
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
-.anim-fade-up {
-  animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
+.anim-fade-up    { animation: fadeUp    0.7s  cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-fade-in    { animation: fadeIn    0.7s  ease-out both; }
+.anim-scale-in   { animation: scaleIn  0.6s  cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-text-reveal { animation: textReveal 0.95s cubic-bezier(0.22, 1, 0.36, 1) both; display: block; }
 
-.anim-fade-in {
-  animation: fadeIn 0.7s ease-out both;
-}
-
-.anim-scale-in {
-  animation: scaleIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.anim-text-reveal {
-  animation: textReveal 0.95s cubic-bezier(0.22, 1, 0.36, 1) both;
-  display: block;
-}
-
-/* Accesibilidad: sin movimiento si el usuario lo prefiere */
+/* Accesibilidad */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-delay:    0ms   !important;
+    animation-duration:  0.01ms !important;
+    animation-delay:     0ms    !important;
     transition-duration: 0.01ms !important;
   }
 }
