@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import AnimateIn from '@/components/AnimateIn';
+import TextScramble from '@/components/TextScramble';
 import TiltCard from '@/components/TiltCard';
 import SplitText from '@/components/SplitText';
 import MagneticEl from '@/components/MagneticEl';
@@ -51,7 +52,7 @@ export default function ContactoPage() {
     <>
       {/* Hero */}
       <section className="bg-[#172E22] px-[52px] py-16 border-b border-[#1E3020]">
-        <p className="anim-fade-up text-[#C8DC2E] text-[11px] font-bold tracking-[2.5px] uppercase mb-4" style={{ animationDelay: '0.05s' }}>Encúntranos</p>
+        <p className="anim-fade-up text-[#C8DC2E] text-[11px] font-bold tracking-[2.5px] uppercase mb-4" style={{ animationDelay: '0.05s' }}><TextScramble text="Encúntranos" delay={50} /></p>
         <h1 className="anim-text-reveal font-hero font-[800] text-[clamp(40px,6vw,64px)] leading-[1.0] text-white mb-4" style={{ animationDelay: '0.15s' }}>
           Dónde estamos
         </h1>
