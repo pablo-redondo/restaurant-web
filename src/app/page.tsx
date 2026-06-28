@@ -20,11 +20,10 @@ export const metadata: Metadata = {
   },
 };
 
-
 const cartaCards = [
-  { tag: 'Firma',     nombre: 'Tataki de atún rojo',   desc: 'Aguacate cremoso, ponzu de yuzu y microbrotes de rábano',   precio: '28€', delay: 0 },
-  { tag: 'Temporada', nombre: 'Carrillera de ternera', desc: 'Cocinada 12 horas, puré de chirivía y salsa Pedro Ximénez', precio: '26€', delay: 100 },
-  { tag: 'Clásico',   nombre: 'Tarta de queso La Viña',desc: 'Nuestra versión con coulis de frambuesa y miel de azahar',  precio: '10€', delay: 200 },
+  { tag: 'Firma',     nombre: 'Tataki de atún rojo',    desc: 'Aguacate cremoso, ponzu de yuzu y microbrotes de rábano',   precio: '28€', delay: 0 },
+  { tag: 'Temporada', nombre: 'Carrillera de ternera',  desc: 'Cocinada 12 horas, puré de chirivía y salsa Pedro Ximénez', precio: '26€', delay: 100 },
+  { tag: 'Clásico',   nombre: 'Tarta de queso La Viña', desc: 'Nuestra versión con coulis de frambuesa y miel de azahar',  precio: '10€', delay: 200 },
 ];
 
 export default function HomePage() {
@@ -32,15 +31,15 @@ export default function HomePage() {
     <>
       {/* ── Hero ── */}
       <section className="relative bg-[#172E22] grid md:grid-cols-2" style={{ minHeight: 'calc(100vh - 58px)' }}>
-        {/* Fondo sutil móvil */}
         <div className="absolute inset-0 md:hidden overflow-hidden">
           <Image src="/hero.webp" alt="" fill className="object-cover opacity-[0.15]" style={{ objectPosition: 'center 15%' }} priority />
         </div>
 
-        {/* Texto */}
         <div className="relative flex flex-col justify-center px-[52px] py-14 border-r border-[#1E3020]">
-          <p className="anim-fade-up text-[#6A9A80] text-[11px] font-bold tracking-[2.5px] uppercase mb-7" style={{ animationDelay: '0.05s' }}><TextScramble text="Desde 1987 · Madrid" delay={50} /></p>
-          <h1 className="anim-text-reveal font-hero font-[800] text-[clamp(48px,7vw,80px)] leading-[1.02] text-white mb-7" style={{ animationDelay: '0.18s' }}>
+          <p className="anim-fade-up text-[#6A9A80] text-[11px] font-bold tracking-[2.5px] uppercase mb-7" style={{ animationDelay: '0.05s' }}>
+            <TextScramble text="Desde 1987 · Madrid" delay={50} />
+          </p>
+          <h1 className="anim-text-reveal font-heading font-bold text-[clamp(40px,5.5vw,68px)] tracking-[-1.5px] leading-[1.05] text-white mb-7" style={{ animationDelay: '0.18s' }}>
             Una experiencia<br />que{' '}<em className="not-italic text-[#C8DC2E]">no olvidarás</em>
           </h1>
           <p className="anim-fade-up text-[#8AB5A0] text-[16px] leading-[1.75] mb-9" style={{ animationDelay: '0.32s' }}>
@@ -49,7 +48,7 @@ export default function HomePage() {
           <div className="anim-fade-up flex gap-3 flex-wrap" style={{ animationDelay: '0.44s' }}>
             <MagneticEl>
               <Link href="/reservations" className="inline-block px-[30px] py-[14px] bg-[#C8DC2E] text-[#172E22] font-bold text-[14px] rounded-[3px] hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200">
-                Reservar mesa →
+                Reservar mesa
               </Link>
             </MagneticEl>
             <MagneticEl>
@@ -80,7 +79,6 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Imagen con parallax — solo desktop */}
         <div className="hidden md:block relative overflow-hidden">
           <ParallaxImage speed={0.2}>
             <Image
@@ -113,7 +111,7 @@ export default function HomePage() {
           <SplitText
             text="El sabor de lo auténtico"
             as="h2"
-            className="font-hero font-[800] text-[52px] leading-[1.05] text-[#172E22] mb-6"
+            className="font-heading font-bold text-[40px] tracking-[-0.5px] leading-[1.1] text-[#172E22] mb-6"
             baseDelay={80}
             stagger={60}
           />
@@ -124,8 +122,8 @@ export default function HomePage() {
             Desde los campos de Castilla hasta tu mesa, respetamos el producto y la memoria de la cocina española de siempre.
           </p>
           <MagneticEl className="w-fit">
-            <Link href="/nosotros" className="inline-flex items-center gap-2 text-[#172E22] font-bold text-[12px] tracking-[1.5px] uppercase border-b-2 border-[#C8DC2E] pb-[3px] hover:gap-3 hover:text-[#8A9C1E] transition-all duration-200">
-              Nuestra historia →
+            <Link href="/nosotros" className="inline-flex items-center gap-2 text-[#172E22] font-bold text-[12px] tracking-[1.5px] uppercase border-b-2 border-[#C8DC2E] pb-[3px] hover:text-[#8A9C1E] transition-colors duration-200">
+              Nuestra historia
             </Link>
           </MagneticEl>
         </AnimateIn>
@@ -136,13 +134,13 @@ export default function HomePage() {
         <AnimateIn className="flex items-end justify-between mb-[52px]">
           <div>
             <p className="text-[#C8DC2E] text-[10px] font-bold tracking-[2.5px] uppercase mb-3">Nuestra carta</p>
-            <h2 className="font-heading font-bold text-[38px] tracking-[-0.5px] text-white leading-[1.2]">
+            <h2 className="font-heading font-bold text-[36px] tracking-[-0.5px] text-white leading-[1.2]">
               Platos que cuentan<br />una historia
             </h2>
           </div>
           <MagneticEl>
-            <Link href="/carta" className="hidden md:inline-flex items-center gap-2 px-[24px] py-[12px] border border-white/15 text-white text-[13px] rounded-[3px] hover:bg-white/8 hover:border-white/30 hover:gap-3 transition-all duration-200">
-              Ver carta completa →
+            <Link href="/carta" className="hidden md:inline-block px-[24px] py-[11px] border border-white/15 text-white text-[13px] rounded-[3px] hover:bg-white/8 hover:border-white/30 transition-all duration-200">
+              Ver carta completa
             </Link>
           </MagneticEl>
         </AnimateIn>
@@ -166,7 +164,7 @@ export default function HomePage() {
 
         <div className="mt-6 md:hidden">
           <Link href="/carta" className="block text-center px-[24px] py-[12px] border border-white/15 text-white text-[13px] rounded-[3px] hover:bg-white/8 transition">
-            Ver carta completa →
+            Ver carta completa
           </Link>
         </div>
       </section>
@@ -175,7 +173,7 @@ export default function HomePage() {
       <section className="bg-[#F0F4F0] py-[88px] px-[52px]">
         <AnimateIn>
           <p className="text-[#172E22] text-[10px] font-bold tracking-[2.5px] uppercase mb-3">Lo que dicen</p>
-          <h2 className="font-heading font-bold text-[38px] tracking-[-0.5px] text-[#172E22] mb-0">Nuestros clientes</h2>
+          <h2 className="font-heading font-bold text-[36px] tracking-[-0.5px] text-[#172E22] mb-0">Nuestros clientes</h2>
         </AnimateIn>
         <AnimateIn delay={150}>
           <ReviewsSection />
