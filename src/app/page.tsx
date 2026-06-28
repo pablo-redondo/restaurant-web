@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import ReviewsSection from './ReviewsSection';
 import AnimateIn from '@/components/AnimateIn';
+import MagneticEl from '@/components/MagneticEl';
 
 export const metadata: Metadata = {
   title: 'Restaurante Marqués — Alta cocina en Madrid desde 1987',
@@ -28,39 +29,45 @@ export default function HomePage() {
           <Image src="/hero.webp" alt="" fill className="object-cover opacity-[0.15]" style={{ objectPosition: 'center 15%' }} priority />
         </div>
 
-        {/* Columna texto — entradas escalonadas con CSS */}
+        {/* Columna texto */}
         <div className="relative flex flex-col justify-center px-[52px] py-14 border-r border-[#1E3020]">
           <p className="anim-fade-up text-[#6A9A80] text-[11px] font-bold tracking-[2.5px] uppercase mb-7"
             style={{ animationDelay: '0.05s' }}>
             Desde 1987 · Madrid
           </p>
-          <h1 className="anim-fade-up font-hero font-[800] text-[clamp(48px,7vw,80px)] leading-[1.02] text-white mb-7"
-            style={{ animationDelay: '0.15s' }}>
+          <h1
+            className="anim-text-reveal font-hero font-[800] text-[clamp(48px,7vw,80px)] leading-[1.02] text-white mb-7"
+            style={{ animationDelay: '0.18s' }}
+          >
             Una experiencia<br />que{' '}
             <em className="not-italic text-[#C8DC2E]">no olvidarás</em>
           </h1>
           <p className="anim-fade-up text-[#8AB5A0] text-[16px] leading-[1.75] mb-9"
-            style={{ animationDelay: '0.25s' }}>
+            style={{ animationDelay: '0.32s' }}>
             Cocina de temporada, ingredientes de mercado y una terraza que
             enamora en cada estación del año.
           </p>
           <div className="anim-fade-up flex gap-3 flex-wrap"
-            style={{ animationDelay: '0.35s' }}>
-            <Link
-              href="/reservations"
-              className="px-[30px] py-[14px] bg-[#C8DC2E] text-[#172E22] font-bold text-[14px] rounded-[3px] hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
-            >
-              Reservar mesa →
-            </Link>
-            <Link
-              href="/carta"
-              className="px-[30px] py-[14px] border border-white/15 text-white text-[14px] rounded-[3px] hover:bg-white/10 hover:border-white/30 transition-all duration-200"
-            >
-              Ver carta
-            </Link>
+            style={{ animationDelay: '0.44s' }}>
+            <MagneticEl>
+              <Link
+                href="/reservations"
+                className="inline-block px-[30px] py-[14px] bg-[#C8DC2E] text-[#172E22] font-bold text-[14px] rounded-[3px] hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+              >
+                Reservar mesa →
+              </Link>
+            </MagneticEl>
+            <MagneticEl>
+              <Link
+                href="/carta"
+                className="inline-block px-[30px] py-[14px] border border-white/15 text-white text-[14px] rounded-[3px] hover:bg-white/10 hover:border-white/30 transition-all duration-200"
+              >
+                Ver carta
+              </Link>
+            </MagneticEl>
           </div>
           <div className="anim-fade-up mt-12 pt-6 border-t border-white/10 flex gap-10"
-            style={{ animationDelay: '0.45s' }}>
+            style={{ animationDelay: '0.54s' }}>
             {[
               { val: '35+',    label: 'Años de historia' },
               { val: '4.8★',  label: 'Valoración media' },
@@ -112,12 +119,14 @@ export default function HomePage() {
             Desde los campos de Castilla hasta tu mesa, respetamos el producto
             y la memoria de la cocina española de siempre.
           </p>
-          <Link
-            href="/nosotros"
-            className="inline-flex items-center gap-2 text-[#172E22] font-bold text-[12px] tracking-[1.5px] uppercase border-b-2 border-[#C8DC2E] pb-[3px] w-fit hover:gap-3 hover:text-[#8A9C1E] transition-all duration-200"
-          >
-            Nuestra historia →
-          </Link>
+          <MagneticEl className="w-fit">
+            <Link
+              href="/nosotros"
+              className="inline-flex items-center gap-2 text-[#172E22] font-bold text-[12px] tracking-[1.5px] uppercase border-b-2 border-[#C8DC2E] pb-[3px] hover:gap-3 hover:text-[#8A9C1E] transition-all duration-200"
+            >
+              Nuestra historia →
+            </Link>
+          </MagneticEl>
         </AnimateIn>
       </section>
 
@@ -130,12 +139,14 @@ export default function HomePage() {
               Platos que cuentan<br />una historia
             </h2>
           </div>
-          <Link
-            href="/carta"
-            className="hidden md:inline-flex items-center gap-2 px-[24px] py-[12px] border border-white/15 text-white text-[13px] rounded-[3px] hover:bg-white/8 hover:border-white/30 hover:gap-3 transition-all duration-200"
-          >
-            Ver carta completa →
-          </Link>
+          <MagneticEl>
+            <Link
+              href="/carta"
+              className="hidden md:inline-flex items-center gap-2 px-[24px] py-[12px] border border-white/15 text-white text-[13px] rounded-[3px] hover:bg-white/8 hover:border-white/30 hover:gap-3 transition-all duration-200"
+            >
+              Ver carta completa →
+            </Link>
+          </MagneticEl>
         </AnimateIn>
 
         <div className="grid md:grid-cols-3 divide-x divide-white/10 border border-white/10 rounded-[4px] overflow-hidden">
