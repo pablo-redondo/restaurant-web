@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import AnimateIn from '@/components/AnimateIn';
 
 export const metadata: Metadata = {
   title: 'Nuestra historia',
@@ -32,75 +33,88 @@ const milestones = [
 export default function NosotrosPage() {
   return (
     <>
+      {/* Hero */}
       <section className="relative overflow-hidden" style={{ height: '70vh', minHeight: '480px' }}>
-        <Image src="/hero.webp" alt="Interior del restaurante Marqués" fill className="object-cover" style={{ objectPosition: 'center 30%' }} priority />
+        <Image src="/hero.webp" alt="Interior del restaurante Marqués" fill className="object-cover scale-[1.03] hover:scale-100 transition-transform duration-[8000ms] ease-out" style={{ objectPosition: 'center 30%' }} priority />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(14,28,18,0.90) 0%, rgba(14,28,18,0.60) 50%, rgba(14,28,18,0.20) 100%)' }} />
         <div className="relative h-full flex flex-col justify-end px-[52px] pb-16">
-          <p className="text-[#C8DC2E] text-[11px] font-bold tracking-[2.5px] uppercase mb-4">Desde 1987</p>
-          <h1 className="font-hero font-[800] text-[72px] leading-[1.0] text-white mb-4">Nuestra historia</h1>
-          <p className="text-[#B8D8C8] text-[17px] leading-[1.7] max-w-[480px]">Casi cuatro décadas sirviendo Madrid con la misma pasión y los mismos valores con los que empezamos.</p>
+          <p className="anim-fade-up text-[#C8DC2E] text-[11px] font-bold tracking-[2.5px] uppercase mb-4" style={{ animationDelay: '0.05s' }}>Desde 1987</p>
+          <h1 className="anim-fade-up font-hero font-[800] text-[clamp(44px,6vw,72px)] leading-[1.0] text-white mb-4" style={{ animationDelay: '0.15s' }}>Nuestra historia</h1>
+          <p className="anim-fade-up text-[#B8D8C8] text-[17px] leading-[1.7] max-w-[480px]" style={{ animationDelay: '0.25s' }}>Casi cuatro décadas sirviendo Madrid con la misma pasión y los mismos valores con los que empezamos.</p>
         </div>
       </section>
 
+      {/* Historia + timeline */}
       <section className="bg-[#F0F4F0] px-[52px] py-[88px]">
         <div className="max-w-5xl mx-auto grid md:grid-cols-[1fr_1fr] gap-20 items-start">
-          <div>
+          <AnimateIn from="left">
             <p className="text-[#172E22] text-[10px] font-bold tracking-[2.5px] uppercase mb-4">La historia</p>
             <h2 className="font-heading font-bold text-[38px] leading-[1.1] tracking-[-0.5px] text-[#172E22] mb-6">Un restaurante familiar desde el primer día</h2>
             <p className="text-[#5A6B60] text-[15px] leading-[1.75] mb-5">En 1987, Alejandro Marqués abrió una pequeña taberna en el barrio de Malasaña con veinte sillas, una carta de ocho platos y la convicción de que la cocina honesta siempre tiene cabida en Madrid.</p>
             <p className="text-[#5A6B60] text-[15px] leading-[1.75] mb-5">Once años después, el local de Gran Vía pasó a ser nuestro hogar. Un espacio que hemos ido construyendo despacio, con materiales nobles, sin prisas y con el mismo carácter de siempre.</p>
             <p className="text-[#5A6B60] text-[15px] leading-[1.75]">Hoy somos dos generaciones en la cocina. Diego Marqués, formado en Lyon y San Sebastián, aporta técnica y viaje a una cocina que nunca ha olvidado sus raíces: el producto, la temporada y el respeto.</p>
-          </div>
+          </AnimateIn>
           <div className="space-y-0">
             {milestones.map((m, i) => (
-              <div key={m.year} className="flex gap-6 pb-8 relative">
-                {i < milestones.length - 1 && (<div className="absolute left-[19px] top-[28px] bottom-0 w-px bg-[#C4D5CA]" />)}
-                <div className="shrink-0 w-10 h-10 rounded-full bg-[#172E22] flex items-center justify-center z-10">
-                  <div className="w-2 h-2 rounded-full bg-[#C8DC2E]" />
+              <AnimateIn key={m.year} delay={i * 80} from="right">
+                <div className="flex gap-6 pb-8 relative">
+                  {i < milestones.length - 1 && (<div className="absolute left-[19px] top-[28px] bottom-0 w-px bg-[#C4D5CA]" />)}
+                  <div className="shrink-0 w-10 h-10 rounded-full bg-[#172E22] flex items-center justify-center z-10 hover:bg-[#C8DC2E] transition-colors duration-300 group">
+                    <div className="w-2 h-2 rounded-full bg-[#C8DC2E] group-hover:bg-[#172E22] transition-colors duration-300" />
+                  </div>
+                  <div>
+                    <p className="font-heading font-bold text-[13px] text-[#C8A020] tracking-[1px] uppercase mb-1">{m.year}</p>
+                    <p className="text-[#5A6B60] text-[14px] leading-[1.65]">{m.text}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-heading font-bold text-[13px] text-[#C8A020] tracking-[1px] uppercase mb-1">{m.year}</p>
-                  <p className="text-[#5A6B60] text-[14px] leading-[1.65]">{m.text}</p>
-                </div>
-              </div>
+              </AnimateIn>
             ))}
           </div>
         </div>
       </section>
 
+      {/* Cita */}
       <section className="relative overflow-hidden" style={{ height: '440px' }}>
         <Image src="/hero.webp" alt="Salón del restaurante Marqués" fill className="object-cover" style={{ objectPosition: 'center 70%' }} />
-        <div className="absolute inset-0" style={{ background: 'rgba(14,28,18,0.45)' }} />
+        <div className="absolute inset-0" style={{ background: 'rgba(14,28,18,0.50)' }} />
         <div className="relative h-full flex items-center px-[52px]">
-          <blockquote className="max-w-[600px]">
-            <p className="font-hero font-[800] text-[36px] leading-[1.15] text-white mb-4">&ldquo;Cocinar bien es dar lo mejor de uno mismo en cada plato. No hay otra fórmula.&rdquo;</p>
-            <cite className="text-[#C8DC2E] text-[12px] font-bold tracking-[2px] uppercase not-italic">Alejandro Marqués, fundador</cite>
-          </blockquote>
+          <AnimateIn from="bottom">
+            <blockquote className="max-w-[600px]">
+              <p className="font-hero font-[800] text-[clamp(24px,3vw,36px)] leading-[1.15] text-white mb-4">&ldquo;Cocinar bien es dar lo mejor de uno mismo en cada plato. No hay otra fórmula.&rdquo;</p>
+              <cite className="text-[#C8DC2E] text-[12px] font-bold tracking-[2px] uppercase not-italic">Alejandro Marqués, fundador</cite>
+            </blockquote>
+          </AnimateIn>
         </div>
       </section>
 
+      {/* Filosofía */}
       <section className="bg-[#172E22] px-[52px] py-[88px]">
         <div className="max-w-5xl mx-auto">
-          <p className="text-[#C8DC2E] text-[10px] font-bold tracking-[2.5px] uppercase mb-4">Cómo cocinamos</p>
-          <h2 className="font-heading font-bold text-[38px] tracking-[-0.5px] text-white mb-14">Nuestra filosofía</h2>
+          <AnimateIn>
+            <p className="text-[#C8DC2E] text-[10px] font-bold tracking-[2.5px] uppercase mb-4">Cómo cocinamos</p>
+            <h2 className="font-heading font-bold text-[38px] tracking-[-0.5px] text-white mb-14">Nuestra filosofía</h2>
+          </AnimateIn>
           <div className="grid md:grid-cols-3 gap-8">
-            {values.map((v) => (
-              <div key={v.num} className="border-t border-white/10 pt-6">
-                <p className="font-heading text-[11px] font-bold text-[#C8DC2E] tracking-[1.5px] mb-4 uppercase">{v.num}</p>
-                <h3 className="font-heading font-bold text-[20px] text-white mb-3">{v.title}</h3>
-                <p className="text-[#6A9A80] text-[14px] leading-[1.7]">{v.desc}</p>
-              </div>
+            {values.map((v, i) => (
+              <AnimateIn key={v.num} delay={i * 100}>
+                <div className="border-t border-white/10 pt-6 hover:border-[#C8DC2E]/40 transition-colors duration-300 group">
+                  <p className="font-heading text-[11px] font-bold text-[#C8DC2E] tracking-[1.5px] mb-4 uppercase">{v.num}</p>
+                  <h3 className="font-heading font-bold text-[20px] text-white mb-3 group-hover:text-[#C8DC2E] transition-colors duration-300">{v.title}</h3>
+                  <p className="text-[#6A9A80] text-[14px] leading-[1.7]">{v.desc}</p>
+                </div>
+              </AnimateIn>
             ))}
           </div>
         </div>
       </section>
 
+      {/* El espacio */}
       <section className="bg-[#F0F4F0] px-[52px] py-[88px]">
         <div className="max-w-5xl mx-auto grid md:grid-cols-[56fr_44fr] gap-16 items-center">
-          <div className="relative overflow-hidden rounded-[4px]" style={{ height: '460px' }}>
-            <Image src="/hero.webp" alt="El salón de Marqués" fill className="object-cover" style={{ objectPosition: 'right 20%' }} />
-          </div>
-          <div>
+          <AnimateIn from="left" className="relative overflow-hidden rounded-[4px]" style={{ height: '460px' }}>
+            <Image src="/hero.webp" alt="El salón de Marqués" fill className="object-cover hover:scale-105 transition-transform duration-[5000ms] ease-out" style={{ objectPosition: 'right 20%' }} />
+          </AnimateIn>
+          <AnimateIn from="right">
             <p className="text-[#172E22] text-[10px] font-bold tracking-[2.5px] uppercase mb-4">El espacio</p>
             <h2 className="font-heading font-bold text-[34px] leading-[1.15] tracking-[-0.5px] text-[#172E22] mb-6">Un lugar pensado para disfrutar</h2>
             <div className="space-y-4 text-[#5A6B60] text-[15px] leading-[1.75]">
@@ -109,28 +123,31 @@ export default function NosotrosPage() {
               <p>Terraza interior climatizada disponible de marzo a octubre, con entrada propia desde la calle.</p>
             </div>
             <div className="mt-8 grid grid-cols-3 gap-4">
-              {[{ n: '120', l: 'Comensales' }, { n: '200+', l: 'Referencias\nde vino' }, { n: '18', l: 'Sala privada' }].map((s) => (
-                <div key={s.n} className="border-t-2 border-[#C8DC2E] pt-4">
-                  <p className="font-heading font-bold text-[24px] text-[#172E22]">{s.n}</p>
-                  <p className="text-[11px] text-[#5A6B60] font-bold tracking-[1px] uppercase mt-1" style={{ whiteSpace: 'pre-line' }}>{s.l}</p>
-                </div>
+              {[{ n: '120', l: 'Comensales' }, { n: '200+', l: 'Referencias\nde vino' }, { n: '18', l: 'Sala privada' }].map((s, i) => (
+                <AnimateIn key={s.n} delay={i * 80}>
+                  <div className="border-t-2 border-[#C8DC2E] pt-4 hover:-translate-y-1 transition-transform duration-200">
+                    <p className="font-heading font-bold text-[24px] text-[#172E22]">{s.n}</p>
+                    <p className="text-[11px] text-[#5A6B60] font-bold tracking-[1px] uppercase mt-1" style={{ whiteSpace: 'pre-line' }}>{s.l}</p>
+                  </div>
+                </AnimateIn>
               ))}
             </div>
-          </div>
+          </AnimateIn>
         </div>
       </section>
 
+      {/* CTA */}
       <section className="bg-[#172E22] px-[52px] py-16">
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <AnimateIn className="max-w-5xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
             <h2 className="font-heading font-bold text-[28px] text-white mb-2">Ven a conocernos</h2>
             <p className="text-[#6A9A80] text-[15px]">Calle Gran Vía, 45 · Madrid · Martes a domingo</p>
           </div>
           <div className="flex gap-3 flex-wrap">
-            <Link href="/reservations" className="px-[28px] py-[13px] bg-[#C8DC2E] text-[#172E22] font-bold text-[14px] rounded-[3px] hover:brightness-105 transition">Reservar mesa →</Link>
-            <Link href="/carta" className="px-[28px] py-[13px] border border-white/15 text-white text-[14px] rounded-[3px] hover:bg-white/5 transition">Ver carta</Link>
+            <Link href="/reservations" className="px-[28px] py-[13px] bg-[#C8DC2E] text-[#172E22] font-bold text-[14px] rounded-[3px] hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] transition-all">Reservar mesa →</Link>
+            <Link href="/carta" className="px-[28px] py-[13px] border border-white/15 text-white text-[14px] rounded-[3px] hover:bg-white/10 hover:border-white/30 transition-all">Ver carta</Link>
           </div>
-        </div>
+        </AnimateIn>
       </section>
     </>
   );
