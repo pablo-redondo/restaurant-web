@@ -30,7 +30,7 @@ body {
   body.has-custom-cursor * { cursor: none !important; }
 }
 
-/* ── Keyframes ────────────────────────────────────────────── */
+/* ── Keyframes ─────────────────────────────────────────────── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(28px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -48,10 +48,10 @@ body {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
-/* Brillo que cruza un botón */
-@keyframes shimmer {
-  0%   { background-position: -200% center; }
-  100% { background-position:  200% center; }
+/* Brillo que cruza el botón de izquierda a derecha */
+@keyframes shimmerSweep {
+  from { transform: translateX(-100%) skewX(-12deg); }
+  to   { transform: translateX(220%)  skewX(-12deg); }
 }
 
 /* ── Clases de animación ─────────────────────────────────── */
@@ -60,20 +60,27 @@ body {
 .anim-scale-in    { animation: scaleIn    0.6s  cubic-bezier(0.22, 1, 0.36, 1) both; }
 .anim-text-reveal { animation: textReveal 0.95s cubic-bezier(0.22, 1, 0.36, 1) both; display: block; }
 
-/* Shimmer para el botón CTA del navbar */
+/* Shimmer CTA — sólido en reposo, brillo al hover */
 .btn-cta-shimmer {
-  background-image: linear-gradient(
-    105deg,
-    #172E22 0%,
-    #172E22 40%,
-    rgba(255,255,255,0.14) 50%,
-    #172E22 60%,
-    #172E22 100%
-  );
-  background-size: 200% auto;
+  background: #172E22;
+  position: relative;
+  overflow: hidden;
 }
-.btn-cta-shimmer:hover {
-  animation: shimmer 1.6s linear infinite;
+.btn-cta-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 25%,
+    rgba(255,255,255,0.18) 50%,
+    transparent 75%
+  );
+  transform: translateX(-100%) skewX(-12deg);
+  pointer-events: none;
+}
+.btn-cta-shimmer:hover::after {
+  animation: shimmerSweep 0.85s ease-in-out infinite;
 }
 
 /* Accesibilidad */
