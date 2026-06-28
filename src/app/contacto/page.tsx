@@ -17,11 +17,11 @@ export const metadata: Metadata = {
 };
 
 const horarios = [
-  { dias: 'Lunes',          horas: 'Cerrado',                                  cerrado: true },
-  { dias: 'Martes – Jueves',horas: '13:30 – 16:00 h  ·   20:30 – 23:00 h',    cerrado: false },
-  { dias: 'Viernes',        horas: '13:30 – 16:30 h  ·   20:30 – 23:30 h',    cerrado: false },
-  { dias: 'Sábado',         horas: '13:30 – 16:30 h  ·   20:30 – 23:30 h',    cerrado: false },
-  { dias: 'Domingo',        horas: '13:30 – 16:30 h (solo comidas)',           cerrado: false },
+  { dias: 'Lunes',           horas: 'Cerrado',                               cerrado: true },
+  { dias: 'Martes – Jueves', horas: '13:30 – 16:00 h  ·  20:30 – 23:00 h',  cerrado: false },
+  { dias: 'Viernes',         horas: '13:30 – 16:30 h  ·  20:30 – 23:30 h',  cerrado: false },
+  { dias: 'Sábado',          horas: '13:30 – 16:30 h  ·  20:30 – 23:30 h',  cerrado: false },
+  { dias: 'Domingo',         horas: '13:30 – 16:30 h (solo comidas)',         cerrado: false },
 ];
 
 const contactInfo = [
@@ -52,8 +52,10 @@ export default function ContactoPage() {
     <>
       {/* Hero */}
       <section className="bg-[#172E22] px-[52px] py-16 border-b border-[#1E3020]">
-        <p className="anim-fade-up text-[#C8DC2E] text-[11px] font-bold tracking-[2.5px] uppercase mb-4" style={{ animationDelay: '0.05s' }}><TextScramble text="Encúntranos" delay={50} /></p>
-        <h1 className="anim-text-reveal font-hero font-[800] text-[clamp(40px,6vw,64px)] leading-[1.0] text-white mb-4" style={{ animationDelay: '0.15s' }}>
+        <p className="anim-fade-up text-[#C8DC2E] text-[11px] font-bold tracking-[2.5px] uppercase mb-4" style={{ animationDelay: '0.05s' }}>
+          <TextScramble text="Encúntranos" delay={50} />
+        </p>
+        <h1 className="anim-text-reveal font-heading font-bold text-[clamp(36px,5vw,62px)] tracking-[-1px] leading-[1.05] text-white mb-4" style={{ animationDelay: '0.15s' }}>
           Dónde estamos
         </h1>
         <p className="anim-fade-up text-[#8AB5A0] text-[17px] leading-[1.7] max-w-[480px]" style={{ animationDelay: '0.25s' }}>
@@ -121,7 +123,7 @@ export default function ContactoPage() {
         </div>
       </section>
 
-      {/* Mapa */}
+      {/* Ubicación */}
       <section className="bg-[#172E22] px-[52px] py-[72px]">
         <AnimateIn className="max-w-5xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-8">
           <div>
@@ -137,7 +139,7 @@ export default function ContactoPage() {
               className="inline-flex items-center gap-3 px-[28px] py-[14px] bg-white/8 border border-white/15 text-white text-[14px] font-medium rounded-[3px] hover:bg-white/12 hover:scale-[1.02] transition-all"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              Ver en Google Maps ↗
+              Ver en Google Maps
             </a>
           </MagneticEl>
         </AnimateIn>
@@ -152,10 +154,14 @@ export default function ContactoPage() {
           </div>
           <div className="flex gap-3 flex-wrap">
             <MagneticEl>
-              <Link href="/reservations" className="inline-block px-[28px] py-[13px] bg-[#172E22] text-white font-bold text-[14px] rounded-[3px] hover:bg-[#1E3A2A] hover:scale-[1.02] active:scale-[0.98] transition-all">Reservar mesa →</Link>
+              <Link href="/reservations" className="inline-block px-[28px] py-[13px] bg-[#172E22] text-white font-bold text-[14px] rounded-[3px] hover:bg-[#1E3A2A] hover:scale-[1.02] active:scale-[0.98] transition-all">
+                Reservar mesa
+              </Link>
             </MagneticEl>
             <MagneticEl>
-              <Link href="/carta" className="inline-block px-[28px] py-[13px] border border-[#C4D5CA] text-[#172E22] text-[14px] rounded-[3px] hover:bg-[#E8EDE8] transition-all">Ver la carta</Link>
+              <Link href="/carta" className="inline-block px-[28px] py-[13px] border border-[#C4D5CA] text-[#172E22] text-[14px] rounded-[3px] hover:bg-[#E8EDE8] transition-all">
+                Ver la carta
+              </Link>
             </MagneticEl>
           </div>
         </AnimateIn>
