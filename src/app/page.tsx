@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import ReviewsSection from './ReviewsSection';
 import AnimateIn from '@/components/AnimateIn';
+import TextScramble from '@/components/TextScramble';
 import MagneticEl from '@/components/MagneticEl';
 import CountUp from '@/components/CountUp';
 import ParallaxImage from '@/components/ParallaxImage';
@@ -38,9 +39,7 @@ export default function HomePage() {
 
         {/* Texto */}
         <div className="relative flex flex-col justify-center px-[52px] py-14 border-r border-[#1E3020]">
-          <p className="anim-fade-up text-[#6A9A80] text-[11px] font-bold tracking-[2.5px] uppercase mb-7" style={{ animationDelay: '0.05s' }}>
-            Desde 1987 · Madrid
-          </p>
+          <p className="anim-fade-up text-[#6A9A80] text-[11px] font-bold tracking-[2.5px] uppercase mb-7" style={{ animationDelay: '0.05s' }}><TextScramble text="Desde 1987 · Madrid" delay={50} /></p>
           <h1 className="anim-text-reveal font-hero font-[800] text-[clamp(48px,7vw,80px)] leading-[1.02] text-white mb-7" style={{ animationDelay: '0.18s' }}>
             Una experiencia<br />que{' '}<em className="not-italic text-[#C8DC2E]">no olvidarás</em>
           </h1>
