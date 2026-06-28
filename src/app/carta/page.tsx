@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import AnimateIn from '@/components/AnimateIn';
+import TextScramble from '@/components/TextScramble';
 import ParallaxImage from '@/components/ParallaxImage';
 import MagneticEl from '@/components/MagneticEl';
 import TiltCard from '@/components/TiltCard';
@@ -77,7 +78,7 @@ export default function CartaPage() {
         </ParallaxImage>
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(14,28,18,0.93) 0%, rgba(14,28,18,0.70) 45%, rgba(14,28,18,0.25) 100%)' }} />
         <div className="relative h-full flex flex-col justify-center px-[52px]">
-          <p className="anim-fade-up text-[#C8DC2E] text-[11px] font-bold tracking-[2.5px] uppercase mb-4" style={{ animationDelay: '0.05s' }}>Temporada 2024</p>
+          <p className="anim-fade-up text-[#C8DC2E] text-[11px] font-bold tracking-[2.5px] uppercase mb-4" style={{ animationDelay: '0.05s' }}><TextScramble text="Temporada 2024" delay={50} /></p>
           <h1 className="anim-text-reveal font-hero font-[800] text-[clamp(40px,6vw,68px)] leading-[1.0] text-white mb-4" style={{ animationDelay: '0.15s' }}>Nuestra carta</h1>
           <p className="anim-fade-up text-[#B8D8C8] text-[16px] leading-[1.7] max-w-[420px] mb-8" style={{ animationDelay: '0.25s' }}>Ingredientes de mercado seleccionados cada mañana. Carta renovada con cada estación.</p>
           <div className="anim-fade-up flex gap-3 flex-wrap" style={{ animationDelay: '0.35s' }}>
