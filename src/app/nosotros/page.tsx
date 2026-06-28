@@ -44,12 +44,12 @@ const stats = [
 export default function NosotrosPage() {
   return (
     <>
-      {/* Hero con parallax */}
+      {/* ── 1. HERO ─────────────────────────────────────────── */}
       <section className="relative overflow-hidden" style={{ height: '70vh', minHeight: '480px' }}>
         <ParallaxImage speed={0.2}>
           <Image src="/hero.webp" alt="Interior del restaurante Marqués" fill className="object-cover" style={{ objectPosition: 'center 30%' }} priority />
         </ParallaxImage>
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(14,28,18,0.90) 0%, rgba(14,28,18,0.60) 50%, rgba(14,28,18,0.20) 100%)' }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(115deg, rgba(8,18,12,0.95) 0%, rgba(8,18,12,0.78) 40%, rgba(8,18,12,0.25) 80%, transparent 100%)' }} />
         <div className="relative h-full flex flex-col justify-end px-[52px] pb-16">
           <p className="anim-fade-up text-[#C8DC2E] text-[11px] font-bold tracking-[2.5px] uppercase mb-4" style={{ animationDelay: '0.05s' }}>
             <TextScramble text="Desde 1987" delay={50} />
@@ -63,7 +63,7 @@ export default function NosotrosPage() {
         </div>
       </section>
 
-      {/* Historia + timeline */}
+      {/* ── 2. HISTORIA + TIMELINE ── bg claro ─────────────── */}
       <section className="bg-[#F0F4F0] px-[52px] py-[88px]">
         <div className="max-w-5xl mx-auto grid md:grid-cols-[1fr_1fr] gap-20 items-start">
           <AnimateIn from="left">
@@ -75,15 +75,24 @@ export default function NosotrosPage() {
               baseDelay={60}
               stagger={45}
             />
-            <p className="text-[#5A6B60] text-[15px] leading-[1.75] mb-5">En 1987, Alejandro Marqués abrió una pequeña taberna en el barrio de Malasaña con veinte sillas, una carta de ocho platos y la convicción de que la cocina honesta siempre tiene cabida en Madrid.</p>
-            <p className="text-[#5A6B60] text-[15px] leading-[1.75] mb-5">Once años después, el local de Gran Vía pasó a ser nuestro hogar. Un espacio que hemos ido construyendo despacio, con materiales nobles, sin prisas y con el mismo carácter de siempre.</p>
-            <p className="text-[#5A6B60] text-[15px] leading-[1.75]">Hoy somos dos generaciones en la cocina. Diego Marqués, formado en Lyon y San Sebastián, aporta técnica y viaje a una cocina que nunca ha olvidado sus raíces: el producto, la temporada y el respeto.</p>
+            <p className="text-[#5A6B60] text-[15px] leading-[1.75] mb-5">
+              En 1987, Alejandro Marqués abrió una pequeña taberna en el barrio de Malasaña con veinte sillas, una carta de ocho platos y la convicción de que la cocina honesta siempre tiene cabida en Madrid.
+            </p>
+            <p className="text-[#5A6B60] text-[15px] leading-[1.75] mb-5">
+              Once años después, el local de Gran Vía pasó a ser nuestro hogar. Un espacio que hemos ido construyendo despacio, con materiales nobles, sin prisas y con el mismo carácter de siempre.
+            </p>
+            <p className="text-[#5A6B60] text-[15px] leading-[1.75]">
+              Hoy somos dos generaciones en la cocina. Diego Marqués, formado en Lyon y San Sebastián, aporta técnica y viaje a una cocina que nunca ha olvidado sus raíces.
+            </p>
           </AnimateIn>
+
           <div className="space-y-0">
             {milestones.map((m, i) => (
               <AnimateIn key={m.year} delay={i * 80} from="right">
                 <div className="flex gap-6 pb-8 relative">
-                  {i < milestones.length - 1 && (<div className="absolute left-[19px] top-[28px] bottom-0 w-px bg-[#C4D5CA]" />)}
+                  {i < milestones.length - 1 && (
+                    <div className="absolute left-[19px] top-[28px] bottom-0 w-px bg-[#C4D5CA]" />
+                  )}
                   <div className="shrink-0 w-10 h-10 rounded-full bg-[#172E22] flex items-center justify-center z-10 hover:bg-[#C8DC2E] transition-colors duration-300 group">
                     <div className="w-2 h-2 rounded-full bg-[#C8DC2E] group-hover:bg-[#172E22] transition-colors duration-300" />
                   </div>
@@ -98,25 +107,7 @@ export default function NosotrosPage() {
         </div>
       </section>
 
-      {/* Cita con parallax */}
-      <section className="relative overflow-hidden" style={{ height: '440px' }}>
-        <ParallaxImage speed={0.15}>
-          <Image src="/hero.webp" alt="Salón del restaurante Marqués" fill className="object-cover" style={{ objectPosition: 'center 70%' }} />
-        </ParallaxImage>
-        <div className="absolute inset-0" style={{ background: 'rgba(14,28,18,0.52)' }} />
-        <div className="relative h-full flex items-center px-[52px]">
-          <AnimateIn from="bottom">
-            <blockquote className="max-w-[600px]">
-              <p className="font-heading font-bold text-[clamp(22px,2.8vw,34px)] leading-[1.2] text-white mb-4">
-                &ldquo;Cocinar bien es dar lo mejor de uno mismo en cada plato. No hay otra fórmula.&rdquo;
-              </p>
-              <cite className="text-[#C8DC2E] text-[12px] font-bold tracking-[2px] uppercase not-italic">Alejandro Marqués, fundador</cite>
-            </blockquote>
-          </AnimateIn>
-        </div>
-      </section>
-
-      {/* Filosofía */}
+      {/* ── 3. FILOSOFÍA ── bg oscuro ───────────────────────── */}
       <section className="bg-[#172E22] px-[52px] py-[88px]">
         <div className="max-w-5xl mx-auto">
           <AnimateIn>
@@ -144,7 +135,7 @@ export default function NosotrosPage() {
         </div>
       </section>
 
-      {/* El espacio */}
+      {/* ── 4. EL ESPACIO ── bg claro ───────────────────────── */}
       <section className="bg-[#F0F4F0] px-[52px] py-[88px]">
         <div className="max-w-5xl mx-auto grid md:grid-cols-[56fr_44fr] gap-16 items-center">
           <AnimateIn from="left" className="relative overflow-hidden rounded-[4px]" style={{ height: '460px' }}>
@@ -154,7 +145,9 @@ export default function NosotrosPage() {
           </AnimateIn>
           <AnimateIn from="right">
             <p className="text-[#172E22] text-[10px] font-bold tracking-[2.5px] uppercase mb-4">El espacio</p>
-            <h2 className="font-heading font-bold text-[34px] leading-[1.15] tracking-[-0.5px] text-[#172E22] mb-6">Un lugar pensado para disfrutar</h2>
+            <h2 className="font-heading font-bold text-[34px] leading-[1.15] tracking-[-0.5px] text-[#172E22] mb-6">
+              Un lugar pensado para disfrutar
+            </h2>
             <div className="space-y-4 text-[#5A6B60] text-[15px] leading-[1.75]">
               <p>120 comensales en un salón de techos altos, iluminado con lámparas de cristal soplado y revestido en madera de nogal.</p>
               <p>Una bodega privada para grupos y celebraciones con capacidad para 18 personas y acceso directo a nuestra cava de vinos.</p>
@@ -178,21 +171,51 @@ export default function NosotrosPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-[#172E22] px-[52px] py-16">
-        <AnimateIn className="max-w-5xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
+      {/* ── 5. CITA ── parallax oscuro, break visual ────────── */}
+      <section className="relative overflow-hidden" style={{ height: '400px' }}>
+        <ParallaxImage speed={0.15}>
+          <Image src="/hero.webp" alt="Salón del restaurante Marqués" fill className="object-cover" style={{ objectPosition: 'center 70%' }} />
+        </ParallaxImage>
+        <div className="absolute inset-0" style={{ background: 'rgba(8,18,12,0.58)' }} />
+        <div className="relative h-full flex items-center px-[52px]">
+          <AnimateIn>
+            <blockquote className="max-w-[640px]">
+              <span className="text-[#C8DC2E] text-[48px] font-heading font-bold leading-none opacity-60 select-none block mb-2">"</span>
+              <p className="font-heading font-bold text-[clamp(20px,2.6vw,32px)] leading-[1.25] text-white mb-5">
+                Cocinar bien es dar lo mejor de uno mismo en cada plato. No hay otra fórmula.
+              </p>
+              <cite className="text-[#C8DC2E] text-[11px] font-bold tracking-[2px] uppercase not-italic">
+                Alejandro Marqués, fundador
+              </cite>
+            </blockquote>
+          </AnimateIn>
+        </div>
+      </section>
+
+      {/* ── 6. CTA ── bg crema, CONTRASTA con footer verde ─── */}
+      <section className="bg-[#F1EFE9] px-[52px] py-[72px] border-t border-[#D8D5CF]">
+        <AnimateIn className="max-w-5xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-8">
           <div>
-            <h2 className="font-heading font-bold text-[28px] text-white mb-2">Ven a conocernos</h2>
-            <p className="text-[#6A9A80] text-[15px]">Calle Gran Vía, 45 · Madrid · Martes a domingo</p>
+            <p className="text-[#172E22] text-[10px] font-bold tracking-[2.5px] uppercase mb-3">¿Quieres visitarnos?</p>
+            <h2 className="font-heading font-bold text-[clamp(26px,3vw,36px)] tracking-[-0.5px] text-[#172E22] mb-2">
+              Ven a conocernos
+            </h2>
+            <p className="text-[#5A6B60] text-[15px]">Calle Gran Vía, 45 · Madrid · Martes a domingo</p>
           </div>
-          <div className="flex gap-3 flex-wrap">
+          <div className="flex gap-3 flex-wrap shrink-0">
             <MagneticEl>
-              <Link href="/reservations" className="inline-block px-[28px] py-[13px] bg-[#C8DC2E] text-[#172E22] font-bold text-[14px] rounded-[3px] hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] transition-all">
+              <Link
+                href="/reservations"
+                className="inline-block px-[28px] py-[13px] bg-[#172E22] text-white font-bold text-[14px] rounded-[3px] hover:bg-[#1E3A2A] hover:scale-[1.02] active:scale-[0.98] transition-all"
+              >
                 Reservar mesa
               </Link>
             </MagneticEl>
             <MagneticEl>
-              <Link href="/carta" className="inline-block px-[28px] py-[13px] border border-white/15 text-white text-[14px] rounded-[3px] hover:bg-white/10 hover:border-white/30 transition-all">
+              <Link
+                href="/carta"
+                className="inline-block px-[28px] py-[13px] border border-[#C4D5CA] text-[#172E22] text-[14px] rounded-[3px] hover:bg-[#E8EDE8] transition-all"
+              >
                 Ver carta
               </Link>
             </MagneticEl>
