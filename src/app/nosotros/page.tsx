@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import AnimateIn from '@/components/AnimateIn';
+import CountUp from '@/components/CountUp';
+import MagneticEl from '@/components/MagneticEl';
 
 export const metadata: Metadata = {
   title: 'Nuestra historia',
@@ -30,6 +32,12 @@ const milestones = [
   { year: '2024', text: 'Nuevo proyecto digital y carta renovada. Sigue siendo un restaurante familiar, como el primer día.' },
 ];
 
+const stats = [
+  { to: 120, suffix: '',  label: 'Comensales' },
+  { to: 200, suffix: '+', label: 'Referencias\nde vino' },
+  { to: 18,  suffix: '',  label: 'Sala privada' },
+];
+
 export default function NosotrosPage() {
   return (
     <>
@@ -39,8 +47,8 @@ export default function NosotrosPage() {
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(14,28,18,0.90) 0%, rgba(14,28,18,0.60) 50%, rgba(14,28,18,0.20) 100%)' }} />
         <div className="relative h-full flex flex-col justify-end px-[52px] pb-16">
           <p className="anim-fade-up text-[#C8DC2E] text-[11px] font-bold tracking-[2.5px] uppercase mb-4" style={{ animationDelay: '0.05s' }}>Desde 1987</p>
-          <h1 className="anim-fade-up font-hero font-[800] text-[clamp(44px,6vw,72px)] leading-[1.0] text-white mb-4" style={{ animationDelay: '0.15s' }}>Nuestra historia</h1>
-          <p className="anim-fade-up text-[#B8D8C8] text-[17px] leading-[1.7] max-w-[480px]" style={{ animationDelay: '0.25s' }}>Casi cuatro décadas sirviendo Madrid con la misma pasión y los mismos valores con los que empezamos.</p>
+          <h1 className="anim-text-reveal font-hero font-[800] text-[clamp(44px,6vw,72px)] leading-[1.0] text-white mb-4" style={{ animationDelay: '0.18s' }}>Nuestra historia</h1>
+          <p className="anim-fade-up text-[#B8D8C8] text-[17px] leading-[1.7] max-w-[480px]" style={{ animationDelay: '0.32s' }}>Casi cuatro décadas sirviendo Madrid con la misma pasión y los mismos valores con los que empezamos.</p>
         </div>
       </section>
 
@@ -123,11 +131,13 @@ export default function NosotrosPage() {
               <p>Terraza interior climatizada disponible de marzo a octubre, con entrada propia desde la calle.</p>
             </div>
             <div className="mt-8 grid grid-cols-3 gap-4">
-              {[{ n: '120', l: 'Comensales' }, { n: '200+', l: 'Referencias\nde vino' }, { n: '18', l: 'Sala privada' }].map((s, i) => (
-                <AnimateIn key={s.n} delay={i * 80}>
+              {stats.map((s, i) => (
+                <AnimateIn key={s.label} delay={i * 80}>
                   <div className="border-t-2 border-[#C8DC2E] pt-4 hover:-translate-y-1 transition-transform duration-200">
-                    <p className="font-heading font-bold text-[24px] text-[#172E22]">{s.n}</p>
-                    <p className="text-[11px] text-[#5A6B60] font-bold tracking-[1px] uppercase mt-1" style={{ whiteSpace: 'pre-line' }}>{s.l}</p>
+                    <p className="font-heading font-bold text-[24px] text-[#172E22]">
+                      <CountUp to={s.to} suffix={s.suffix} />
+                    </p>
+                    <p className="text-[11px] text-[#5A6B60] font-bold tracking-[1px] uppercase mt-1" style={{ whiteSpace: 'pre-line' }}>{s.label}</p>
                   </div>
                 </AnimateIn>
               ))}
@@ -144,8 +154,12 @@ export default function NosotrosPage() {
             <p className="text-[#6A9A80] text-[15px]">Calle Gran Vía, 45 · Madrid · Martes a domingo</p>
           </div>
           <div className="flex gap-3 flex-wrap">
-            <Link href="/reservations" className="px-[28px] py-[13px] bg-[#C8DC2E] text-[#172E22] font-bold text-[14px] rounded-[3px] hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] transition-all">Reservar mesa →</Link>
-            <Link href="/carta" className="px-[28px] py-[13px] border border-white/15 text-white text-[14px] rounded-[3px] hover:bg-white/10 hover:border-white/30 transition-all">Ver carta</Link>
+            <MagneticEl>
+              <Link href="/reservations" className="inline-block px-[28px] py-[13px] bg-[#C8DC2E] text-[#172E22] font-bold text-[14px] rounded-[3px] hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] transition-all">Reservar mesa →</Link>
+            </MagneticEl>
+            <MagneticEl>
+              <Link href="/carta" className="inline-block px-[28px] py-[13px] border border-white/15 text-white text-[14px] rounded-[3px] hover:bg-white/10 hover:border-white/30 transition-all">Ver carta</Link>
+            </MagneticEl>
           </div>
         </AnimateIn>
       </section>
