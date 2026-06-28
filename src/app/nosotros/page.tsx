@@ -4,11 +4,13 @@ import Link from 'next/link';
 import AnimateIn from '@/components/AnimateIn';
 import CountUp from '@/components/CountUp';
 import MagneticEl from '@/components/MagneticEl';
+import ParallaxImage from '@/components/ParallaxImage';
+import TiltCard from '@/components/TiltCard';
+import SplitText from '@/components/SplitText';
 
 export const metadata: Metadata = {
   title: 'Nuestra historia',
-  description:
-    'Conoce la historia de Restaurante Marqués: casi cuatro décadas en Madrid, dos generaciones en la cocina y una filosofía construida sobre el respeto al producto y la hospitalidad genuina.',
+  description: 'Conoce la historia de Restaurante Marqués: casi cuatro décadas en Madrid, dos generaciones en la cocina y una filosofía construida sobre el respeto al producto y la hospitalidad genuina.',
   openGraph: {
     title: 'Nuestra historia · Restaurante Marqués',
     description: 'Desde 1987 en el corazón de Madrid. Conoce a la familia Marqués y su forma de entender la cocina.',
@@ -41,9 +43,11 @@ const stats = [
 export default function NosotrosPage() {
   return (
     <>
-      {/* Hero */}
+      {/* Hero con parallax */}
       <section className="relative overflow-hidden" style={{ height: '70vh', minHeight: '480px' }}>
-        <Image src="/hero.webp" alt="Interior del restaurante Marqués" fill className="object-cover scale-[1.03] hover:scale-100 transition-transform duration-[8000ms] ease-out" style={{ objectPosition: 'center 30%' }} priority />
+        <ParallaxImage speed={0.2}>
+          <Image src="/hero.webp" alt="Interior del restaurante Marqués" fill className="object-cover" style={{ objectPosition: 'center 30%' }} priority />
+        </ParallaxImage>
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(14,28,18,0.90) 0%, rgba(14,28,18,0.60) 50%, rgba(14,28,18,0.20) 100%)' }} />
         <div className="relative h-full flex flex-col justify-end px-[52px] pb-16">
           <p className="anim-fade-up text-[#C8DC2E] text-[11px] font-bold tracking-[2.5px] uppercase mb-4" style={{ animationDelay: '0.05s' }}>Desde 1987</p>
@@ -57,7 +61,13 @@ export default function NosotrosPage() {
         <div className="max-w-5xl mx-auto grid md:grid-cols-[1fr_1fr] gap-20 items-start">
           <AnimateIn from="left">
             <p className="text-[#172E22] text-[10px] font-bold tracking-[2.5px] uppercase mb-4">La historia</p>
-            <h2 className="font-heading font-bold text-[38px] leading-[1.1] tracking-[-0.5px] text-[#172E22] mb-6">Un restaurante familiar desde el primer día</h2>
+            <SplitText
+              text="Un restaurante familiar desde el primer día"
+              as="h2"
+              className="font-heading font-bold text-[38px] leading-[1.1] tracking-[-0.5px] text-[#172E22] mb-6"
+              baseDelay={60}
+              stagger={45}
+            />
             <p className="text-[#5A6B60] text-[15px] leading-[1.75] mb-5">En 1987, Alejandro Marqués abrió una pequeña taberna en el barrio de Malasaña con veinte sillas, una carta de ocho platos y la convicción de que la cocina honesta siempre tiene cabida en Madrid.</p>
             <p className="text-[#5A6B60] text-[15px] leading-[1.75] mb-5">Once años después, el local de Gran Vía pasó a ser nuestro hogar. Un espacio que hemos ido construyendo despacio, con materiales nobles, sin prisas y con el mismo carácter de siempre.</p>
             <p className="text-[#5A6B60] text-[15px] leading-[1.75]">Hoy somos dos generaciones en la cocina. Diego Marqués, formado en Lyon y San Sebastián, aporta técnica y viaje a una cocina que nunca ha olvidado sus raíces: el producto, la temporada y el respeto.</p>
@@ -81,9 +91,11 @@ export default function NosotrosPage() {
         </div>
       </section>
 
-      {/* Cita */}
+      {/* Cita con parallax */}
       <section className="relative overflow-hidden" style={{ height: '440px' }}>
-        <Image src="/hero.webp" alt="Salón del restaurante Marqués" fill className="object-cover" style={{ objectPosition: 'center 70%' }} />
+        <ParallaxImage speed={0.15}>
+          <Image src="/hero.webp" alt="Salón del restaurante Marqués" fill className="object-cover" style={{ objectPosition: 'center 70%' }} />
+        </ParallaxImage>
         <div className="absolute inset-0" style={{ background: 'rgba(14,28,18,0.50)' }} />
         <div className="relative h-full flex items-center px-[52px]">
           <AnimateIn from="bottom">
@@ -95,21 +107,28 @@ export default function NosotrosPage() {
         </div>
       </section>
 
-      {/* Filosofía */}
+      {/* Filosofía — cards con tilt 3D */}
       <section className="bg-[#172E22] px-[52px] py-[88px]">
         <div className="max-w-5xl mx-auto">
           <AnimateIn>
             <p className="text-[#C8DC2E] text-[10px] font-bold tracking-[2.5px] uppercase mb-4">Cómo cocinamos</p>
-            <h2 className="font-heading font-bold text-[38px] tracking-[-0.5px] text-white mb-14">Nuestra filosofía</h2>
+            <SplitText
+              text="Nuestra filosofía"
+              as="h2"
+              className="font-heading font-bold text-[38px] tracking-[-0.5px] text-white mb-14"
+              stagger={70}
+            />
           </AnimateIn>
           <div className="grid md:grid-cols-3 gap-8">
             {values.map((v, i) => (
               <AnimateIn key={v.num} delay={i * 100}>
-                <div className="border-t border-white/10 pt-6 hover:border-[#C8DC2E]/40 transition-colors duration-300 group">
-                  <p className="font-heading text-[11px] font-bold text-[#C8DC2E] tracking-[1.5px] mb-4 uppercase">{v.num}</p>
-                  <h3 className="font-heading font-bold text-[20px] text-white mb-3 group-hover:text-[#C8DC2E] transition-colors duration-300">{v.title}</h3>
-                  <p className="text-[#6A9A80] text-[14px] leading-[1.7]">{v.desc}</p>
-                </div>
+                <TiltCard intensity={6} className="h-full">
+                  <div className="border-t border-white/10 pt-6 h-full hover:border-[#C8DC2E]/40 transition-colors duration-300 group">
+                    <p className="font-heading text-[11px] font-bold text-[#C8DC2E] tracking-[1.5px] mb-4 uppercase">{v.num}</p>
+                    <h3 className="font-heading font-bold text-[20px] text-white mb-3 group-hover:text-[#C8DC2E] transition-colors duration-300">{v.title}</h3>
+                    <p className="text-[#6A9A80] text-[14px] leading-[1.7]">{v.desc}</p>
+                  </div>
+                </TiltCard>
               </AnimateIn>
             ))}
           </div>
@@ -120,7 +139,9 @@ export default function NosotrosPage() {
       <section className="bg-[#F0F4F0] px-[52px] py-[88px]">
         <div className="max-w-5xl mx-auto grid md:grid-cols-[56fr_44fr] gap-16 items-center">
           <AnimateIn from="left" className="relative overflow-hidden rounded-[4px]" style={{ height: '460px' }}>
-            <Image src="/hero.webp" alt="El salón de Marqués" fill className="object-cover hover:scale-105 transition-transform duration-[5000ms] ease-out" style={{ objectPosition: 'right 20%' }} />
+            <ParallaxImage speed={0.12}>
+              <Image src="/hero.webp" alt="El salón de Marqués" fill className="object-cover" style={{ objectPosition: 'right 20%' }} />
+            </ParallaxImage>
           </AnimateIn>
           <AnimateIn from="right">
             <p className="text-[#172E22] text-[10px] font-bold tracking-[2.5px] uppercase mb-4">El espacio</p>
@@ -133,12 +154,14 @@ export default function NosotrosPage() {
             <div className="mt-8 grid grid-cols-3 gap-4">
               {stats.map((s, i) => (
                 <AnimateIn key={s.label} delay={i * 80}>
-                  <div className="border-t-2 border-[#C8DC2E] pt-4 hover:-translate-y-1 transition-transform duration-200">
-                    <p className="font-heading font-bold text-[24px] text-[#172E22]">
-                      <CountUp to={s.to} suffix={s.suffix} />
-                    </p>
-                    <p className="text-[11px] text-[#5A6B60] font-bold tracking-[1px] uppercase mt-1" style={{ whiteSpace: 'pre-line' }}>{s.label}</p>
-                  </div>
+                  <TiltCard intensity={5}>
+                    <div className="border-t-2 border-[#C8DC2E] pt-4">
+                      <p className="font-heading font-bold text-[24px] text-[#172E22]">
+                        <CountUp to={s.to} suffix={s.suffix} />
+                      </p>
+                      <p className="text-[11px] text-[#5A6B60] font-bold tracking-[1px] uppercase mt-1" style={{ whiteSpace: 'pre-line' }}>{s.label}</p>
+                    </div>
+                  </TiltCard>
                 </AnimateIn>
               ))}
             </div>
