@@ -4,6 +4,7 @@ import './globals.css';
 import { AuthProvider } from '@/context/AuthContext';
 import PublicShell from './PublicShell';
 import ScrollProgress from '@/components/ScrollProgress';
+import CursorSpotlight from '@/components/CursorSpotlight';
 import CustomCursor from '@/components/CustomCursor';
 
 const barlowCondensed = Barlow_Condensed({
@@ -64,6 +65,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="flex flex-col min-h-screen bg-[#F0F4F0]">
         <ScrollProgress />
         <CustomCursor />
+        <CursorSpotlight />
         <AuthProvider>
           <PublicShell>{children}</PublicShell>
         </AuthProvider>
