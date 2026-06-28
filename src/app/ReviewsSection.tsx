@@ -5,44 +5,46 @@ import type { Review } from '@/types';
 import AnimateIn from '@/components/AnimateIn';
 
 const AVATARS = ['#2A4A38', '#1A3050', '#3A3020', '#172E22', '#402028', '#1A2A40'];
+const TIMEOUT_MS = 5000;
 
-function SkeletonCard() {
-  return (
-    <div className="bg-white border border-[#E8EDE8] rounded-[4px] p-6 animate-pulse">
-      <div className="h-2.5 bg-[#DDE8E0] rounded-full w-20 mb-5" />
-      <div className="space-y-2.5 mb-7">
-        <div className="h-2.5 bg-[#E8F0EC] rounded-full w-full" />
-        <div className="h-2.5 bg-[#E8F0EC] rounded-full w-5/6" />
-        <div className="h-2.5 bg-[#E8F0EC] rounded-full w-3/4" />
-        <div className="h-2.5 bg-[#EFF3F0] rounded-full w-2/3" />
-      </div>
-      <div className="flex items-center gap-3 pt-4 border-t border-[#EDF2EF]">
-        <div className="w-9 h-9 rounded-full bg-[#DDE8E0] shrink-0" />
-        <div className="space-y-2">
-          <div className="h-2.5 bg-[#E8F0EC] rounded-full w-24" />
-          <div className="h-2 bg-[#EFF3F0] rounded-full w-16" />
-        </div>
-      </div>
-    </div>
-  );
-}
+type Status = 'loading' | 'done' | 'empty';
 
 export default function ReviewsSection() {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [avg,     setAvg]     = useState<number | null>(null);
   const [total,   setTotal]   = useState<number | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [status,  setStatus]  = useState<Status>('loading');
 
   useEffect(() => {
+    let cancelled = false;
+
+    // Si el API tarda más de 5s, desaparecer limpiamente
+    const timer = setTimeout(() => {
+      if (!cancelled) setStatus('empty');
+    }, TIMEOUT_MS);
+
     reviewsApi.list({ limit: 6 })
       .then(({ reviews, average_rating, total }) => {
-        setReviews(reviews);
-        setAvg(average_rating !== null ? Number(average_rating) : null);
-        setTotal(total ?? null);
+        if (cancelled) return;
+        clearTimeout(timer);
+        if (reviews.length > 0) {
+          setReviews(reviews);
+          setAvg(average_rating !== null ? Number(average_rating) : null);
+          setTotal(total ?? null);
+          setStatus('done');
+        } else {
+          setStatus('empty');
+        }
       })
-      .catch(() => {})
-      .finally(() => setLoading(false));
+      .catch(() => {
+        if (!cancelled) { clearTimeout(timer); setStatus('empty'); }
+      });
+
+    return () => { cancelled = true; clearTimeout(timer); };
   }, []);
+
+  // Sin reseñas o timeout → ocultar sección completamente
+  if (status === 'empty') return null;
 
   const avgRounded = avg !== null ? Math.min(5, Math.max(0, Math.round(avg))) : 5;
   const avgStars   = '★'.repeat(avgRounded) + '☆'.repeat(5 - avgRounded);
@@ -50,15 +52,7 @@ export default function ReviewsSection() {
   return (
     <div>
       {/* Rating summary */}
-      {loading ? (
-        <div className="flex items-center gap-4 mt-3 mb-10 animate-pulse">
-          <div className="h-12 w-16 bg-[#DDE8E0] rounded" />
-          <div className="space-y-2">
-            <div className="h-3 bg-[#E8F0EC] rounded-full w-28" />
-            <div className="h-2.5 bg-[#EFF3F0] rounded-full w-40" />
-          </div>
-        </div>
-      ) : (
+      {status === 'done' ? (
         <div className="flex items-center gap-4 mt-3 mb-10">
           <span className="font-heading font-bold text-[48px] leading-none text-[#172E22]">
             {avg !== null ? avg.toFixed(1) : '—'}
@@ -70,18 +64,24 @@ export default function ReviewsSection() {
             </span>
           </div>
         </div>
+      ) : (
+        /* Indicador discreto mientras carga — sin tarjetas fantasma */
+        <div className="flex items-center gap-3 mt-4 mb-10 text-[#8A9C90] text-[13px]">
+          <span className="flex gap-1 items-center">
+            {[0, 1, 2].map(i => (
+              <span
+                key={i}
+                className="w-[5px] h-[5px] rounded-full bg-[#B8CCBF] inline-block animate-pulse"
+                style={{ animationDelay: `${i * 180}ms` }}
+              />
+            ))}
+          </span>
+          <span>Cargando reseñas…</span>
+        </div>
       )}
 
-      {/* Grid de reseñas */}
-      {loading ? (
-        <div className="grid md:grid-cols-3 gap-5">
-          {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
-        </div>
-      ) : reviews.length === 0 ? (
-        <p className="text-[#5A6B60] text-center py-14 text-[15px]">
-          Aún no hay reseñas disponibles.
-        </p>
-      ) : (
+      {/* Grid de reseñas — solo cuando los datos están listos */}
+      {status === 'done' && (
         <div className="grid md:grid-cols-3 gap-5">
           {reviews.map((r: Review, i: number) => {
             const initial = r.user_name ? r.user_name.charAt(0).toUpperCase() : '?';
