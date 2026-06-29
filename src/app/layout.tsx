@@ -6,6 +6,7 @@ import PublicShell from './PublicShell';
 import ScrollProgress from '@/components/ScrollProgress';
 import CursorSpotlight from '@/components/CursorSpotlight';
 import CustomCursor from '@/components/CustomCursor';
+import ApiWarmup from '@/components/ApiWarmup';
 
 const barlowCondensed = Barlow_Condensed({
   weight: ['800'],
@@ -63,6 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${barlowCondensed.variable} ${syne.variable} ${plusJakarta.variable}`}
     >
       <body className="flex flex-col min-h-screen bg-[#F0F4F0]">
+        <ApiWarmup />
         <ScrollProgress />
         <CustomCursor />
         <CursorSpotlight />
