@@ -37,7 +37,7 @@ const milestones = [
 
 const stats = [
   { to: 120, suffix: '',  label: 'Comensales' },
-  { to: 200, suffix: '+', label: 'Referencias\nde vino' },
+  { to: 200, suffix: '+', label: 'Referencias de vino' },
   { to: 18,  suffix: '',  label: 'Sala privada' },
 ];
 
@@ -153,17 +153,19 @@ export default function NosotrosPage() {
               <p>Una bodega privada para grupos y celebraciones con capacidad para 18 personas y acceso directo a nuestra cava de vinos.</p>
               <p>Terraza interior climatizada disponible de marzo a octubre, con entrada propia desde la calle.</p>
             </div>
-            <div className="mt-8 grid grid-cols-3 gap-4">
+
+            {/* Stats ── fila horizontal limpia */}
+            <div className="mt-10 flex gap-0 border border-[#D8E4DC] rounded-[4px] overflow-hidden">
               {stats.map((s, i) => (
-                <AnimateIn key={s.label} delay={i * 80}>
-                  <TiltCard intensity={5}>
-                    <div className="border-t-2 border-[#C8DC2E] pt-4">
-                      <p className="font-heading font-bold text-[24px] text-[#172E22]">
-                        <CountUp to={s.to} suffix={s.suffix} />
-                      </p>
-                      <p className="text-[11px] text-[#5A6B60] font-bold tracking-[1px] uppercase mt-1" style={{ whiteSpace: 'pre-line' }}>{s.label}</p>
-                    </div>
-                  </TiltCard>
+                <AnimateIn key={s.label} delay={i * 80} className="flex-1">
+                  <div className={`px-5 py-5 bg-white flex flex-col gap-1${
+                    i < stats.length - 1 ? ' border-r border-[#D8E4DC]' : ''
+                  }`}>
+                    <p className="font-heading font-bold text-[28px] leading-none text-[#172E22]">
+                      <CountUp to={s.to} suffix={s.suffix} />
+                    </p>
+                    <p className="text-[11px] text-[#7A9080] font-bold tracking-[0.8px] uppercase mt-1">{s.label}</p>
+                  </div>
                 </AnimateIn>
               ))}
             </div>
