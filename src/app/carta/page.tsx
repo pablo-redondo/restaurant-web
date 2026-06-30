@@ -62,7 +62,7 @@ const sections = [
 ];
 
 const tagColors: Record<string, string> = {
-  'Clásico':   'bg-[#EEF2EE] text-[#3A5A48]',
+  'Clásico':   'bg-[#F0F4F0] text-[#4A6058] border border-[#D8E2DC]',
   'Firma':     'bg-[#172E22] text-[#C8DC2E]',
   'Vegetal':   'bg-[#E3F2E4] text-[#2A6A40]',
   'Temporada': 'bg-[#FCEFCB] text-[#8A6010]',
@@ -91,9 +91,9 @@ export default function CartaPage() {
         </div>
       </section>
 
-      {/* ── FRANJA DE CIFRAS ── sobre crema, NO oscura, evita acumular bloques oscuros ── */}
-      <section className="bg-[#F1EFE9] border-b border-[#E0DCD2]">
-        <div className="px-[52px] py-9 max-w-5xl mx-auto grid grid-cols-3 divide-x divide-[#DCD7CB]">
+      {/* ── FRANJA DE CIFRAS ── blanco, igual que el resto de la página ── */}
+      <section className="bg-white border-b border-[#EAEEE9]">
+        <div className="px-[52px] py-9 max-w-5xl mx-auto grid grid-cols-3 divide-x divide-[#EAEEE9]">
           {[
             { to: 37,  suffix: '',  decimals: 0, label: 'años en Madrid',        delay: 200 },
             { to: 4.8, suffix: '★', decimals: 1, label: 'valoración Google',     delay: 300 },
@@ -103,14 +103,14 @@ export default function CartaPage() {
               <p className="font-heading font-bold leading-none text-[#172E22] tabular-nums" style={{ fontSize: 'clamp(26px,3.2vw,38px)' }}>
                 <CountUp to={to} suffix={suffix} decimals={decimals} startDelay={delay} />
               </p>
-              <p className="text-[#7A7363] text-[12px] mt-2 tracking-[0.3px]">{label}</p>
+              <p className="text-[#8A9C90] text-[12px] mt-2 tracking-[0.3px]">{label}</p>
             </AnimateIn>
           ))}
         </div>
       </section>
 
       {/* ── NAV DE SECCIONES ── ───────────────────────────────────── */}
-      <nav className="sticky top-[58px] z-40 border-b border-[#E4EDE8]" style={{ background: 'rgba(255,255,255,0.97)', backdropFilter: 'blur(12px)' }}>
+      <nav className="sticky top-[58px] z-40 border-b border-[#EAEEE9]" style={{ background: 'rgba(255,255,255,0.97)', backdropFilter: 'blur(12px)' }}>
         <div className="px-[52px] overflow-x-auto">
           <ul className="flex gap-1 min-w-max py-[10px]">
             {sections.map((s, idx) => (
@@ -130,12 +130,11 @@ export default function CartaPage() {
         </div>
       </nav>
 
-      {/* ── SECCIONES DE PLATOS ── todas sobre fondo claro, sin bloques oscuros intermedios ── */}
+      {/* ── SECCIONES DE PLATOS ── un único fondo blanco, sin alternancia de grises ── */}
       {sections.map((s, si) => (
-        <section key={s.id} id={s.id} className={si % 2 === 0 ? 'bg-white' : 'bg-[#FAFAF8]'}>
+        <section key={s.id} id={s.id} className="bg-white">
           <div className="px-[52px] py-16">
             <div className="max-w-5xl mx-auto">
-              {/* Cabecera de sección — ligera, sobre el mismo fondo claro */}
               <AnimateIn>
                 <div className="flex items-end justify-between gap-4 mb-10 pb-6 border-b-2 border-[#172E22]">
                   <div>
@@ -166,7 +165,7 @@ export default function CartaPage() {
                         className={`py-5 border-b border-[#EAEEE9] group cursor-default transition-all duration-200 ${
                           isFirma
                             ? '-ml-3 pl-[13px] pr-3 border-l-[3px] border-l-[#C8DC2E] hover:bg-[#F6FCE8]'
-                            : '-mx-3 px-3 rounded-[3px] hover:bg-[#F0F4F0]'
+                            : '-mx-3 px-3 rounded-[3px] hover:bg-[#F7F9F7]'
                         }`}
                       >
                         <div className="flex items-start justify-between gap-3 mb-[6px]">
@@ -226,14 +225,14 @@ export default function CartaPage() {
         </div>
       </section>
 
-      {/* ── ALÉRGENOS ── misma familia de crema que la franja de cifras, cierra el ciclo ── */}
-      <section className="bg-[#F1EFE9] px-[52px] py-14 border-t border-[#E0DCD2]">
+      {/* ── ALÉRGENOS ── mismo blanco que el resto de la página ── */}
+      <section className="bg-white px-[52px] py-14 border-t border-[#EAEEE9]">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
             <p className="font-heading font-semibold text-[13px] tracking-[0.3px] text-[#172E22] mb-2">
               Información sobre alérgenos
             </p>
-            <p className="text-[#6A6458] text-[13px] leading-[1.7] max-w-[520px]">
+            <p className="text-[#5A6B60] text-[13px] leading-[1.7] max-w-[520px]">
               Si tienes alguna alergia o intolerancia, comunícaselo a nuestro equipo antes de pedir.
               Disponemos de información detallada sobre los 14 alérgenos de declaración obligatoria.
             </p>
