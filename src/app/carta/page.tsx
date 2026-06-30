@@ -119,19 +119,19 @@ export default function CartaPage() {
           <div className="px-[52px] py-16">
             <div className="max-w-5xl mx-auto">
               <AnimateIn>
-                <div className="flex items-end justify-between gap-4 mb-10 pb-6 border-b-2 border-[#172E22]">
-                  <div>
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#172E22] text-[#C8DC2E] font-heading font-bold text-[12px]">
-                        {si + 1}
-                      </span>
-                      <span className="text-[#5A6B60] text-[10px] font-bold tracking-[2.5px] uppercase">
+                <div className="flex items-end justify-between gap-4 mb-10">
+                  <div className="flex items-end gap-5">
+                    <span className="font-heading font-bold text-[#C8DC2E] leading-[0.78]" style={{ fontSize: 'clamp(40px,5vw,58px)' }}>
+                      {String(si + 1).padStart(2, '0')}
+                    </span>
+                    <div>
+                      <p className="text-[#5A6B60] text-[11px] font-bold tracking-[2.5px] uppercase mb-[5px]">
                         {s.label}
-                      </span>
+                      </p>
+                      <h2 className="font-heading font-bold text-[#172E22] leading-[1]" style={{ fontSize: 'clamp(26px,3.2vw,36px)', letterSpacing: '-0.5px' }}>
+                        {s.title}
+                      </h2>
                     </div>
-                    <h2 className="font-heading font-bold text-[#172E22] leading-[1.05]" style={{ fontSize: 'clamp(28px,3.4vw,42px)' }}>
-                      {s.title}
-                    </h2>
                   </div>
                   <p className="text-[#5A6B60] text-[12px] shrink-0 hidden md:block mb-[4px]">
                     Precios en euros · IVA incluido
