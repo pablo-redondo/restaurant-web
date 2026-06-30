@@ -1,13 +1,14 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { Suspense, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 
-export default function LoginPage() {
+function LoginForm() {
   const { login } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -19,7 +20,8 @@ export default function LoginPage() {
     setLoading(true);
     try {
       await login(email, password);
-      router.push('/reservations/me');
+      const redirect = searchParams.get('redirect');
+      router.push(redirect || '/reservations/me');
     } catch (err: unknown) {
       const e = err as { error?: string };
       setError(e?.error ?? 'Error al iniciar sesión');
@@ -92,5 +94,13 @@ export default function LoginPage() {
         </form>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginForm />
+    </Suspense>
   );
 }

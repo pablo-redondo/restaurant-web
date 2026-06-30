@@ -1,10 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { tablesApi, reservationsApi } from '@/lib/api';
 import type { Table } from '@/types';
+
+const PENDING_RESERVATION_KEY = 'pendingReservation';
 
 const WEEKDAYS = ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá', 'Do'];
 const MONTHS = [
@@ -118,6 +120,27 @@ export default function ReservationsPage() {
   const [success, setSuccess] = useState(false);
   const [reservationId, setReservationId] = useState<number | null>(null);
 
+  useEffect(() => {
+    if (authLoading || !user) return;
+    const raw = sessionStorage.getItem(PENDING_RESERVATION_KEY);
+    if (!raw) return;
+    sessionStorage.removeItem(PENDING_RESERVATION_KEY);
+    try {
+      const draft = JSON.parse(raw) as {
+        date: string; time: string; guests: number; notes: string; selectedTable: Table | null;
+      };
+      setDate(draft.date);
+      setTime(draft.time);
+      setGuests(draft.guests);
+      setNotes(draft.notes || '');
+      if (draft.selectedTable) {
+        setSelectedTable(draft.selectedTable);
+        setLocationTab(draft.selectedTable.location as 'interior' | 'terraza');
+        setStep(3);
+      }
+    } catch { /* draft corrupto, se ignora */ }
+  }, [user, authLoading]);
+
   const goToStep2 = async () => {
     if (!date || !time) return;
     setLoadingTables(true);
@@ -130,7 +153,11 @@ export default function ReservationsPage() {
   };
 
   const handleBook = async () => {
-    if (!user) { router.push('/login'); return; }
+    if (!user) {
+      sessionStorage.setItem(PENDING_RESERVATION_KEY, JSON.stringify({ date, time, guests, notes, selectedTable }));
+      router.push('/login?redirect=/reservations');
+      return;
+    }
     if (!selectedTable) return;
     setBooking(true);
     setBookingError('');
