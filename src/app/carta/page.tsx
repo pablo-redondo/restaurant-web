@@ -80,8 +80,8 @@ export default function CartaPage() {
         <div className="absolute inset-0" style={{ background: 'linear-gradient(115deg, rgba(8,18,12,0.94) 0%, rgba(8,18,12,0.80) 38%, rgba(8,18,12,0.30) 75%, transparent 100%)' }} />
 
         <div className="relative h-full flex flex-col justify-end pb-14 px-[52px]">
-          <p className="anim-fade-up text-[#C8D8CC] text-[11px] font-bold tracking-[3px] uppercase mb-4" style={{ animationDelay: '0.05s' }}>
-            <TextScramble text="Temporada 2024" delay={50} />
+          <p className="anim-fade-up text-[#C8DC2E] text-[11px] font-bold tracking-[3px] uppercase mb-4" style={{ animationDelay: '0.05s' }}>
+            <TextScramble text="Cocina de temporada" delay={50} />
           </p>
           <h1 className="anim-text-reveal font-heading font-bold leading-[1.0] text-white mb-5" style={{ fontSize: 'clamp(42px,6vw,68px)', animationDelay: '0.12s' }}>
             Nuestra carta
