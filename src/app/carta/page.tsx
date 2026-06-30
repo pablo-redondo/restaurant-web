@@ -6,7 +6,6 @@ import CountUp from '@/components/CountUp';
 import TextScramble from '@/components/TextScramble';
 import ParallaxImage from '@/components/ParallaxImage';
 import MagneticEl from '@/components/MagneticEl';
-import TiltCard from '@/components/TiltCard';
 
 export const metadata: Metadata = {
   title: 'Carta',
@@ -63,79 +62,65 @@ const sections = [
 ];
 
 const tagColors: Record<string, string> = {
-  'Clásico':   'bg-[#E8EDE8] text-[#3A5A48]',
+  'Clásico':   'bg-[#EEF2EE] text-[#3A5A48]',
   'Firma':     'bg-[#172E22] text-[#C8DC2E]',
-  'Vegetal':   'bg-[#DFF0E0] text-[#2A6A40]',
-  'Temporada': 'bg-[#FFF4D6] text-[#8A6010]',
+  'Vegetal':   'bg-[#E3F2E4] text-[#2A6A40]',
+  'Temporada': 'bg-[#FCEFCB] text-[#8A6010]',
 };
 
 export default function CartaPage() {
   return (
     <>
-      {/* ── HERO ─────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden" style={{ height: '65vh', minHeight: '440px' }}>
+      {/* ── HERO ── único bloque oscuro de toda la página, marca la entrada ── */}
+      <section className="relative overflow-hidden" style={{ height: '58vh', minHeight: '400px' }}>
         <ParallaxImage speed={0.18}>
           <Image src="/hero.webp" alt="Restaurante Marqués" fill className="object-cover" style={{ objectPosition: 'center 55%' }} priority />
         </ParallaxImage>
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(115deg, rgba(8,18,12,0.96) 0%, rgba(8,18,12,0.84) 32%, rgba(8,18,12,0.38) 65%, transparent 100%)' }} />
-        <div className="absolute bottom-0 inset-x-0 h-36" style={{ background: 'linear-gradient(to top, rgba(8,18,12,0.50), transparent)' }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(115deg, rgba(8,18,12,0.94) 0%, rgba(8,18,12,0.80) 38%, rgba(8,18,12,0.30) 75%, transparent 100%)' }} />
 
-        <div className="relative h-full flex flex-col justify-end pb-16 px-[52px]">
-          <p className="anim-fade-up text-[#C8DC2E] text-[11px] font-bold tracking-[3px] uppercase mb-5" style={{ animationDelay: '0.05s' }}>
+        <div className="relative h-full flex flex-col justify-end pb-14 px-[52px]">
+          <p className="anim-fade-up text-[#C8DC2E] text-[11px] font-bold tracking-[3px] uppercase mb-4" style={{ animationDelay: '0.05s' }}>
             <TextScramble text="Temporada 2024" delay={50} />
           </p>
-          <h1 className="font-heading font-bold leading-[0.95] text-white mb-6" style={{ fontSize: 'clamp(48px,7vw,84px)', animationDelay: '0.12s' }}>
-            <span className="anim-text-reveal block" style={{ animationDelay: '0.12s' }}>Nuestra</span>
-            <span className="anim-text-reveal block text-[#C8DC2E]" style={{ animationDelay: '0.22s' }}>carta</span>
+          <h1 className="anim-text-reveal font-heading font-bold leading-[1.0] text-white mb-5" style={{ fontSize: 'clamp(42px,6vw,68px)', animationDelay: '0.12s' }}>
+            Nuestra carta
           </h1>
-          <p className="anim-fade-up text-[#A8CEC0] text-[15px] leading-[1.75] max-w-[360px] mb-8" style={{ animationDelay: '0.36s' }}>
+          <p className="anim-fade-up text-[#C8D8CC] text-[15px] leading-[1.7] max-w-[420px]" style={{ animationDelay: '0.28s' }}>
             Ingredientes de mercado seleccionados cada mañana. Carta renovada con cada estación.
           </p>
-          <div className="anim-fade-up flex gap-3 flex-wrap" style={{ animationDelay: '0.48s' }}>
-            <MagneticEl>
-              <Link href="/reservations" className="inline-block px-[28px] py-[13px] bg-[#C8DC2E] text-[#172E22] font-bold text-[14px] rounded-[3px] hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] transition-all">
-                Reservar mesa
-              </Link>
-            </MagneticEl>
-            <MagneticEl>
-              <a href="#entrantes" className="inline-block px-[28px] py-[13px] border border-white/25 text-white text-[14px] rounded-[3px] hover:bg-white/10 hover:border-white/45 transition-all">
-                Ver la carta
-              </a>
-            </MagneticEl>
-          </div>
         </div>
       </section>
 
-      {/* ── STATS STRIP ──────────────────────────────────────── */}
-      <section className="bg-[#0E1C12] border-b border-[#1A2E1F]">
-        <div className="px-[52px] py-10 max-w-5xl mx-auto grid grid-cols-3 divide-x divide-[#1A2E1F]">
+      {/* ── FRANJA DE CIFRAS ── sobre crema, NO oscura, evita acumular bloques oscuros ── */}
+      <section className="bg-[#F1EFE9] border-b border-[#E0DCD2]">
+        <div className="px-[52px] py-9 max-w-5xl mx-auto grid grid-cols-3 divide-x divide-[#DCD7CB]">
           {[
             { to: 37,  suffix: '',  decimals: 0, label: 'años en Madrid',        delay: 200 },
             { to: 4.8, suffix: '★', decimals: 1, label: 'valoración Google',     delay: 300 },
             { to: 200, suffix: '+', decimals: 0, label: 'referencias en bodega', delay: 400 },
           ].map(({ to, suffix, decimals, label, delay }, i) => (
             <AnimateIn key={label} delay={i * 80} className="px-8 first:pl-0 text-center">
-              <p className="font-heading font-bold leading-none text-[#C8DC2E] tabular-nums" style={{ fontSize: 'clamp(28px,3.5vw,44px)' }}>
+              <p className="font-heading font-bold leading-none text-[#172E22] tabular-nums" style={{ fontSize: 'clamp(26px,3.2vw,38px)' }}>
                 <CountUp to={to} suffix={suffix} decimals={decimals} startDelay={delay} />
               </p>
-              <p className="text-[#4A7060] text-[12px] mt-2 tracking-[0.3px]">{label}</p>
+              <p className="text-[#7A7363] text-[12px] mt-2 tracking-[0.3px]">{label}</p>
             </AnimateIn>
           ))}
         </div>
       </section>
 
-      {/* ── NAV DE SECCIONES ─────────────────────────────────── */}
-      <nav className="sticky top-[58px] z-40 border-b border-[#C4D5CA]" style={{ background: 'rgba(241,239,233,0.97)', backdropFilter: 'blur(12px)' }}>
+      {/* ── NAV DE SECCIONES ── ───────────────────────────────────── */}
+      <nav className="sticky top-[58px] z-40 border-b border-[#E4EDE8]" style={{ background: 'rgba(255,255,255,0.97)', backdropFilter: 'blur(12px)' }}>
         <div className="px-[52px] overflow-x-auto">
-          <ul className="flex gap-1 min-w-max py-[9px]">
+          <ul className="flex gap-1 min-w-max py-[10px]">
             {sections.map((s, idx) => (
               <li key={s.id}>
                 <a
                   href={`#${s.id}`}
-                  className="flex items-center gap-[7px] px-4 py-2 rounded-[4px] text-[13px] font-medium text-[#5A6B60] hover:text-[#172E22] hover:bg-[#172E22]/[0.06] transition-all duration-200 group"
+                  className="flex items-center gap-[8px] px-4 py-2 rounded-[4px] text-[13px] font-semibold text-[#5A6B60] hover:text-[#172E22] hover:bg-[#F0F4F0] transition-all duration-200 group"
                 >
-                  <span className="text-[9px] font-bold text-[#C8DC2E] opacity-80 group-hover:opacity-100 transition-opacity">
-                    {String(idx + 1).padStart(2, '0')}
+                  <span className="flex items-center justify-center w-[18px] h-[18px] rounded-full bg-[#172E22] text-[#C8DC2E] text-[9px] font-bold group-hover:bg-[#0E1C12] transition-colors">
+                    {idx + 1}
                   </span>
                   {s.title}
                 </a>
@@ -145,50 +130,40 @@ export default function CartaPage() {
         </div>
       </nav>
 
-      {/* ── SECCIONES DE PLATOS ──────────────────────────────── */}
+      {/* ── SECCIONES DE PLATOS ── todas sobre fondo claro, sin bloques oscuros intermedios ── */}
       {sections.map((s, si) => (
-        <section key={s.id} id={s.id}>
-          {/* Cabecera oscura compacta */}
-          <AnimateIn>
-            <div className="bg-[#172E22] px-[52px] py-[38px] relative overflow-hidden">
-              <span
-                className="absolute right-8 top-1/2 -translate-y-1/2 font-heading font-bold leading-none text-white/[0.05] select-none pointer-events-none"
-                style={{ fontSize: '140px' }}
-                aria-hidden
-              >
-                {String(si + 1).padStart(2, '0')}
-              </span>
-              <div className="max-w-5xl mx-auto flex items-end justify-between gap-4">
-                <div>
-                  <div className="flex items-center gap-3 mb-2">
-                    <span className="text-[#C8DC2E] font-heading font-bold text-[11px] tracking-[2px]">
-                      {String(si + 1).padStart(2, '0')}
-                    </span>
-                    <span className="text-[#3A6050] text-[10px] font-bold tracking-[2.5px] uppercase">
-                      {s.label}
-                    </span>
+        <section key={s.id} id={s.id} className={si % 2 === 0 ? 'bg-white' : 'bg-[#FAFAF8]'}>
+          <div className="px-[52px] py-16">
+            <div className="max-w-5xl mx-auto">
+              {/* Cabecera de sección — ligera, sobre el mismo fondo claro */}
+              <AnimateIn>
+                <div className="flex items-end justify-between gap-4 mb-10 pb-6 border-b-2 border-[#172E22]">
+                  <div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#172E22] text-[#C8DC2E] font-heading font-bold text-[12px]">
+                        {si + 1}
+                      </span>
+                      <span className="text-[#8A9C90] text-[10px] font-bold tracking-[2.5px] uppercase">
+                        {s.label}
+                      </span>
+                    </div>
+                    <h2 className="font-heading font-bold text-[#172E22] leading-[1.05]" style={{ fontSize: 'clamp(28px,3.4vw,42px)' }}>
+                      {s.title}
+                    </h2>
                   </div>
-                  <h2 className="font-heading font-bold text-white leading-[1.05]" style={{ fontSize: 'clamp(26px,3.2vw,40px)' }}>
-                    {s.title}
-                  </h2>
+                  <p className="text-[#8A9C90] text-[12px] shrink-0 hidden md:block mb-[4px]">
+                    Precios en euros · IVA incluido
+                  </p>
                 </div>
-                <p className="text-[#2E5040] text-[11px] shrink-0 hidden md:block mb-[2px]">
-                  Precios en euros · IVA incluido
-                </p>
-              </div>
-            </div>
-          </AnimateIn>
+              </AnimateIn>
 
-          {/* Contenido claro — sin problemas de legibilidad */}
-          <div className={si % 2 === 0 ? 'bg-[#FAFAF8]' : 'bg-white'}>
-            <div className="px-[52px] py-14">
-              <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-x-14">
+              <div className="grid md:grid-cols-2 gap-x-14">
                 {s.dishes.map((dish, di) => {
                   const isFirma = dish.tag === 'Firma';
                   return (
                     <AnimateIn key={dish.name} delay={di * 55}>
                       <div
-                        className={`py-5 border-b border-[#E4EDE8] group cursor-default transition-all duration-200 ${
+                        className={`py-5 border-b border-[#EAEEE9] group cursor-default transition-all duration-200 ${
                           isFirma
                             ? '-ml-3 pl-[13px] pr-3 border-l-[3px] border-l-[#C8DC2E] hover:bg-[#F6FCE8]'
                             : '-mx-3 px-3 rounded-[3px] hover:bg-[#F0F4F0]'
@@ -196,7 +171,7 @@ export default function CartaPage() {
                       >
                         <div className="flex items-start justify-between gap-3 mb-[6px]">
                           <div className="flex items-center gap-2 flex-wrap">
-                            <p className="font-heading font-semibold text-[15px] text-[#172E22] group-hover:text-[#2A6A40] transition-colors duration-200">
+                            <p className="font-heading font-semibold text-[16px] text-[#172E22] group-hover:text-[#2A6A40] transition-colors duration-200">
                               {dish.name}
                             </p>
                             {dish.tag && (
@@ -205,13 +180,13 @@ export default function CartaPage() {
                               </span>
                             )}
                           </div>
-                          <p className="font-heading font-bold text-[16px] shrink-0 tabular-nums text-[#172E22]">
+                          <p className="font-heading font-bold text-[17px] shrink-0 tabular-nums text-[#172E22]">
                             {dish.price} €
                           </p>
                         </div>
-                        <p className="text-[#5A6B60] text-[13px] leading-[1.65]">{dish.desc}</p>
+                        <p className="text-[#5A6B60] text-[13.5px] leading-[1.7]">{dish.desc}</p>
                         {isFirma && (
-                          <p className="text-[#C8DC2E] text-[10px] font-bold tracking-[1.5px] uppercase mt-[10px] opacity-70">
+                          <p className="text-[#7A9020] text-[10px] font-bold tracking-[1.5px] uppercase mt-[10px]">
                             ✦ Plato firma del chef
                           </p>
                         )}
@@ -225,42 +200,40 @@ export default function CartaPage() {
         </section>
       ))}
 
-      {/* ── MARIDAJE ─────────────────────────────────────────── */}
-      <section className="relative overflow-hidden" style={{ height: '320px' }}>
+      {/* ── MARIDAJE ── segundo y único otro bloque oscuro, como cierre de transición ── */}
+      <section className="relative overflow-hidden" style={{ height: '300px' }}>
         <ParallaxImage speed={0.14}>
           <Image src="/hero.webp" alt="Interior Marqués" fill className="object-cover" style={{ objectPosition: 'center 80%' }} />
         </ParallaxImage>
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(8,18,12,0.92) 0%, rgba(8,18,12,0.68) 55%, rgba(8,18,12,0.40) 100%)' }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(8,18,12,0.92) 0%, rgba(8,18,12,0.72) 55%, rgba(8,18,12,0.46) 100%)' }} />
         <div className="relative h-full px-[52px] flex items-center">
           <div className="max-w-5xl mx-auto w-full flex flex-col md:flex-row items-center justify-between gap-10">
             <AnimateIn>
               <p className="text-[#C8DC2E] text-[10px] font-bold tracking-[2.5px] uppercase mb-3">Maridaje perfecto</p>
-              <p className="font-heading font-bold text-white leading-[1.1] mb-2" style={{ fontSize: 'clamp(26px,3.5vw,42px)' }}>
+              <p className="font-heading font-bold text-white leading-[1.15] mb-2" style={{ fontSize: 'clamp(24px,3.2vw,38px)' }}>
                 Bodega con más de <span className="text-[#C8DC2E]">200 referencias</span>
               </p>
-              <p className="text-[#7AAA90] text-[14px] mt-1">Nuestro sumiller te asesora en sala</p>
+              <p className="text-[#9FC4B0] text-[14px] mt-1">Nuestro sumiller te asesora en sala</p>
             </AnimateIn>
             <AnimateIn delay={150}>
-              <TiltCard intensity={5} className="inline-block">
-                <MagneticEl>
-                  <Link href="/reservations" className="inline-block px-[34px] py-[15px] bg-[#C8DC2E] text-[#172E22] font-bold text-[15px] rounded-[3px] hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap">
-                    Reservar mesa
-                  </Link>
-                </MagneticEl>
-              </TiltCard>
+              <MagneticEl>
+                <Link href="/reservations" className="inline-block px-[32px] py-[14px] bg-[#C8DC2E] text-[#172E22] font-bold text-[14px] rounded-[3px] hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap">
+                  Reservar mesa
+                </Link>
+              </MagneticEl>
             </AnimateIn>
           </div>
         </div>
       </section>
 
-      {/* ── ALÉRGENOS ────────────────────────────────────────── */}
-      <section className="bg-[#F0F4F0] px-[52px] py-14 border-t border-[#C4D5CA]">
+      {/* ── ALÉRGENOS ── misma familia de crema que la franja de cifras, cierra el ciclo ── */}
+      <section className="bg-[#F1EFE9] px-[52px] py-14 border-t border-[#E0DCD2]">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
             <p className="font-heading font-semibold text-[13px] tracking-[0.3px] text-[#172E22] mb-2">
               Información sobre alérgenos
             </p>
-            <p className="text-[#5A6B60] text-[13px] leading-[1.7] max-w-[520px]">
+            <p className="text-[#6A6458] text-[13px] leading-[1.7] max-w-[520px]">
               Si tienes alguna alergia o intolerancia, comunícaselo a nuestro equipo antes de pedir.
               Disponemos de información detallada sobre los 14 alérgenos de declaración obligatoria.
             </p>
