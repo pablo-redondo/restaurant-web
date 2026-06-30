@@ -82,9 +82,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <div className="mt-auto pt-6">
             <Link
               href="/"
-              className="flex items-center gap-2 px-3 py-[9px] rounded-[3px] text-[13px] text-[#4A6A58] hover:text-[#7AAD94] transition-colors"
+              className="flex items-center gap-[10px] px-3 py-[9px] rounded-[3px] text-[13px] font-medium text-[#7AAD94] hover:text-[#C8DC2E] hover:bg-white/5 transition-colors"
             >
-              ← Ver web
+              <span className="text-[14px] w-4 text-center shrink-0">⌂</span>
+              Ver web
             </Link>
           </div>
         </nav>

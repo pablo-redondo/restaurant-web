@@ -7,6 +7,7 @@ import { reservationsApi, reviewsApi } from '@/lib/api';
 import type { Reservation } from '@/types';
 import StatusBadge from '@/components/StatusBadge';
 import StarRating from '@/components/StarRating';
+import BackButton from '@/components/BackButton';
 
 export default function ReservationDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -68,9 +69,7 @@ export default function ReservationDetailPage() {
 
   return (
     <div className="max-w-xl mx-auto px-4 py-12">
-      <button onClick={() => router.back()} className="text-[#5A6B60] hover:text-[#172E22] text-sm mb-6 transition-colors">
-        ← Volver
-      </button>
+      <BackButton onClick={() => router.back()} className="mb-6" />
 
       <div className="bg-white border border-[#C4D5CA] rounded-card p-8">
         <div className="flex items-start justify-between mb-6">

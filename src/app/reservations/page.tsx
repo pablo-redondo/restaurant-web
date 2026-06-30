@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { tablesApi, reservationsApi } from '@/lib/api';
 import type { Table } from '@/types';
+import BackButton from '@/components/BackButton';
 
 const PENDING_RESERVATION_KEY = 'pendingReservation';
 
@@ -217,10 +218,11 @@ export default function ReservationsPage() {
   return (
     <div className="min-h-[calc(100vh-58px)] bg-[#F0F4F0]">
       <div className="bg-[#172E22] px-8 md:px-14 pt-11 pb-14">
-        <button onClick={() => step > 1 ? setStep(s => s - 1) : router.push('/')}
-          className="text-[#6A9A80] text-sm mb-4 hover:text-[#A8CCBA] transition-colors block">
-          ← Volver
-        </button>
+        <BackButton
+          variant="dark"
+          onClick={() => step > 1 ? setStep(s => s - 1) : router.push('/')}
+          className="mb-4"
+        />
         <h1 className="font-heading font-bold text-[38px] tracking-[-0.5px] text-white mb-2">Reservar mesa</h1>
         <p className="text-[#7AAD94] text-[14px]">Seleccione fecha, hora y número de comensales para ver disponibilidad.</p>
       </div>

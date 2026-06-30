@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import BackButton from '@/components/BackButton';
 
 export const metadata: Metadata = {
   title: 'Aviso legal',
@@ -54,9 +54,7 @@ export default function AvisoLegalPage() {
         </div>
 
         <div className="mt-12">
-          <Link href="/" className="inline-flex items-center gap-2 text-[#172E22] font-bold text-[12px] tracking-[1.5px] uppercase border-b-2 border-[#C8DC2E] pb-[3px] hover:text-[#8A9C1E] transition">
-            ← Volver al inicio
-          </Link>
+          <BackButton href="/" label="Volver al inicio" />
         </div>
       </div>
     </section>
