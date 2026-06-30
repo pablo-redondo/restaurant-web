@@ -205,24 +205,33 @@ export default function CartaPage() {
         </div>
       </section>
 
-      {/* ── ALÉRGENOS ── #F0F4F0, cierra el ciclo igual que la franja de cifras ── */}
-      <section className="bg-[#F0F4F0] px-[52px] py-14">
-        <div className="max-w-5xl mx-auto pt-9 border-t border-[#C4D5CA] flex flex-col md:flex-row md:items-end justify-between gap-10">
-          <div className="flex-1 min-w-[280px]">
-            <p className="text-[#B07010] text-[10.5px] font-bold tracking-[2.5px] uppercase mb-[10px]">
-              Información sobre alérgenos
-            </p>
-            <p className="text-[#3F5A4B] text-[15px] leading-[1.7] max-w-[620px]">
-              Disponemos de información detallada sobre los{' '}
-              <strong className="text-[#172E22]">14 alérgenos de declaración obligatoria</strong>.
-              Si tienes alguna alergia o intolerancia, comunícaselo a nuestro equipo antes de pedir.
-            </p>
-          </div>
-          <MagneticEl>
-            <Link href="/contacto" className="inline-block shrink-0 px-9 py-[14px] bg-[#172E22] text-white font-bold text-[13.5px] tracking-[0.4px] rounded-[3px] hover:bg-[#0F1F17] transition-all duration-200">
-              Contactar
-            </Link>
-          </MagneticEl>
+      {/* ── ALÉRGENOS ── tarjeta destacada, sin línea separadora ── */}
+      <section className="bg-[#F0F4F0] px-[52px] py-16">
+        <div className="max-w-5xl mx-auto">
+          <AnimateIn>
+            <div className="bg-white rounded-[10px] border border-[#C4D5CA] px-9 py-9 md:px-12 md:py-10 flex flex-col md:flex-row md:items-center justify-between gap-9 shadow-[0_6px_24px_rgba(23,46,34,0.06)]">
+              <div className="flex items-start gap-5 flex-1 min-w-[280px]">
+                <span className="shrink-0 w-12 h-12 rounded-full bg-[#FCEFCB] flex items-center justify-center text-[#B07010] text-[20px] font-bold">
+                  !
+                </span>
+                <div>
+                  <p className="text-[#B07010] text-[11px] font-bold tracking-[2.5px] uppercase mb-[10px]">
+                    Información sobre alérgenos
+                  </p>
+                  <p className="text-[#3F5A4B] text-[15.5px] leading-[1.75] max-w-[560px]">
+                    Disponemos de información detallada sobre los{' '}
+                    <strong className="text-[#172E22]">14 alérgenos de declaración obligatoria</strong>.
+                    Si tienes alguna alergia o intolerancia, comunícaselo a nuestro equipo antes de pedir.
+                  </p>
+                </div>
+              </div>
+              <MagneticEl>
+                <Link href="/contacto" className="inline-block shrink-0 px-9 py-[14px] bg-[#172E22] text-white font-bold text-[13.5px] tracking-[0.4px] rounded-[3px] hover:bg-[#0F1F17] transition-all duration-200">
+                  Contactar
+                </Link>
+              </MagneticEl>
+            </div>
+          </AnimateIn>
         </div>
       </section>
     </>
