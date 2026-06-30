@@ -75,10 +75,10 @@ export default function Navbar() {
                   href="/admin"
                   className="text-[12.5px] font-semibold tracking-[0.5px] uppercase text-[#7C8C82] hover:text-[#172E22] transition-colors"
                 >
-                  Admin
+                  Panel
                 </Link>
               )}
-              <span className="hidden sm:block text-[13px] font-medium text-[#172E22] px-1">
+              <span className="hidden sm:block text-[13px] font-medium text-[#172E22] px-3 py-[5px] rounded-full bg-[#E2ECE6]">
                 {user.name.split(' ')[0]}
               </span>
               <button
