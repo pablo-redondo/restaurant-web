@@ -62,16 +62,16 @@ const sections = [
 ];
 
 const tagColors: Record<string, string> = {
-  'Clásico':   'bg-[#F0F4F0] text-[#4A6058] border border-[#D8E2DC]',
+  'Clásico':   'bg-white text-[#4A6058] border border-[#D8E2DC]',
   'Firma':     'bg-[#172E22] text-[#C8DC2E]',
-  'Vegetal':   'bg-[#E3F2E4] text-[#2A6A40]',
+  'Vegetal':   'bg-[#DCEFDD] text-[#2A6A40]',
   'Temporada': 'bg-[#FCEFCB] text-[#8A6010]',
 };
 
 export default function CartaPage() {
   return (
     <>
-      {/* ── HERO ── único bloque oscuro de toda la página, marca la entrada ── */}
+      {/* ── HERO ── único bloque oscuro de entrada ── */}
       <section className="relative overflow-hidden" style={{ height: '58vh', minHeight: '400px' }}>
         <ParallaxImage speed={0.18}>
           <Image src="/hero.webp" alt="Restaurante Marqués" fill className="object-cover" style={{ objectPosition: 'center 55%' }} priority />
@@ -91,9 +91,9 @@ export default function CartaPage() {
         </div>
       </section>
 
-      {/* ── FRANJA DE CIFRAS ── blanco, igual que el resto de la página ── */}
-      <section className="bg-white border-b border-[#EAEEE9]">
-        <div className="px-[52px] py-9 max-w-5xl mx-auto grid grid-cols-3 divide-x divide-[#EAEEE9]">
+      {/* ── FRANJA DE CIFRAS ── #F0F4F0, el verde-gris base de toda la web ── */}
+      <section className="bg-[#F0F4F0] border-b border-[#DDE6DD]">
+        <div className="px-[52px] py-9 max-w-5xl mx-auto grid grid-cols-3 divide-x divide-[#DDE6DD]">
           {[
             { to: 37,  suffix: '',  decimals: 0, label: 'años en Madrid',        delay: 200 },
             { to: 4.8, suffix: '★', decimals: 1, label: 'valoración Google',     delay: 300 },
@@ -103,21 +103,21 @@ export default function CartaPage() {
               <p className="font-heading font-bold leading-none text-[#172E22] tabular-nums" style={{ fontSize: 'clamp(26px,3.2vw,38px)' }}>
                 <CountUp to={to} suffix={suffix} decimals={decimals} startDelay={delay} />
               </p>
-              <p className="text-[#8A9C90] text-[12px] mt-2 tracking-[0.3px]">{label}</p>
+              <p className="text-[#5A6B60] text-[12px] mt-2 tracking-[0.3px]">{label}</p>
             </AnimateIn>
           ))}
         </div>
       </section>
 
       {/* ── NAV DE SECCIONES ── ───────────────────────────────────── */}
-      <nav className="sticky top-[58px] z-40 border-b border-[#EAEEE9]" style={{ background: 'rgba(255,255,255,0.97)', backdropFilter: 'blur(12px)' }}>
+      <nav className="sticky top-[58px] z-40 border-b border-[#DDE6DD]" style={{ background: 'rgba(240,244,240,0.97)', backdropFilter: 'blur(12px)' }}>
         <div className="px-[52px] overflow-x-auto">
           <ul className="flex gap-1 min-w-max py-[10px]">
             {sections.map((s, idx) => (
               <li key={s.id}>
                 <a
                   href={`#${s.id}`}
-                  className="flex items-center gap-[8px] px-4 py-2 rounded-[4px] text-[13px] font-semibold text-[#5A6B60] hover:text-[#172E22] hover:bg-[#F0F4F0] transition-all duration-200 group"
+                  className="flex items-center gap-[8px] px-4 py-2 rounded-[4px] text-[13px] font-semibold text-[#5A6B60] hover:text-[#172E22] hover:bg-white transition-all duration-200 group"
                 >
                   <span className="flex items-center justify-center w-[18px] h-[18px] rounded-full bg-[#172E22] text-[#C8DC2E] text-[9px] font-bold group-hover:bg-[#0E1C12] transition-colors">
                     {idx + 1}
@@ -130,9 +130,9 @@ export default function CartaPage() {
         </div>
       </nav>
 
-      {/* ── SECCIONES DE PLATOS ── un único fondo blanco, sin alternancia de grises ── */}
+      {/* ── SECCIONES DE PLATOS ── alternando blanco y #F0F4F0, igual que el resto del sitio ── */}
       {sections.map((s, si) => (
-        <section key={s.id} id={s.id} className="bg-white">
+        <section key={s.id} id={s.id} className={si % 2 === 0 ? 'bg-white' : 'bg-[#F0F4F0]'}>
           <div className="px-[52px] py-16">
             <div className="max-w-5xl mx-auto">
               <AnimateIn>
@@ -142,7 +142,7 @@ export default function CartaPage() {
                       <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#172E22] text-[#C8DC2E] font-heading font-bold text-[12px]">
                         {si + 1}
                       </span>
-                      <span className="text-[#8A9C90] text-[10px] font-bold tracking-[2.5px] uppercase">
+                      <span className="text-[#5A6B60] text-[10px] font-bold tracking-[2.5px] uppercase">
                         {s.label}
                       </span>
                     </div>
@@ -150,7 +150,7 @@ export default function CartaPage() {
                       {s.title}
                     </h2>
                   </div>
-                  <p className="text-[#8A9C90] text-[12px] shrink-0 hidden md:block mb-[4px]">
+                  <p className="text-[#5A6B60] text-[12px] shrink-0 hidden md:block mb-[4px]">
                     Precios en euros · IVA incluido
                   </p>
                 </div>
@@ -162,10 +162,12 @@ export default function CartaPage() {
                   return (
                     <AnimateIn key={dish.name} delay={di * 55}>
                       <div
-                        className={`py-5 border-b border-[#EAEEE9] group cursor-default transition-all duration-200 ${
+                        className={`py-5 border-b transition-all duration-200 group cursor-default ${
+                          si % 2 === 0 ? 'border-[#EAEEE9]' : 'border-[#DDE6DD]'
+                        } ${
                           isFirma
-                            ? '-ml-3 pl-[13px] pr-3 border-l-[3px] border-l-[#C8DC2E] hover:bg-[#F6FCE8]'
-                            : '-mx-3 px-3 rounded-[3px] hover:bg-[#F7F9F7]'
+                            ? '-ml-3 pl-[13px] pr-3 border-l-[3px] border-l-[#C8DC2E] hover:bg-[#172E22]/[0.04]'
+                            : '-mx-3 px-3 rounded-[3px] hover:bg-white'
                         }`}
                       >
                         <div className="flex items-start justify-between gap-3 mb-[6px]">
@@ -199,7 +201,7 @@ export default function CartaPage() {
         </section>
       ))}
 
-      {/* ── MARIDAJE ── segundo y único otro bloque oscuro, como cierre de transición ── */}
+      {/* ── MARIDAJE ── segundo bloque oscuro, cierre de transición ── */}
       <section className="relative overflow-hidden" style={{ height: '300px' }}>
         <ParallaxImage speed={0.14}>
           <Image src="/hero.webp" alt="Interior Marqués" fill className="object-cover" style={{ objectPosition: 'center 80%' }} />
@@ -225,8 +227,8 @@ export default function CartaPage() {
         </div>
       </section>
 
-      {/* ── ALÉRGENOS ── mismo blanco que el resto de la página ── */}
-      <section className="bg-white px-[52px] py-14 border-t border-[#EAEEE9]">
+      {/* ── ALÉRGENOS ── #F0F4F0, cierra el ciclo igual que la franja de cifras ── */}
+      <section className="bg-[#F0F4F0] px-[52px] py-14 border-t border-[#DDE6DD]">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
             <p className="font-heading font-semibold text-[13px] tracking-[0.3px] text-[#172E22] mb-2">
