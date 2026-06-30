@@ -45,10 +45,13 @@ export default function Navbar() {
     <header
       className={`fixed top-0 inset-x-0 z-50 h-[58px] border-b transition-all duration-300 ${
         scrolled
-          ? 'border-[#C4D5CA] shadow-[0_4px_24px_rgba(23,46,34,0.10)]'
+          ? 'border-[#C4D5CA] shadow-[0_8px_24px_rgba(23,46,34,0.14)]'
           : 'border-transparent'
       }`}
-      style={{ background: 'rgba(241,239,233,0.97)', backdropFilter: 'blur(16px)' }}
+      style={{
+        background: scrolled ? '#FFFFFF' : 'rgba(241,239,233,0.97)',
+        backdropFilter: scrolled ? 'none' : 'blur(16px)',
+      }}
     >
       {/* Grid de 3 columnas con extremos iguales (1fr) para que el bloque central quede
           siempre centrado en el nav, sin importar cuánto contenido haya a cada lado. */}
