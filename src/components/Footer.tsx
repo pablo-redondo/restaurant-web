@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer className="bg-[#0F1F17] px-[52px] pt-10 pb-6">
       <div className="max-w-[1120px] mx-auto">
-        <div className="flex flex-wrap items-center justify-between gap-6 pb-[26px] border-b border-white/8">
+        <div className="flex flex-wrap items-center justify-between gap-6 pb-[26px] border-b border-[#1E3527]">
           <Link href="/" className="font-heading font-semibold text-[18px] sm:text-[20px] tracking-[4px] sm:tracking-[5px] uppercase text-white">
             MARQUÉS
           </Link>
