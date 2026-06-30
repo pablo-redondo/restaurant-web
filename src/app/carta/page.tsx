@@ -92,19 +92,19 @@ export default function CartaPage() {
         </div>
       </section>
 
-      {/* ── FRANJA DE CIFRAS ── #F0F4F0, el verde-gris base de toda la web ── */}
-      <section className="bg-[#F0F4F0] border-b border-[#DDE6DD]">
-        <div className="px-[52px] py-9 max-w-5xl mx-auto grid grid-cols-3 divide-x divide-[#DDE6DD]">
+      {/* ── FRANJA DE CIFRAS ── #172E22, diferenciada con la línea oscura de la web ── */}
+      <section className="bg-[#172E22]" style={{ borderTop: '3px solid #C8DC2E' }}>
+        <div className="px-[52px] py-9 max-w-5xl mx-auto grid grid-cols-3 divide-x divide-white/10">
           {[
             { to: 37,  suffix: '',  decimals: 0, label: 'años en Madrid',        delay: 200 },
             { to: 4.8, suffix: '★', decimals: 1, label: 'valoración Google',     delay: 300 },
             { to: 200, suffix: '+', decimals: 0, label: 'referencias en bodega', delay: 400 },
           ].map(({ to, suffix, decimals, label, delay }, i) => (
             <AnimateIn key={label} delay={i * 80} className="px-8 first:pl-0 text-center">
-              <p className="font-heading font-bold leading-none text-[#172E22] tabular-nums" style={{ fontSize: 'clamp(26px,3.2vw,38px)' }}>
+              <p className="font-heading font-bold leading-none text-[#C8DC2E] tabular-nums" style={{ fontSize: 'clamp(28px,3.6vw,52px)' }}>
                 <CountUp to={to} suffix={suffix} decimals={decimals} startDelay={delay} />
               </p>
-              <p className="text-[#5A6B60] text-[12px] mt-2 tracking-[0.3px]">{label}</p>
+              <p className="text-[#8AB5A0] text-[12px] mt-2 tracking-[0.3px]">{label}</p>
             </AnimateIn>
           ))}
         </div>
