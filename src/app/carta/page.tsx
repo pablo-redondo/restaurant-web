@@ -48,6 +48,7 @@ const sections = [
       { name: 'Pichón asado al horno',          desc: 'Pichón de Bresse, salsa de frutos del bosque, foie mi-cuit y brioche.', price: '36', tag: 'Temporada' },
       { name: 'Carrilleras ibéricas estofadas', desc: 'Mejillas de cerdo ibérico 8 horas, puré trufado y cebolla caramelizada.', price: '28', tag: null },
       { name: 'Cochinillo confitado',           desc: 'Cochinillo segoviano, piel crujiente, manzana al calvados y reducción de jugo.', price: '32', tag: null },
+      { name: 'Cordero lechal asado',           desc: 'Cordero de leche churro, romero fresco, ajos confitados y patata panadera.', price: '34', tag: null },
     ],
   },
   {
@@ -58,6 +59,7 @@ const sections = [
       { name: 'Crema catalana',             desc: 'Receta tradicional, caramelo artesano y lavanda de la Sierra de Guadarrama.', price: '9',  tag: null },
       { name: 'Sorbete de limón al cava',   desc: 'Limón de Murcia, cava Brut Nature y menta fresca.', price: '8',  tag: null },
       { name: 'Selección de quesos',        desc: 'Tabla de 5 quesos españoles con membrillo, nueces y miel de romero.', price: '16', tag: null },
+      { name: 'Milhojas de crema pastelera', desc: 'Hojaldre crujiente, crema pastelera de vainilla y azúcar glas.', price: '9',  tag: null },
     ],
   },
 ];
@@ -101,7 +103,7 @@ export default function CartaPage() {
             { to: 200, suffix: '+', decimals: 0, label: 'referencias en bodega', delay: 400 },
           ].map(({ to, suffix, decimals, label, delay }, i) => (
             <AnimateIn key={label} delay={i * 80} className="px-8 first:pl-0 text-center">
-              <p className="font-heading font-bold leading-none text-[#C8DC2E] tabular-nums" style={{ fontSize: 'clamp(28px,3.6vw,52px)' }}>
+              <p className="font-heading font-bold leading-none text-white tabular-nums" style={{ fontSize: 'clamp(28px,3.6vw,52px)' }}>
                 <CountUp to={to} suffix={suffix} decimals={decimals} startDelay={delay} />
               </p>
               <p className="text-[#8AB5A0] text-[12px] mt-2 tracking-[0.3px]">{label}</p>
@@ -139,12 +141,12 @@ export default function CartaPage() {
                 </div>
               </AnimateIn>
 
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid md:grid-cols-2 gap-4 items-stretch">
                 {s.dishes.map((dish, di) => {
                   const isFirma = dish.tag === 'Firma';
                   return (
-                    <AnimateIn key={dish.name} delay={di * 55}>
-                      <div className="relative bg-white border border-[#C4D5CA] rounded-[5px] px-[26px] py-6 flex flex-col gap-[9px] overflow-hidden hover:border-[#A8C0B0] hover:shadow-[0_6px_18px_rgba(23,46,34,0.08)] transition-all duration-200 group">
+                    <AnimateIn key={dish.name} delay={di * 55} className="h-full">
+                      <div className="relative h-full min-h-[168px] bg-white border border-[#C4D5CA] rounded-[5px] px-[26px] py-6 flex flex-col gap-[9px] overflow-hidden hover:border-[#A8C0B0] hover:shadow-[0_6px_18px_rgba(23,46,34,0.08)] transition-all duration-200 group">
                         {isFirma && <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#C8DC2E]" />}
                         <div className="flex items-start justify-between gap-4">
                           <div className="flex items-center gap-[10px] flex-wrap">
@@ -163,7 +165,7 @@ export default function CartaPage() {
                         </div>
                         <p className="text-[#5A6B60] text-[13.5px] leading-[1.6]">{dish.desc}</p>
                         {isFirma && (
-                          <p className="flex items-center gap-[6px] text-[#B07010] text-[11px] font-bold tracking-[0.5px] uppercase mt-[3px]">
+                          <p className="flex items-center gap-[6px] text-[#B07010] text-[11px] font-bold tracking-[0.5px] uppercase mt-auto pt-[3px]">
                             <span className="text-[12px]">✦</span>Plato firma del chef
                           </p>
                         )}
