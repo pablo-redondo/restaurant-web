@@ -6,6 +6,7 @@ import CountUp from '@/components/CountUp';
 import TextScramble from '@/components/TextScramble';
 import ParallaxImage from '@/components/ParallaxImage';
 import MagneticEl from '@/components/MagneticEl';
+import CartaCategoryNav from '@/components/CartaCategoryNav';
 
 export const metadata: Metadata = {
   title: 'Carta',
@@ -109,26 +110,8 @@ export default function CartaPage() {
         </div>
       </section>
 
-      {/* ── NAV DE SECCIONES ── ───────────────────────────────────── */}
-      <nav className="sticky top-[58px] z-40 border-b border-[#DDE6DD]" style={{ background: 'rgba(240,244,240,0.97)', backdropFilter: 'blur(12px)' }}>
-        <div className="px-[52px] overflow-x-auto">
-          <ul className="flex gap-1 min-w-max py-[10px]">
-            {sections.map((s, idx) => (
-              <li key={s.id}>
-                <a
-                  href={`#${s.id}`}
-                  className="flex items-center gap-[8px] px-4 py-2 rounded-[4px] text-[13px] font-semibold text-[#5A6B60] hover:text-[#172E22] hover:bg-white transition-all duration-200 group"
-                >
-                  <span className="flex items-center justify-center w-[18px] h-[18px] rounded-full bg-[#172E22] text-[#C8DC2E] text-[9px] font-bold group-hover:bg-[#0E1C12] transition-colors">
-                    {idx + 1}
-                  </span>
-                  {s.title}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </nav>
+      {/* ── NAV DE SECCIONES ── con resaltado activo al hacer scroll ── */}
+      <CartaCategoryNav categories={sections.map(({ id, title }) => ({ id, title }))} />
 
       {/* ── SECCIONES DE PLATOS ── alternando blanco y #F0F4F0, igual que el resto del sitio ── */}
       {sections.map((s, si) => (
@@ -156,39 +139,32 @@ export default function CartaPage() {
                 </div>
               </AnimateIn>
 
-              <div className="grid md:grid-cols-2 gap-x-14">
+              <div className="grid md:grid-cols-2 gap-4">
                 {s.dishes.map((dish, di) => {
                   const isFirma = dish.tag === 'Firma';
                   return (
                     <AnimateIn key={dish.name} delay={di * 55}>
-                      <div
-                        className={`py-5 border-b transition-all duration-200 group cursor-default ${
-                          si % 2 === 0 ? 'border-[#EAEEE9]' : 'border-[#DDE6DD]'
-                        } ${
-                          isFirma
-                            ? '-ml-3 pl-[13px] pr-3 border-l-[3px] border-l-[#C8DC2E] hover:bg-[#172E22]/[0.04]'
-                            : '-mx-3 px-3 rounded-[3px] hover:bg-white'
-                        }`}
-                      >
-                        <div className="flex items-start justify-between gap-3 mb-[6px]">
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <p className="font-heading font-semibold text-[16px] text-[#172E22] group-hover:text-[#2A6A40] transition-colors duration-200">
+                      <div className="relative bg-white border border-[#C4D5CA] rounded-[5px] px-[26px] py-6 flex flex-col gap-[9px] overflow-hidden hover:border-[#A8C0B0] hover:shadow-[0_6px_18px_rgba(23,46,34,0.08)] transition-all duration-200 group">
+                        {isFirma && <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#C8DC2E]" />}
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="flex items-center gap-[10px] flex-wrap">
+                            <p className="font-heading font-bold text-[17px] text-[#172E22] leading-[1.2] group-hover:text-[#2A6A40] transition-colors duration-200">
                               {dish.name}
                             </p>
                             {dish.tag && (
-                              <span className={`text-[10px] font-bold px-[7px] py-[2px] rounded-[2px] tracking-[0.5px] ${tagColors[dish.tag]}`}>
+                              <span className={`text-[9.5px] font-bold px-2 py-[3px] rounded-[2px] tracking-[1px] uppercase whitespace-nowrap ${tagColors[dish.tag]}`}>
                                 {dish.tag}
                               </span>
                             )}
                           </div>
-                          <p className="font-heading font-bold text-[17px] shrink-0 tabular-nums text-[#172E22]">
+                          <p className="font-heading font-bold text-[25px] shrink-0 tabular-nums text-[#172E22]">
                             {dish.price} €
                           </p>
                         </div>
-                        <p className="text-[#5A6B60] text-[13.5px] leading-[1.7]">{dish.desc}</p>
+                        <p className="text-[#5A6B60] text-[13.5px] leading-[1.6]">{dish.desc}</p>
                         {isFirma && (
-                          <p className="text-[#7A9020] text-[10px] font-bold tracking-[1.5px] uppercase mt-[10px]">
-                            ✦ Plato firma del chef
+                          <p className="flex items-center gap-[6px] text-[#B07010] text-[11px] font-bold tracking-[0.5px] uppercase mt-[3px]">
+                            <span className="text-[12px]">✦</span>Plato firma del chef
                           </p>
                         )}
                       </div>
@@ -228,19 +204,20 @@ export default function CartaPage() {
       </section>
 
       {/* ── ALÉRGENOS ── #F0F4F0, cierra el ciclo igual que la franja de cifras ── */}
-      <section className="bg-[#F0F4F0] px-[52px] py-14 border-t border-[#DDE6DD]">
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div>
-            <p className="font-heading font-semibold text-[13px] tracking-[0.3px] text-[#172E22] mb-2">
+      <section className="bg-[#F0F4F0] px-[52px] py-14">
+        <div className="max-w-5xl mx-auto pt-9 border-t border-[#C4D5CA] flex flex-col md:flex-row md:items-end justify-between gap-10">
+          <div className="flex-1 min-w-[280px]">
+            <p className="text-[#B07010] text-[10.5px] font-bold tracking-[2.5px] uppercase mb-[10px]">
               Información sobre alérgenos
             </p>
-            <p className="text-[#5A6B60] text-[13px] leading-[1.7] max-w-[520px]">
+            <p className="text-[#3F5A4B] text-[15px] leading-[1.7] max-w-[620px]">
+              Disponemos de información detallada sobre los{' '}
+              <strong className="text-[#172E22]">14 alérgenos de declaración obligatoria</strong>.
               Si tienes alguna alergia o intolerancia, comunícaselo a nuestro equipo antes de pedir.
-              Disponemos de información detallada sobre los 14 alérgenos de declaración obligatoria.
             </p>
           </div>
           <MagneticEl>
-            <Link href="/contacto" className="inline-block shrink-0 px-[28px] py-[13px] border border-[#172E22] text-[#172E22] font-bold text-[14px] rounded-[3px] hover:bg-[#172E22] hover:text-white transition-all duration-200">
+            <Link href="/contacto" className="inline-block shrink-0 px-9 py-[14px] bg-[#172E22] text-white font-bold text-[13.5px] tracking-[0.4px] rounded-[3px] hover:bg-[#0F1F17] transition-all duration-200">
               Contactar
             </Link>
           </MagneticEl>

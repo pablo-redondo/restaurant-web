@@ -3,26 +3,39 @@ import Link from 'next/link';
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="bg-[#172E22] border-t border-white/8">
-      <div className="px-[52px] py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+    <footer className="bg-[#0F1F17] px-[52px] pt-10 pb-6">
+      <div className="max-w-[1120px] mx-auto">
+        <div className="flex flex-wrap items-center justify-between gap-6 pb-[26px] border-b border-white/8">
+          <Link href="/" className="font-heading font-semibold text-[18px] sm:text-[20px] tracking-[4px] sm:tracking-[5px] uppercase text-white">
+            MARQUÉS
+          </Link>
 
-        <span className="font-heading font-bold text-[14px] tracking-[2.5px] uppercase text-[#C8DC2E]">
-          MARQUÉS
-        </span>
+          <div className="flex flex-wrap items-center gap-x-[30px] gap-y-3">
+            <Link href="/nosotros" className="text-[13.5px] font-medium text-[#8AB5A0] hover:text-white transition-colors">
+              Nosotros
+            </Link>
+            <Link href="/carta" className="text-[13.5px] font-medium text-[#8AB5A0] hover:text-white transition-colors">
+              Carta
+            </Link>
+            <Link href="/contacto" className="text-[13.5px] font-medium text-[#8AB5A0] hover:text-white transition-colors">
+              Contacto
+            </Link>
+            <Link
+              href="/reservations"
+              className="bg-[#C8DC2E] text-[#172E22] px-6 py-[11px] rounded-[3px] text-[13px] font-bold tracking-[0.4px] hover:brightness-110 transition-all"
+            >
+              Reservar mesa
+            </Link>
+          </div>
+        </div>
 
-        <nav className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[13px] text-[#6A9A80]">
-          <Link href="/nosotros"    className="hover:text-white transition-colors">Nosotros</Link>
-          <span className="text-[#2A4A38]">&middot;</span>
-          <Link href="/carta"       className="hover:text-white transition-colors">Carta</Link>
-          <span className="text-[#2A4A38]">&middot;</span>
-          <Link href="/contacto"    className="hover:text-white transition-colors">Contacto</Link>
-          <span className="text-[#2A4A38]">&middot;</span>
-          <Link href="/privacidad"  className="hover:text-white transition-colors">Privacidad</Link>
-          <span className="text-[#2A4A38]">&middot;</span>
-          <Link href="/aviso-legal" className="hover:text-white transition-colors">Aviso legal</Link>
-        </nav>
-
-        <p className="text-[#3A5A48] text-[12px]">&copy; {year} Restaurante Marqués</p>
+        <div className="flex flex-wrap items-center justify-between gap-3 mt-5">
+          <p className="text-[12px] text-[#4A6A58]">&copy; {year} Restaurante Marqués · Gran Vía, 45 · Madrid</p>
+          <div className="flex gap-5 text-[12px] text-[#6E8C7C]">
+            <Link href="/privacidad" className="hover:text-white transition-colors">Privacidad</Link>
+            <Link href="/aviso-legal" className="hover:text-white transition-colors">Aviso legal</Link>
+          </div>
+        </div>
       </div>
     </footer>
   );
