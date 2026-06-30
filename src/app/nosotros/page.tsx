@@ -154,17 +154,16 @@ export default function NosotrosPage() {
               <p>Terraza interior climatizada disponible de marzo a octubre, con entrada propia desde la calle.</p>
             </div>
 
-            {/* Stats ── fila horizontal limpia */}
-            <div className="mt-10 flex gap-0 border border-[#D8E4DC] rounded-[4px] overflow-hidden">
+            {/* Stats ── tarjetas separadas con sombra propia y animación hover */}
+            <div className="mt-10 grid grid-cols-3 gap-4">
               {stats.map((s, i) => (
-                <AnimateIn key={s.label} delay={i * 80} className="flex-1">
-                  <div className={`px-5 py-5 bg-white flex flex-col gap-1${
-                    i < stats.length - 1 ? ' border-r border-[#D8E4DC]' : ''
-                  }`}>
-                    <p className="font-heading font-bold text-[28px] leading-none text-[#172E22]">
+                <AnimateIn key={s.label} delay={i * 90}>
+                  <div className="group bg-white rounded-[6px] shadow-[0_2px_10px_rgba(23,46,34,0.07)] px-5 py-6 flex flex-col gap-1.5 border border-[#E4EDE8] hover:border-[#C8DC2E] hover:shadow-[0_10px_24px_rgba(23,46,34,0.13)] hover:-translate-y-[3px] transition-all duration-300 ease-out cursor-default">
+                    <p className="font-heading font-bold text-[28px] leading-none text-[#172E22] group-hover:text-[#0E1C12] transition-colors duration-300">
                       <CountUp to={s.to} suffix={s.suffix} />
                     </p>
-                    <p className="text-[11px] text-[#7A9080] font-bold tracking-[0.8px] uppercase mt-1">{s.label}</p>
+                    <p className="text-[11px] text-[#7A9080] font-bold tracking-[0.8px] uppercase mt-1 leading-snug">{s.label}</p>
+                    <span className="block w-6 h-[2px] bg-[#C8DC2E] mt-1 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" />
                   </div>
                 </AnimateIn>
               ))}
