@@ -113,9 +113,19 @@ export default function ReservationDetailPage() {
 
       {reservation.status === 'confirmed' && (
         <div className="mt-6 bg-white border border-[#C4D5CA] rounded-card p-8">
-          <h2 className="font-heading font-bold text-xl text-[#172E22] mb-5">Dejar una reseña</h2>
+          <h2 className="font-heading font-bold text-xl text-[#172E22] mb-5">
+            {reservation.review_id ? 'Tu reseña' : 'Dejar una reseña'}
+          </h2>
           {reviewDone ? (
             <p className="text-[#1A8A50] font-medium">¡Gracias por tu valoración!</p>
+          ) : reservation.review_id ? (
+            <div className="space-y-3">
+              <StarRating value={reservation.review_rating ?? 0} size="lg" />
+              {reservation.review_comment && (
+                <p className="text-[#3F5A4B] text-[15px] leading-[1.7]">{reservation.review_comment}</p>
+              )}
+              <p className="text-[#8A9C90] text-[13px]">Ya has valorado esta visita. Solo se admite una reseña por reserva.</p>
+            </div>
           ) : (
             <form onSubmit={handleReview} className="space-y-4">
               <div>

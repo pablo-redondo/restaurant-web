@@ -27,6 +27,9 @@ export interface Reservation {
   user_name?: string;
   user_email?: string;
   table_number?: number;
+  review_id?: number | null;
+  review_rating?: number | null;
+  review_comment?: string | null;
 }
 
 export interface Review {
