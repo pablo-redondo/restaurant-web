@@ -22,6 +22,7 @@ export const metadata: Metadata = {
 const sections = [
   {
     id: 'entrantes', label: 'Para empezar', title: 'Entrantes',
+    accent: '#5F8A3A', bg: '#F1F4EB',
     dishes: [
       { name: 'Croquetas de ibérico y trufa',  desc: 'Bechamel artesana, jamón ibérico D.O., trufa negra de Teruel · 6 uds.', price: '12', tag: 'Clásico' },
       { name: 'Tartar de atún rojo',            desc: 'Atún rojo de almadraba, aguacate, soja, sésamo tostado y yema curada.', price: '18', tag: null },
@@ -33,6 +34,7 @@ const sections = [
   },
   {
     id: 'pescados', label: 'Del mar', title: 'Pescados',
+    accent: '#2F7C8C', bg: '#ECF3F4',
     dishes: [
       { name: 'Rodaballo salvaje a la plancha', desc: 'Rodaballo del Cantábrico, mantequilla de alcaparras y papas a lo pobre.', price: '38', tag: null },
       { name: 'Lubina al horno con hinojo',     desc: 'Lubina salvaje, hinojo braseado, limón confitado y aceite de eneldo.', price: '34', tag: 'Temporada' },
@@ -42,6 +44,7 @@ const sections = [
   },
   {
     id: 'carnes', label: 'De la tierra', title: 'Carnes',
+    accent: '#A34B2B', bg: '#F7EEEA',
     dishes: [
       { name: 'Chuletón madurado 45 días',      desc: 'Buey de Galicia, 800 g, maduración propia. Patatas al horno y pimientos asados.', price: '58', tag: 'Firma' },
       { name: 'Solomillo de ternera gallega',   desc: 'Solomillo al punto, salsa de vino tinto Ribera, cebollitas glaseadas y trufa.', price: '42', tag: null },
@@ -53,6 +56,7 @@ const sections = [
   },
   {
     id: 'postres', label: 'El final perfecto', title: 'Postres',
+    accent: '#B87A2E', bg: '#F8F1E6',
     dishes: [
       { name: 'Tarta de queso al horno',    desc: 'Estilo vasco, compota de frambuesa y galleta de almendra.', price: '10', tag: 'Clásico' },
       { name: 'Coulant de chocolate negro', desc: 'Valrhona 72 %, corazón fundente, helado de vainilla de Madagascar.', price: '11', tag: 'Firma' },
@@ -115,19 +119,23 @@ export default function CartaPage() {
       {/* ── NAV DE SECCIONES ── con resaltado activo al hacer scroll ── */}
       <CartaCategoryNav categories={sections.map(({ id, title }) => ({ id, title }))} />
 
-      {/* ── SECCIONES DE PLATOS ── alternando blanco y #F0F4F0, igual que el resto del sitio ── */}
+      {/* ── SECCIONES DE PLATOS ── cada sección con su propio color temático (verde, mar, tierra, dulce) ── */}
       {sections.map((s, si) => (
-        <section key={s.id} id={s.id} className={si % 2 === 0 ? 'bg-white' : 'bg-[#F0F4F0]'}>
+        <section
+          key={s.id}
+          id={s.id}
+          style={{ backgroundColor: s.bg, '--accent': s.accent } as React.CSSProperties}
+        >
           <div className="px-[52px] py-16">
             <div className="max-w-5xl mx-auto">
               <AnimateIn>
                 <div className="flex items-end justify-between gap-4 mb-10">
                   <div className="flex items-end gap-5">
-                    <span className="font-heading font-bold text-[#C8DC2E] leading-[0.78]" style={{ fontSize: 'clamp(40px,5vw,58px)' }}>
+                    <span className="font-heading font-bold text-[color:var(--accent)] leading-[0.78]" style={{ fontSize: 'clamp(40px,5vw,58px)' }}>
                       {String(si + 1).padStart(2, '0')}
                     </span>
                     <div>
-                      <p className="text-[#5A6B60] text-[11px] font-bold tracking-[2.5px] uppercase mb-[5px]">
+                      <p className="text-[color:var(--accent)] text-[11px] font-bold tracking-[2.5px] uppercase mb-[5px]">
                         {s.label}
                       </p>
                       <h2 className="font-heading font-bold text-[#172E22] leading-[1]" style={{ fontSize: 'clamp(26px,3.2vw,36px)', letterSpacing: '-0.5px' }}>
@@ -146,11 +154,11 @@ export default function CartaPage() {
                   const isFirma = dish.tag === 'Firma';
                   return (
                     <AnimateIn key={dish.name} delay={di * 55} className="h-full">
-                      <div className="relative h-full min-h-[168px] bg-white border border-[#C4D5CA] rounded-[5px] px-[26px] py-6 flex flex-col gap-[9px] overflow-hidden hover:border-[#A8C0B0] hover:shadow-[0_6px_18px_rgba(23,46,34,0.08)] transition-all duration-200 group">
+                      <div className="relative h-full min-h-[168px] bg-white border border-[#DDE6DE] rounded-[7px] px-[26px] py-6 flex flex-col gap-[9px] overflow-hidden shadow-[0_2px_8px_rgba(23,46,34,0.04)] hover:border-[color:var(--accent)] hover:shadow-[0_10px_26px_rgba(23,46,34,0.12)] hover:-translate-y-[2px] transition-all duration-200 group">
                         {isFirma && <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#C8DC2E]" />}
                         <div className="flex items-start justify-between gap-4">
                           <div className="flex items-center gap-[10px] flex-wrap">
-                            <p className="font-heading font-bold text-[17px] text-[#172E22] leading-[1.2] group-hover:text-[#2A6A40] transition-colors duration-200">
+                            <p className="font-heading font-bold text-[17px] text-[#172E22] leading-[1.2] group-hover:text-[color:var(--accent)] transition-colors duration-200">
                               {dish.name}
                             </p>
                             {dish.tag && (
@@ -159,7 +167,7 @@ export default function CartaPage() {
                               </span>
                             )}
                           </div>
-                          <p className="font-heading font-bold text-[25px] shrink-0 tabular-nums text-[#172E22]">
+                          <p className="font-heading font-bold text-[25px] shrink-0 tabular-nums text-[color:var(--accent)]">
                             {dish.price} €
                           </p>
                         </div>
@@ -206,7 +214,7 @@ export default function CartaPage() {
       </section>
 
       {/* ── ALÉRGENOS ── tarjeta destacada, sin línea separadora ── */}
-      <section className="bg-[#F0F4F0] px-[52px] py-16">
+      <section className="bg-[#F5F2EA] px-[52px] py-16">
         <div className="max-w-5xl mx-auto">
           <AnimateIn>
             <div className="bg-white rounded-[10px] border border-[#C4D5CA] px-9 py-9 md:px-12 md:py-10 flex flex-col md:flex-row md:items-center justify-between gap-9 shadow-[0_6px_24px_rgba(23,46,34,0.06)]">
