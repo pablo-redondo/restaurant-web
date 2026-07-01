@@ -67,7 +67,6 @@ export default function Navbar() {
           {navLink('/nosotros', 'Nosotros')}
           {navLink('/carta',    'Carta')}
           {navLink('/contacto', 'Contacto')}
-          {user && !isAdmin && navLink('/reservations/me', 'Mis reservas')}
         </ul>
 
         <div className="justify-self-end flex items-center gap-3">
@@ -79,6 +78,16 @@ export default function Navbar() {
                   className="text-[12.5px] font-semibold tracking-[0.5px] uppercase text-[#7C8C82] hover:text-[#172E22] transition-colors"
                 >
                   Panel
+                </Link>
+              )}
+              {!isAdmin && (
+                <Link
+                  href="/reservations/me"
+                  className={`text-[12.5px] font-semibold tracking-[0.5px] uppercase transition-colors ${
+                    pathname === '/reservations/me' ? 'text-[#172E22]' : 'text-[#7C8C82] hover:text-[#172E22]'
+                  }`}
+                >
+                  Mis reservas
                 </Link>
               )}
               <span className="hidden sm:block text-[13px] font-medium text-[#172E22] px-3 py-[5px] rounded-full bg-[#E2ECE6]">
