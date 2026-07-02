@@ -42,15 +42,20 @@ export default function HomePage() {
             priority
           />
         </ParallaxImage>
+        {/* Scrim radial (oscurece detrás del texto) + degradado vertical, para
+            legibilidad sobre una imagen recargada sin perder la foto en los bordes */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(180deg, rgba(8,18,12,0.86) 0%, rgba(8,18,12,0.42) 38%, rgba(8,18,12,0.5) 66%, rgba(8,18,12,0.9) 100%)',
+              'radial-gradient(ellipse 78% 68% at 50% 46%, rgba(8,18,12,0.80) 0%, rgba(8,18,12,0.5) 55%, rgba(8,18,12,0.2) 100%), linear-gradient(180deg, rgba(8,18,12,0.9) 0%, rgba(8,18,12,0.6) 34%, rgba(8,18,12,0.62) 66%, rgba(8,18,12,0.94) 100%)',
           }}
         />
 
-        <div className="relative h-full flex flex-col items-center justify-center text-center px-6 py-16 max-w-[860px] mx-auto">
+        <div
+          className="relative h-full flex flex-col items-center justify-center text-center px-6 py-16 max-w-[860px] mx-auto"
+          style={{ textShadow: '0 1px 16px rgba(8,18,12,0.55)' }}
+        >
           <p className="anim-fade-up text-[#C8DC2E] text-[11px] font-bold tracking-[3px] uppercase mb-6" style={{ animationDelay: '0.05s' }}>
             <TextScramble text="Desde 1987 · Madrid" delay={50} />
           </p>
