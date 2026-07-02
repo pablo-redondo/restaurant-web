@@ -83,6 +83,29 @@ body {
   animation: shimmerSweep 0.85s ease-in-out infinite;
 }
 
+/* Variante lima del shimmer, para CTAs sobre fondos oscuros (navbar) */
+.btn-cta-shimmer-lime {
+  background: #C8DC2E;
+  position: relative;
+  overflow: hidden;
+}
+.btn-cta-shimmer-lime::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 25%,
+    rgba(23,46,34,0.15) 50%,
+    transparent 75%
+  );
+  transform: translateX(-100%) skewX(-12deg);
+  pointer-events: none;
+}
+.btn-cta-shimmer-lime:hover::after {
+  animation: shimmerSweep 0.85s ease-in-out infinite;
+}
+
 /* Accesibilidad */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

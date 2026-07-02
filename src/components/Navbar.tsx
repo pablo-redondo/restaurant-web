@@ -25,7 +25,7 @@ export default function Navbar() {
       <Link
         href={href}
         className={`group relative px-1 py-2 text-[12.5px] font-semibold tracking-[0.5px] uppercase transition-colors ${
-          active ? 'text-[#172E22]' : 'text-[#7C8C82] hover:text-[#172E22]'
+          active ? 'text-white' : 'text-[#8AB5A0] hover:text-white'
         }`}
       >
         {label}
@@ -45,20 +45,17 @@ export default function Navbar() {
     <header
       className={`fixed top-0 inset-x-0 z-50 h-[58px] border-b transition-all duration-300 ${
         scrolled
-          ? 'border-[#C4D5CA] shadow-[0_8px_24px_rgba(23,46,34,0.14)]'
+          ? 'border-white/10 shadow-[0_8px_24px_rgba(0,0,0,0.28)]'
           : 'border-transparent'
       }`}
-      style={{
-        background: scrolled ? '#FFFFFF' : 'rgba(241,239,233,0.97)',
-        backdropFilter: scrolled ? 'none' : 'blur(16px)',
-      }}
+      style={{ background: '#172E22' }}
     >
       {/* Grid de 3 columnas con extremos iguales (1fr) para que el bloque central quede
           siempre centrado en el nav, sin importar cuánto contenido haya a cada lado. */}
       <nav className="px-[40px] md:px-[52px] h-full grid grid-cols-[1fr_auto_1fr] items-center gap-6">
         <Link
           href="/"
-          className="justify-self-start font-heading font-bold text-[17px] tracking-[2.5px] uppercase text-[#172E22] hover:tracking-[3px] transition-all duration-300"
+          className="justify-self-start font-heading font-bold text-[17px] tracking-[2.5px] uppercase text-white hover:tracking-[3px] transition-all duration-300"
         >
           MARQUÉS
         </Link>
@@ -75,34 +72,34 @@ export default function Navbar() {
               {isAdmin && (
                 <Link
                   href="/admin"
-                  className="text-[12.5px] font-semibold tracking-[0.5px] uppercase text-[#7C8C82] hover:text-[#172E22] transition-colors"
+                  className="text-[12.5px] font-semibold tracking-[0.5px] uppercase text-[#8AB5A0] hover:text-white transition-colors"
                 >
                   Panel
                 </Link>
               )}
               {!isAdmin && navLinkContent('/reservations/me', 'Mis reservas')}
-              <span className="hidden sm:block text-[13px] font-medium text-[#172E22] px-3 py-[5px] rounded-full bg-[#E2ECE6]">
+              <span className="hidden sm:block text-[13px] font-medium text-white px-3 py-[5px] rounded-full bg-white/10">
                 {user.name.split(' ')[0]}
               </span>
               <button
                 onClick={() => { logout(); router.push('/'); }}
-                className="px-4 py-[7px] rounded-full text-[12.5px] font-semibold border border-[#C4D5CA] text-[#5A6B60] hover:bg-[#E8EDE8] hover:border-[#A8C0B0] transition-all"
+                className="px-4 py-[7px] rounded-full text-[12.5px] font-semibold border border-white/15 text-[#8AB5A0] hover:bg-white/5 hover:border-white/30 hover:text-white transition-all"
               >
                 Salir
               </button>
             </>
           ) : (
             // Entrar y Reservar mesa unidos en una sola píldora
-            <div className="flex items-center rounded-full border border-[#C4D5CA] overflow-hidden">
+            <div className="flex items-center rounded-full border border-white/15 overflow-hidden">
               <Link
                 href="/login"
-                className="px-4 py-[9px] text-[12.5px] font-semibold uppercase tracking-[0.3px] text-[#5A6B60] hover:bg-[#E8EDE8] hover:text-[#172E22] transition-colors"
+                className="px-4 py-[9px] text-[12.5px] font-semibold uppercase tracking-[0.3px] text-[#8AB5A0] hover:bg-white/5 hover:text-white transition-colors"
               >
                 Entrar
               </Link>
               <Link
                 href="/reservations"
-                className="btn-cta-shimmer px-5 py-[9px] text-[12.5px] font-semibold uppercase tracking-[0.3px] text-white hover:brightness-110 transition-all"
+                className="btn-cta-shimmer-lime px-5 py-[9px] text-[12.5px] font-semibold uppercase tracking-[0.3px] text-[#172E22] hover:brightness-105 transition-all"
               >
                 Reservar mesa
               </Link>
