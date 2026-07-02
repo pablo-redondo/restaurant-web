@@ -29,13 +29,28 @@ const cartaCards = [
 export default function HomePage() {
   return (
     <>
-      {/* ── Hero ── */}
-      <section className="relative bg-[#172E22] grid md:grid-cols-2" style={{ minHeight: 'calc(100vh - 58px)' }}>
-        <div className="absolute inset-0 md:hidden overflow-hidden">
-          <Image src="/hero.webp" alt="" fill className="object-cover opacity-[0.15]" style={{ objectPosition: 'center 15%' }} priority />
-        </div>
+      {/* ── Hero ── imagen a pantalla completa con degradado, en vez de un bloque de
+          color plano idéntico al navbar (que hacía que ambos se fundieran sin separación) ── */}
+      <section className="relative overflow-hidden bg-[#08120C]" style={{ minHeight: 'calc(100vh - 58px)' }}>
+        <ParallaxImage speed={0.2}>
+          <Image
+            src="/hero.webp"
+            alt="Interior del restaurante Marqués"
+            fill
+            className="anim-fade-in object-cover"
+            style={{ objectPosition: 'center 15%', animationDelay: '0.3s' }}
+            priority
+          />
+        </ParallaxImage>
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(100deg, rgba(8,18,12,0.95) 0%, rgba(8,18,12,0.88) 34%, rgba(8,18,12,0.6) 56%, rgba(8,18,12,0.22) 78%, rgba(8,18,12,0.05) 100%)',
+          }}
+        />
 
-        <div className="relative flex flex-col justify-center px-[52px] py-14 border-r border-[#1E3020]">
+        <div className="relative h-full flex flex-col justify-center px-[52px] py-14 max-w-[640px]">
           <p className="anim-fade-up text-[#6A9A80] text-[11px] font-bold tracking-[2.5px] uppercase mb-7" style={{ animationDelay: '0.05s' }}>
             <TextScramble text="Desde 1987 · Madrid" delay={50} />
           </p>
@@ -77,19 +92,6 @@ export default function HomePage() {
               <p className="text-[#4A7A60] text-[10px] font-bold tracking-[1.5px] uppercase mt-1">Clientes al mes</p>
             </div>
           </div>
-        </div>
-
-        <div className="hidden md:block relative overflow-hidden">
-          <ParallaxImage speed={0.2}>
-            <Image
-              src="/hero.webp"
-              alt="Interior del restaurante Marqués"
-              fill
-              className="anim-fade-in object-cover"
-              style={{ objectPosition: 'center 15%', animationDelay: '0.3s' }}
-              priority
-            />
-          </ParallaxImage>
         </div>
       </section>
 
