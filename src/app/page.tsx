@@ -46,50 +46,50 @@ export default function HomePage() {
           className="absolute inset-0"
           style={{
             background:
-              'linear-gradient(100deg, rgba(8,18,12,0.95) 0%, rgba(8,18,12,0.88) 34%, rgba(8,18,12,0.6) 56%, rgba(8,18,12,0.22) 78%, rgba(8,18,12,0.05) 100%)',
+              'linear-gradient(180deg, rgba(8,18,12,0.86) 0%, rgba(8,18,12,0.42) 38%, rgba(8,18,12,0.5) 66%, rgba(8,18,12,0.9) 100%)',
           }}
         />
 
-        <div className="relative h-full flex flex-col justify-center px-[52px] py-14 max-w-[640px]">
-          <p className="anim-fade-up text-[#6A9A80] text-[11px] font-bold tracking-[2.5px] uppercase mb-7" style={{ animationDelay: '0.05s' }}>
+        <div className="relative h-full flex flex-col items-center justify-center text-center px-6 py-16 max-w-[860px] mx-auto">
+          <p className="anim-fade-up text-[#C8DC2E] text-[11px] font-bold tracking-[3px] uppercase mb-6" style={{ animationDelay: '0.05s' }}>
             <TextScramble text="Desde 1987 · Madrid" delay={50} />
           </p>
-          <h1 className="anim-text-reveal font-heading font-bold text-[clamp(40px,5.5vw,68px)] tracking-[-1.5px] leading-[1.05] text-white mb-7" style={{ animationDelay: '0.18s' }}>
+          <h1 className="anim-text-reveal font-heading font-bold text-[clamp(44px,7vw,86px)] tracking-[-1.5px] leading-[1.02] text-white mb-7" style={{ animationDelay: '0.18s' }}>
             Una experiencia<br />que{' '}<em className="not-italic text-[#C8DC2E]">no olvidarás</em>
           </h1>
-          <p className="anim-fade-up text-[#8AB5A0] text-[16px] leading-[1.75] mb-9" style={{ animationDelay: '0.32s' }}>
+          <p className="anim-fade-up text-[#C8D8CC] text-[17px] leading-[1.75] mb-10 max-w-[540px] mx-auto" style={{ animationDelay: '0.32s' }}>
             Cocina de temporada, ingredientes de mercado y una terraza que enamora en cada estación del año.
           </p>
-          <div className="anim-fade-up flex gap-3 flex-wrap" style={{ animationDelay: '0.44s' }}>
+          <div className="anim-fade-up flex gap-3 flex-wrap justify-center" style={{ animationDelay: '0.44s' }}>
             <MagneticEl>
-              <Link href="/reservations" className="inline-block px-[30px] py-[14px] bg-[#C8DC2E] text-[#172E22] font-bold text-[14px] rounded-[3px] hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200">
+              <Link href="/reservations" className="inline-block px-[32px] py-[15px] bg-[#C8DC2E] text-[#172E22] font-bold text-[14px] rounded-[3px] hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200">
                 Reservar mesa
               </Link>
             </MagneticEl>
             <MagneticEl>
-              <Link href="/carta" className="inline-block px-[30px] py-[14px] border border-white/15 text-white text-[14px] rounded-[3px] hover:bg-white/10 hover:border-white/30 transition-all duration-200">
+              <Link href="/carta" className="inline-block px-[32px] py-[15px] border border-white/25 text-white text-[14px] rounded-[3px] hover:bg-white/10 hover:border-white/40 transition-all duration-200">
                 Ver carta
               </Link>
             </MagneticEl>
           </div>
-          <div className="anim-fade-up mt-12 pt-6 border-t border-white/10 flex gap-10" style={{ animationDelay: '0.54s' }}>
+          <div className="anim-fade-up mt-14 pt-8 border-t border-white/15 flex justify-center gap-12 sm:gap-16" style={{ animationDelay: '0.54s' }}>
             <div>
-              <p className="font-heading font-bold text-[28px] text-white tabular-nums">
+              <p className="font-heading font-bold text-[30px] text-white tabular-nums">
                 <CountUp to={35} suffix="+" startDelay={650} />
               </p>
-              <p className="text-[#4A7A60] text-[10px] font-bold tracking-[1.5px] uppercase mt-1">Años de historia</p>
+              <p className="text-[#8AB5A0] text-[10px] font-bold tracking-[1.5px] uppercase mt-1">Años de historia</p>
             </div>
             <div>
-              <p className="font-heading font-bold text-[28px] text-white tabular-nums">
+              <p className="font-heading font-bold text-[30px] text-white tabular-nums">
                 <CountUp to={4.8} suffix="★" decimals={1} startDelay={700} />
               </p>
-              <p className="text-[#4A7A60] text-[10px] font-bold tracking-[1.5px] uppercase mt-1">Valoración media</p>
+              <p className="text-[#8AB5A0] text-[10px] font-bold tracking-[1.5px] uppercase mt-1">Valoración media</p>
             </div>
             <div>
-              <p className="font-heading font-bold text-[28px] text-white tabular-nums">
+              <p className="font-heading font-bold text-[30px] text-white tabular-nums">
                 <CountUp to={2000} suffix="+" locale="es-ES" startDelay={750} />
               </p>
-              <p className="text-[#4A7A60] text-[10px] font-bold tracking-[1.5px] uppercase mt-1">Clientes al mes</p>
+              <p className="text-[#8AB5A0] text-[10px] font-bold tracking-[1.5px] uppercase mt-1">Clientes al mes</p>
             </div>
           </div>
         </div>
