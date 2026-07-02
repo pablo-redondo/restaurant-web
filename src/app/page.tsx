@@ -95,40 +95,43 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Editorial split ── */}
-      <section className="grid md:grid-cols-2 overflow-hidden" style={{ minHeight: '540px' }}>
-        <AnimateIn from="left" className="hidden md:block relative overflow-hidden">
-          <ParallaxImage speed={0.18}>
-            <Image
-              src="/interior.webp"
-              alt="Sala con banquetas de terciopelo verde en Marqués"
-              fill
-              className="object-cover"
-              style={{ objectPosition: 'center 40%' }}
+      {/* ── Editorial split ── banda crema con la foto enmarcada (rounded, con margen),
+          para crear un corte claro bajo el hero y evitar que dos fotos oscuras se peguen ── */}
+      <section className="bg-[#F1EFE9] px-[52px] py-[88px]">
+        <div className="max-w-[1120px] mx-auto grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+          <AnimateIn from="left" className="relative overflow-hidden rounded-[8px] h-[300px] md:h-[460px] order-1 md:order-none">
+            <ParallaxImage speed={0.18}>
+              <Image
+                src="/interior.webp"
+                alt="Sala con banquetas de terciopelo verde en Marqués"
+                fill
+                className="object-cover"
+                style={{ objectPosition: 'center 40%' }}
+              />
+            </ParallaxImage>
+          </AnimateIn>
+          <AnimateIn from="right" className="flex flex-col justify-center">
+            <p className="text-[#172E22] text-[10px] font-bold tracking-[2.5px] uppercase mb-6">Cocina con alma</p>
+            <SplitText
+              text="El sabor de lo auténtico"
+              as="h2"
+              className="font-heading font-bold text-[40px] tracking-[-0.5px] leading-[1.1] text-[#172E22] mb-6"
+              baseDelay={80}
+              stagger={60}
             />
-          </ParallaxImage>
-        </AnimateIn>
-        <AnimateIn from="right" className="bg-[#F1EFE9] flex flex-col justify-center px-[52px] py-16">
-          <p className="text-[#172E22] text-[10px] font-bold tracking-[2.5px] uppercase mb-6">Cocina con alma</p>
-          <SplitText
-            text="El sabor de lo auténtico"
-            as="h2"
-            className="font-heading font-bold text-[40px] tracking-[-0.5px] leading-[1.1] text-[#172E22] mb-6"
-            baseDelay={80}
-            stagger={60}
-          />
-          <p className="text-[#5A6B60] text-[16px] leading-[1.75] mb-4">
-            Trabajamos con productores locales que comparten nuestra forma de entender la cocina. Cada ingrediente tiene nombre, origen y una historia que vale la pena contar.
-          </p>
-          <p className="text-[#5A6B60] text-[16px] leading-[1.75] mb-10">
-            Desde los campos de Castilla hasta tu mesa, respetamos el producto y la memoria de la cocina española de siempre.
-          </p>
-          <MagneticEl className="w-fit">
-            <Link href="/nosotros" className="inline-flex items-center gap-2 text-[#172E22] font-bold text-[12px] tracking-[1.5px] uppercase border-b-2 border-[#C8DC2E] pb-[3px] hover:text-[#8A9C1E] transition-colors duration-200">
-              Nuestra historia
-            </Link>
-          </MagneticEl>
-        </AnimateIn>
+            <p className="text-[#5A6B60] text-[16px] leading-[1.75] mb-4">
+              Trabajamos con productores locales que comparten nuestra forma de entender la cocina. Cada ingrediente tiene nombre, origen y una historia que vale la pena contar.
+            </p>
+            <p className="text-[#5A6B60] text-[16px] leading-[1.75] mb-10">
+              Desde los campos de Castilla hasta tu mesa, respetamos el producto y la memoria de la cocina española de siempre.
+            </p>
+            <MagneticEl className="w-fit">
+              <Link href="/nosotros" className="inline-flex items-center gap-2 text-[#172E22] font-bold text-[12px] tracking-[1.5px] uppercase border-b-2 border-[#C8DC2E] pb-[3px] hover:text-[#8A9C1E] transition-colors duration-200">
+                Nuestra historia
+              </Link>
+            </MagneticEl>
+          </AnimateIn>
+        </div>
       </section>
 
       {/* ── Carta preview ── */}
