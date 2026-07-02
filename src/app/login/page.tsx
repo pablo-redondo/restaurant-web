@@ -19,9 +19,13 @@ function LoginForm() {
     setError('');
     setLoading(true);
     try {
-      await login(email, password);
+      const user = await login(email, password);
       const redirect = searchParams.get('redirect');
-      router.push(redirect || '/reservations/me');
+      if (user.role === 'admin') {
+        router.push('/admin');
+      } else {
+        router.push(redirect || '/reservations/me');
+      }
     } catch (err: unknown) {
       const e = err as { error?: string };
       setError(e?.error ?? 'Error al iniciar sesión');
