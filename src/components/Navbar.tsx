@@ -19,27 +19,27 @@ export default function Navbar() {
 
   const isAdmin = user?.role === 'admin';
 
-  const navLink = (href: string, label: string) => {
+  const navLinkContent = (href: string, label: string) => {
     const active = pathname === href;
     return (
-      <li>
-        <Link
-          href={href}
-          className={`group relative px-1 py-2 text-[12.5px] font-semibold tracking-[0.5px] uppercase transition-colors ${
-            active ? 'text-[#172E22]' : 'text-[#7C8C82] hover:text-[#172E22]'
+      <Link
+        href={href}
+        className={`group relative px-1 py-2 text-[12.5px] font-semibold tracking-[0.5px] uppercase transition-colors ${
+          active ? 'text-[#172E22]' : 'text-[#7C8C82] hover:text-[#172E22]'
+        }`}
+      >
+        {label}
+        {/* Indicador centrado bajo el texto, en vez de subrayado completo */}
+        <span
+          className={`absolute left-1/2 -translate-x-1/2 bottom-0 h-[3px] rounded-full bg-[#C8DC2E] transition-all duration-300 ease-out ${
+            active ? 'w-[16px]' : 'w-0 group-hover:w-[16px]'
           }`}
-        >
-          {label}
-          {/* Indicador centrado bajo el texto, en vez de subrayado completo */}
-          <span
-            className={`absolute left-1/2 -translate-x-1/2 bottom-0 h-[3px] rounded-full bg-[#C8DC2E] transition-all duration-300 ease-out ${
-              active ? 'w-[16px]' : 'w-0 group-hover:w-[16px]'
-            }`}
-          />
-        </Link>
-      </li>
+        />
+      </Link>
     );
   };
+
+  const navLink = (href: string, label: string) => <li>{navLinkContent(href, label)}</li>;
 
   return (
     <header
@@ -80,16 +80,7 @@ export default function Navbar() {
                   Panel
                 </Link>
               )}
-              {!isAdmin && (
-                <Link
-                  href="/reservations/me"
-                  className={`text-[12.5px] font-semibold tracking-[0.5px] uppercase transition-colors ${
-                    pathname === '/reservations/me' ? 'text-[#172E22]' : 'text-[#7C8C82] hover:text-[#172E22]'
-                  }`}
-                >
-                  Mis reservas
-                </Link>
-              )}
+              {!isAdmin && navLinkContent('/reservations/me', 'Mis reservas')}
               <span className="hidden sm:block text-[13px] font-medium text-[#172E22] px-3 py-[5px] rounded-full bg-[#E2ECE6]">
                 {user.name.split(' ')[0]}
               </span>
