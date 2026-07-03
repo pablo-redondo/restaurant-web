@@ -77,24 +77,24 @@ export default function HomePage() {
               </Link>
             </MagneticEl>
           </div>
-          <div className="anim-fade-up mt-14 pt-8 border-t border-white/15 flex justify-center gap-12 sm:gap-16" style={{ animationDelay: '0.54s' }}>
-            <div>
-              <p className="font-heading font-bold text-[30px] text-white tabular-nums">
+          <div className="anim-fade-up mt-12 flex flex-wrap justify-center gap-3" style={{ animationDelay: '0.54s' }}>
+            <div className="flex items-center gap-3 rounded-full border border-white/12 bg-white/[0.06] pl-5 pr-6 py-[10px] backdrop-blur-md">
+              <span className="font-heading font-bold text-[26px] text-[#C8DC2E] tabular-nums leading-none">
                 <CountUp to={35} suffix="+" startDelay={650} />
-              </p>
-              <p className="text-[#8AB5A0] text-[10px] font-bold tracking-[1.5px] uppercase mt-1">Años de historia</p>
+              </span>
+              <span className="text-left text-[#C8D8CC] text-[10.5px] font-bold tracking-[1px] uppercase leading-[1.2]">Años de<br />historia</span>
             </div>
-            <div>
-              <p className="font-heading font-bold text-[30px] text-white tabular-nums">
+            <div className="flex items-center gap-3 rounded-full border border-white/12 bg-white/[0.06] pl-5 pr-6 py-[10px] backdrop-blur-md">
+              <span className="font-heading font-bold text-[26px] text-[#C8DC2E] tabular-nums leading-none">
                 <CountUp to={4.8} suffix="★" decimals={1} startDelay={700} />
-              </p>
-              <p className="text-[#8AB5A0] text-[10px] font-bold tracking-[1.5px] uppercase mt-1">Valoración media</p>
+              </span>
+              <span className="text-left text-[#C8D8CC] text-[10.5px] font-bold tracking-[1px] uppercase leading-[1.2]">Valoración<br />media</span>
             </div>
-            <div>
-              <p className="font-heading font-bold text-[30px] text-white tabular-nums">
+            <div className="flex items-center gap-3 rounded-full border border-white/12 bg-white/[0.06] pl-5 pr-6 py-[10px] backdrop-blur-md">
+              <span className="font-heading font-bold text-[26px] text-[#C8DC2E] tabular-nums leading-none">
                 <CountUp to={2000} suffix="+" locale="es-ES" startDelay={750} />
-              </p>
-              <p className="text-[#8AB5A0] text-[10px] font-bold tracking-[1.5px] uppercase mt-1">Clientes al mes</p>
+              </span>
+              <span className="text-left text-[#C8D8CC] text-[10.5px] font-bold tracking-[1px] uppercase leading-[1.2]">Clientes<br />al mes</span>
             </div>
           </div>
         </div>
