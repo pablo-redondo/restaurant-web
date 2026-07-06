@@ -77,24 +77,27 @@ export default function HomePage() {
               </Link>
             </MagneticEl>
           </div>
-          <div className="anim-fade-up mt-12 flex flex-wrap justify-center gap-3" style={{ animationDelay: '0.54s' }}>
-            <div className="flex items-center gap-3 rounded-full border border-white/12 bg-white/[0.06] pl-5 pr-6 py-[10px] backdrop-blur-md">
-              <span className="font-heading font-bold text-[26px] text-[#C8DC2E] tabular-nums leading-none">
+          <div className="anim-fade-up mt-14 flex flex-wrap justify-center gap-10 sm:gap-16" style={{ animationDelay: '0.54s' }}>
+            <div className="group cursor-default">
+              <p className="font-heading font-bold text-[36px] text-white tabular-nums leading-none transition-all duration-300 group-hover:text-[#C8DC2E] group-hover:-translate-y-0.5">
                 <CountUp to={35} suffix="+" startDelay={650} />
-              </span>
-              <span className="text-left text-[#C8D8CC] text-[10.5px] font-bold tracking-[1px] uppercase leading-[1.2]">Años de<br />historia</span>
+              </p>
+              <span className="block mx-auto mt-[10px] h-[2px] w-0 rounded-full bg-[#C8DC2E] transition-all duration-300 group-hover:w-7" />
+              <p className="text-[#8AB5A0] text-[10px] font-bold tracking-[1.5px] uppercase mt-[10px] transition-colors group-hover:text-[#C8D8CC]">Años de historia</p>
             </div>
-            <div className="flex items-center gap-3 rounded-full border border-white/12 bg-white/[0.06] pl-5 pr-6 py-[10px] backdrop-blur-md">
-              <span className="font-heading font-bold text-[26px] text-[#C8DC2E] tabular-nums leading-none">
+            <div className="group cursor-default">
+              <p className="font-heading font-bold text-[36px] text-white tabular-nums leading-none transition-all duration-300 group-hover:text-[#C8DC2E] group-hover:-translate-y-0.5">
                 <CountUp to={4.8} suffix="★" decimals={1} startDelay={700} />
-              </span>
-              <span className="text-left text-[#C8D8CC] text-[10.5px] font-bold tracking-[1px] uppercase leading-[1.2]">Valoración<br />media</span>
+              </p>
+              <span className="block mx-auto mt-[10px] h-[2px] w-0 rounded-full bg-[#C8DC2E] transition-all duration-300 group-hover:w-7" />
+              <p className="text-[#8AB5A0] text-[10px] font-bold tracking-[1.5px] uppercase mt-[10px] transition-colors group-hover:text-[#C8D8CC]">Valoración media</p>
             </div>
-            <div className="flex items-center gap-3 rounded-full border border-white/12 bg-white/[0.06] pl-5 pr-6 py-[10px] backdrop-blur-md">
-              <span className="font-heading font-bold text-[26px] text-[#C8DC2E] tabular-nums leading-none">
+            <div className="group cursor-default">
+              <p className="font-heading font-bold text-[36px] text-white tabular-nums leading-none transition-all duration-300 group-hover:text-[#C8DC2E] group-hover:-translate-y-0.5">
                 <CountUp to={2000} suffix="+" locale="es-ES" startDelay={750} />
-              </span>
-              <span className="text-left text-[#C8D8CC] text-[10.5px] font-bold tracking-[1px] uppercase leading-[1.2]">Clientes<br />al mes</span>
+              </p>
+              <span className="block mx-auto mt-[10px] h-[2px] w-0 rounded-full bg-[#C8DC2E] transition-all duration-300 group-hover:w-7" />
+              <p className="text-[#8AB5A0] text-[10px] font-bold tracking-[1.5px] uppercase mt-[10px] transition-colors group-hover:text-[#C8D8CC]">Clientes al mes</p>
             </div>
           </div>
         </div>
@@ -141,40 +144,45 @@ export default function HomePage() {
 
       {/* ── Carta preview ── */}
       <section className="bg-[#172E22] py-[88px] px-[52px]">
-        <AnimateIn className="flex items-end justify-between mb-[52px]">
+        <AnimateIn className="max-w-[1120px] mx-auto flex items-end justify-between mb-[52px]">
           <div>
             <p className="text-[#C8DC2E] text-[10px] font-bold tracking-[2.5px] uppercase mb-3">Nuestra carta</p>
-            <h2 className="font-heading font-bold text-[36px] tracking-[-0.5px] text-white leading-[1.2]">
+            <h2 className="font-heading font-bold text-[clamp(30px,3.4vw,42px)] tracking-[-0.5px] text-white leading-[1.1]">
               Platos que cuentan<br />una historia
             </h2>
           </div>
           <MagneticEl>
-            <Link href="/carta" className="hidden md:inline-block px-[24px] py-[11px] border border-white/15 text-white text-[13px] rounded-[3px] hover:bg-white/8 hover:border-white/30 transition-all duration-200">
-              Ver carta completa
+            <Link href="/carta" className="group hidden md:inline-flex items-center gap-2 px-[24px] py-[12px] rounded-full border border-white/20 text-white text-[13px] font-semibold hover:bg-[#C8DC2E] hover:text-[#172E22] hover:border-[#C8DC2E] transition-all duration-200">
+              Ver carta
+              <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
             </Link>
           </MagneticEl>
         </AnimateIn>
 
-        <div className="grid md:grid-cols-3 divide-x divide-white/10 border border-white/10 rounded-[4px] overflow-hidden">
+        <div className="max-w-[1120px] mx-auto grid md:grid-cols-3 gap-4">
           {cartaCards.map(({ tag, nombre, desc, precio, delay }) => (
             <AnimateIn key={nombre} delay={delay} className="h-full">
               <TiltCard className="h-full" intensity={6}>
-                <div className="p-8 h-full hover:bg-[#1C3828] transition-colors duration-300 cursor-default group">
-                  <span className="inline-block text-[10px] font-bold tracking-[2px] uppercase px-[10px] py-[4px] rounded-[2px] mb-6 bg-[#C8DC2E]/10 text-[#C8DC2E] group-hover:bg-[#C8DC2E]/20 transition-colors">
-                    {tag}
-                  </span>
-                  <h3 className="font-heading font-bold text-[20px] text-white mb-2 group-hover:text-[#C8DC2E] transition-colors">{nombre}</h3>
-                  <p className="text-[#5A8A70] text-[13px] leading-[1.65] mb-8">{desc}</p>
-                  <p className="font-heading font-bold text-[24px] text-white">{precio}</p>
+                <div className="relative h-full flex flex-col p-7 rounded-[10px] border border-white/10 bg-white/[0.03] overflow-hidden cursor-default group hover:border-[#C8DC2E]/40 hover:bg-white/[0.06] hover:-translate-y-1 transition-all duration-300">
+                  <span className="absolute top-0 left-0 right-0 h-[3px] bg-[#C8DC2E] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" />
+                  <div className="flex items-start justify-between gap-3 mb-6">
+                    <span className="inline-block text-[10px] font-bold tracking-[2px] uppercase px-[10px] py-[4px] rounded-full bg-[#C8DC2E]/10 text-[#C8DC2E] group-hover:bg-[#C8DC2E]/20 transition-colors">
+                      {tag}
+                    </span>
+                    <p className="font-heading font-bold text-[24px] text-white tabular-nums group-hover:text-[#C8DC2E] transition-colors">{precio}</p>
+                  </div>
+                  <h3 className="font-heading font-bold text-[21px] text-white mb-2 leading-[1.2]">{nombre}</h3>
+                  <p className="text-[#8AB5A0] text-[13.5px] leading-[1.65]">{desc}</p>
                 </div>
               </TiltCard>
             </AnimateIn>
           ))}
         </div>
 
-        <div className="mt-6 md:hidden">
-          <Link href="/carta" className="block text-center px-[24px] py-[12px] border border-white/15 text-white text-[13px] rounded-[3px] hover:bg-white/8 transition">
-            Ver carta completa
+        <div className="max-w-[1120px] mx-auto mt-6 md:hidden">
+          <Link href="/carta" className="flex items-center justify-center gap-2 px-[24px] py-[13px] rounded-full border border-white/20 text-white text-[13px] font-semibold hover:bg-[#C8DC2E] hover:text-[#172E22] transition-all">
+            Ver carta
+            <span>→</span>
           </Link>
         </div>
       </section>
