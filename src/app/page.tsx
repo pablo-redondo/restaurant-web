@@ -152,9 +152,8 @@ export default function HomePage() {
             </h2>
           </div>
           <MagneticEl>
-            <Link href="/carta" className="group hidden md:inline-flex items-center gap-2 px-[24px] py-[12px] rounded-full border border-white/20 text-white text-[13px] font-semibold hover:bg-[#C8DC2E] hover:text-[#172E22] hover:border-[#C8DC2E] transition-all duration-200">
+            <Link href="/carta" className="hidden md:inline-block px-[32px] py-[13px] border border-white/25 text-white text-[14px] rounded-[3px] hover:bg-white/10 hover:border-white/40 transition-all duration-200">
               Ver carta
-              <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
             </Link>
           </MagneticEl>
         </AnimateIn>
@@ -180,22 +179,23 @@ export default function HomePage() {
         </div>
 
         <div className="max-w-[1120px] mx-auto mt-6 md:hidden">
-          <Link href="/carta" className="flex items-center justify-center gap-2 px-[24px] py-[13px] rounded-full border border-white/20 text-white text-[13px] font-semibold hover:bg-[#C8DC2E] hover:text-[#172E22] transition-all">
+          <Link href="/carta" className="block text-center px-[24px] py-[13px] border border-white/25 text-white text-[14px] rounded-[3px] hover:bg-white/10 hover:border-white/40 transition-all">
             Ver carta
-            <span>→</span>
           </Link>
         </div>
       </section>
 
       {/* ── Reviews ── */}
       <section className="bg-[#F0F4F0] py-[88px] px-[52px]">
-        <AnimateIn>
-          <p className="text-[#172E22] text-[10px] font-bold tracking-[2.5px] uppercase mb-3">Lo que dicen</p>
-          <h2 className="font-heading font-bold text-[36px] tracking-[-0.5px] text-[#172E22] mb-0">Nuestros clientes</h2>
-        </AnimateIn>
-        <AnimateIn delay={150}>
-          <ReviewsSection />
-        </AnimateIn>
+        <div className="max-w-[1120px] mx-auto">
+          <AnimateIn>
+            <p className="text-[#172E22] text-[10px] font-bold tracking-[2.5px] uppercase mb-3">Lo que dicen</p>
+            <h2 className="font-heading font-bold text-[clamp(30px,3.4vw,42px)] tracking-[-0.5px] text-[#172E22] leading-[1.1] mb-0">Nuestros clientes</h2>
+          </AnimateIn>
+          <AnimateIn delay={150}>
+            <ReviewsSection />
+          </AnimateIn>
+        </div>
       </section>
     </>
   );

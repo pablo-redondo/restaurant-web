@@ -53,13 +53,13 @@ export default function ReviewsSection() {
     <div>
       {/* Rating summary */}
       {status === 'done' ? (
-        <div className="flex items-center gap-4 mt-3 mb-10">
-          <span className="font-heading font-bold text-[48px] leading-none text-[#172E22]">
+        <div className="inline-flex items-center gap-4 mt-5 mb-11 bg-white border border-[#E4EDE8] rounded-full pl-5 pr-7 py-3 shadow-[0_4px_20px_rgba(23,46,34,0.05)]">
+          <span className="font-heading font-bold text-[38px] leading-none text-[#172E22]">
             {avg !== null ? avg.toFixed(1) : '—'}
           </span>
-          <div className="text-[13px] leading-[1.6]">
-            <span className="text-[#172E22] tracking-[2px]">{avgStars}</span><br />
-            <span className="text-[#5A6B60]">
+          <div className="text-[13px] leading-[1.5]">
+            <span className="text-[#B07010] text-[15px] tracking-[3px]">{avgStars}</span><br />
+            <span className="text-[#5A6B60] text-[12px]">
               {total !== null ? `${total} reseñas verificadas` : 'Reseñas verificadas'}
             </span>
           </div>
@@ -89,26 +89,27 @@ export default function ReviewsSection() {
             const date    = new Date(r.created_at).toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
             return (
               <AnimateIn key={r.id} delay={i * 55} className="h-full">
-                <div className="bg-white border border-[#E4EDE8] rounded-[4px] p-6 h-full flex flex-col hover:border-[#C8DC2E]/50 hover:shadow-[0_6px_28px_rgba(23,46,34,0.09)] transition-all duration-300 group">
-                  <div className="flex items-start justify-between mb-4">
-                    <span className="text-[#172E22] text-[11px] tracking-[2px]">{rStars}</span>
-                    <span className="text-[#C8DC2E] text-[28px] leading-none font-heading font-bold opacity-25 group-hover:opacity-50 transition-opacity select-none">"</span>
+                <div className="relative bg-white border border-[#E4EDE8] rounded-[12px] p-7 h-full flex flex-col overflow-hidden hover:border-[#C8DC2E]/50 hover:shadow-[0_12px_32px_rgba(23,46,34,0.10)] hover:-translate-y-1 transition-all duration-300 group">
+                  <span className="absolute top-0 left-0 right-0 h-[3px] bg-[#C8DC2E] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" />
+                  <div className="flex items-start justify-between mb-5">
+                    <span className="text-[#B07010] text-[13px] tracking-[2px]">{rStars}</span>
+                    <span className="font-heading font-bold text-[#C8DC2E] text-[44px] leading-[0.7] opacity-30 group-hover:opacity-60 transition-opacity select-none">&rdquo;</span>
                   </div>
                   {r.comment && (
-                    <p className="text-[#4A5A50] text-[13px] leading-[1.8] mb-5 flex-1">
+                    <p className="text-[#4A5A50] text-[14px] leading-[1.8] mb-6 flex-1">
                       &ldquo;{r.comment}&rdquo;
                     </p>
                   )}
-                  <div className="flex items-center gap-3 mt-auto pt-4 border-t border-[#EDF2EF]">
+                  <div className="flex items-center gap-3 mt-auto pt-5 border-t border-[#EDF2EF]">
                     <div
-                      className="w-9 h-9 rounded-full flex items-center justify-center text-[12px] font-bold text-white shrink-0"
+                      className="w-10 h-10 rounded-full flex items-center justify-center text-[13px] font-bold text-white shrink-0"
                       style={{ background: AVATARS[i % AVATARS.length] }}
                     >
                       {initial}
                     </div>
                     <div>
-                      <p className="text-[13px] font-semibold text-[#172E22]">{r.user_name ?? 'Cliente'}</p>
-                      <p className="text-[11px] text-[#8A9E90] mt-0.5">{date}</p>
+                      <p className="text-[13.5px] font-semibold text-[#172E22]">{r.user_name ?? 'Cliente'}</p>
+                      <p className="text-[11px] text-[#8A9E90] mt-0.5 capitalize">{date}</p>
                     </div>
                   </div>
                 </div>
