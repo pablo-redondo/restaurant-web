@@ -91,11 +91,11 @@ function Stepper({ current }: { current: number }) {
         const done   = current > n;
         const active = current === n;
         return (
-          <div key={label} className={`flex-1 flex items-center gap-3 px-5 py-4 text-sm border-r border-[#C4D5CA] last:border-r-0 ${done ? 'text-[#1A8A50]' : active ? 'text-[#172E22] font-semibold' : 'text-[#C4D5CA]'}`}>
+          <div key={label} className={`flex-1 flex items-center justify-center sm:justify-start gap-2 sm:gap-3 px-2 sm:px-5 py-3 sm:py-4 text-[13px] border-r border-[#C4D5CA] last:border-r-0 ${done ? 'text-[#1A8A50]' : active ? 'text-[#172E22] font-semibold' : 'text-[#C4D5CA]'}`}>
             <span className={`w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold shrink-0 ${done ? 'bg-[#1A8A50] text-white' : active ? 'bg-[#172E22] text-white' : 'bg-[#E2ECE6] text-[#C4D5CA]'}`}>
               {done ? '✓' : n}
             </span>
-            {label}
+            <span className="hidden sm:inline">{label}</span>
           </div>
         );
       })}

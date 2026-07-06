@@ -10,12 +10,22 @@ export default function Navbar() {
   const router   = useRouter();
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  // Cerrar el menú móvil al navegar a otra página
+  useEffect(() => { setMenuOpen(false); }, [pathname]);
+
+  // Bloquear el scroll del body mientras el menú móvil está abierto
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [menuOpen]);
 
   const isAdmin = user?.role === 'admin';
 
@@ -41,6 +51,23 @@ export default function Navbar() {
 
   const navLink = (href: string, label: string) => <li>{navLinkContent(href, label)}</li>;
 
+  // Enlace del menú móvil (fila ancha con buen área de toque)
+  const mobileLink = (href: string, label: string) => {
+    const active = pathname === href;
+    return (
+      <Link
+        href={href}
+        onClick={() => setMenuOpen(false)}
+        className={`flex items-center justify-between py-[14px] border-b border-white/10 text-[15px] font-semibold uppercase tracking-[0.5px] transition-colors ${
+          active ? 'text-[#C8DC2E]' : 'text-white hover:text-[#C8DC2E]'
+        }`}
+      >
+        {label}
+        <span className="text-white/30">→</span>
+      </Link>
+    );
+  };
+
   return (
     <header
       className={`fixed top-0 inset-x-0 z-50 h-[58px] border-b transition-all duration-300 ${
@@ -50,23 +77,23 @@ export default function Navbar() {
       }`}
       style={{ background: '#172E22' }}
     >
-      {/* Grid de 3 columnas con extremos iguales (1fr) para que el bloque central quede
-          siempre centrado en el nav, sin importar cuánto contenido haya a cada lado. */}
-      <nav className="px-[40px] md:px-[52px] h-full grid grid-cols-[1fr_auto_1fr] items-center gap-6">
+      {/* En móvil: flex con logo + hamburguesa. En md+: grid de 3 columnas con
+          extremos iguales (1fr) para que el bloque central quede siempre centrado. */}
+      <nav className="px-5 sm:px-8 lg:px-[52px] h-full flex items-center justify-between md:grid md:grid-cols-[1fr_auto_1fr] md:gap-6">
         <Link
           href="/"
-          className="justify-self-start font-heading font-bold text-[17px] tracking-[2.5px] uppercase text-white hover:tracking-[3px] transition-all duration-300"
+          className="md:justify-self-start font-heading font-bold text-[17px] tracking-[2.5px] uppercase text-white hover:tracking-[3px] transition-all duration-300"
         >
           MARQUÉS
         </Link>
 
-        <ul className="flex items-center gap-9">
+        <ul className="hidden md:flex items-center gap-9">
           {navLink('/nosotros', 'Nosotros')}
           {navLink('/carta',    'Carta')}
           {navLink('/contacto', 'Contacto')}
         </ul>
 
-        <div className="justify-self-end flex items-center gap-3">
+        <div className="hidden md:flex justify-self-end items-center gap-3">
           {user ? (
             <>
               {isAdmin && (
@@ -78,7 +105,7 @@ export default function Navbar() {
                 </Link>
               )}
               {!isAdmin && navLinkContent('/reservations/me', 'Mis reservas')}
-              <span className="hidden sm:block text-[13px] font-medium text-white px-3 py-[5px] rounded-full bg-white/10">
+              <span className="hidden lg:block text-[13px] font-medium text-white px-3 py-[5px] rounded-full bg-white/10">
                 {user.name.split(' ')[0]}
               </span>
               <button
@@ -106,7 +133,69 @@ export default function Navbar() {
             </div>
           )}
         </div>
+
+        {/* Botón hamburguesa — solo móvil/tablet */}
+        <button
+          aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen(o => !o)}
+          className="md:hidden relative w-9 h-9 flex flex-col items-center justify-center gap-[5px] -mr-1"
+        >
+          <span className={`block h-[2px] w-6 bg-white rounded-full transition-all duration-300 ${menuOpen ? 'translate-y-[7px] rotate-45' : ''}`} />
+          <span className={`block h-[2px] w-6 bg-white rounded-full transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
+          <span className={`block h-[2px] w-6 bg-white rounded-full transition-all duration-300 ${menuOpen ? '-translate-y-[7px] -rotate-45' : ''}`} />
+        </button>
       </nav>
+
+      {/* Panel del menú móvil */}
+      {menuOpen && (
+        <>
+          <div
+            className="md:hidden fixed inset-0 top-[58px] bg-black/40"
+            onClick={() => setMenuOpen(false)}
+          />
+          <div className="md:hidden absolute top-[58px] inset-x-0 bg-[#172E22] border-t border-white/10 shadow-[0_16px_32px_rgba(0,0,0,0.35)] px-5 sm:px-8 pt-2 pb-6">
+            {mobileLink('/nosotros', 'Nosotros')}
+            {mobileLink('/carta',    'Carta')}
+            {mobileLink('/contacto', 'Contacto')}
+            {user && !isAdmin && mobileLink('/reservations/me', 'Mis reservas')}
+            {user && isAdmin && mobileLink('/admin', 'Panel')}
+
+            <div className="mt-5">
+              {user ? (
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-[14px] font-medium text-white px-4 py-2 rounded-full bg-white/10">
+                    {user.name.split(' ')[0]}
+                  </span>
+                  <button
+                    onClick={() => { logout(); setMenuOpen(false); router.push('/'); }}
+                    className="px-5 py-[11px] rounded-full text-[13px] font-semibold border border-white/20 text-white hover:bg-white/5 transition-all"
+                  >
+                    Cerrar sesión
+                  </button>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-3">
+                  <Link
+                    href="/reservations"
+                    onClick={() => setMenuOpen(false)}
+                    className="w-full text-center bg-[#C8DC2E] text-[#172E22] font-bold text-[14px] uppercase tracking-[0.3px] py-[14px] rounded-[3px] hover:brightness-105 transition-all"
+                  >
+                    Reservar mesa
+                  </Link>
+                  <Link
+                    href="/login"
+                    onClick={() => setMenuOpen(false)}
+                    className="w-full text-center border border-white/20 text-white font-semibold text-[14px] uppercase tracking-[0.3px] py-[13px] rounded-[3px] hover:bg-white/5 transition-all"
+                  >
+                    Entrar
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
+        </>
+      )}
     </header>
   );
 }

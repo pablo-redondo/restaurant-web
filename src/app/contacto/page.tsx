@@ -51,7 +51,7 @@ export default function ContactoPage() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-[#172E22] px-[52px] py-16 border-b border-[#1E3020]">
+      <section className="bg-[#172E22] px-5 sm:px-8 lg:px-[52px] py-16 border-b border-[#1E3020]">
         <p className="anim-fade-up text-[#C8DC2E] text-[11px] font-bold tracking-[2.5px] uppercase mb-4" style={{ animationDelay: '0.05s' }}>
           <TextScramble text="Encúntranos" delay={50} />
         </p>
@@ -64,7 +64,7 @@ export default function ContactoPage() {
       </section>
 
       {/* Horarios + Contacto */}
-      <section className="bg-[#F1EFE9] px-[52px] py-[88px]">
+      <section className="bg-[#F1EFE9] px-5 sm:px-8 lg:px-[52px] py-16 sm:py-[88px]">
         <div className="grid md:grid-cols-2 gap-16 max-w-5xl mx-auto">
 
           {/* Horarios */}
@@ -124,7 +124,7 @@ export default function ContactoPage() {
       </section>
 
       {/* Ubicación */}
-      <section className="bg-[#172E22] px-[52px] py-[72px]">
+      <section className="bg-[#172E22] px-5 sm:px-8 lg:px-[52px] py-[72px]">
         <AnimateIn className="max-w-5xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-8">
           <div>
             <p className="text-[#C8DC2E] text-[10px] font-bold tracking-[2.5px] uppercase mb-3">Ubicación</p>
@@ -146,7 +146,7 @@ export default function ContactoPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-[#F0F4F0] px-[52px] py-[72px] border-t border-[#C4D5CA]">
+      <section className="bg-[#F0F4F0] px-5 sm:px-8 lg:px-[52px] py-[72px] border-t border-[#C4D5CA]">
         <AnimateIn className="max-w-5xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
             <h2 className="font-heading font-bold text-[28px] text-[#172E22] mb-2">¿Lista para reservar?</h2>

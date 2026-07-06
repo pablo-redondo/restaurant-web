@@ -50,7 +50,7 @@ export default function NosotrosPage() {
           <Image src="/hero.webp" alt="Interior del restaurante Marqués" fill className="object-cover" style={{ objectPosition: 'center 30%' }} priority />
         </ParallaxImage>
         <div className="absolute inset-0" style={{ background: 'linear-gradient(115deg, rgba(8,18,12,0.95) 0%, rgba(8,18,12,0.78) 40%, rgba(8,18,12,0.25) 80%, transparent 100%)' }} />
-        <div className="relative h-full flex flex-col justify-end px-[52px] pb-16">
+        <div className="relative h-full flex flex-col justify-end px-5 sm:px-8 lg:px-[52px] pb-16">
           <p className="anim-fade-up text-[#C8DC2E] text-[11px] font-bold tracking-[2.5px] uppercase mb-4" style={{ animationDelay: '0.05s' }}>
             <TextScramble text="Desde 1987" delay={50} />
           </p>
@@ -64,7 +64,7 @@ export default function NosotrosPage() {
       </section>
 
       {/* ── 2. HISTORIA + TIMELINE ── bg claro ─────────────── */}
-      <section className="bg-[#F0F4F0] px-[52px] py-[88px]">
+      <section className="bg-[#F0F4F0] px-5 sm:px-8 lg:px-[52px] py-16 sm:py-[88px]">
         <div className="max-w-5xl mx-auto grid md:grid-cols-[1fr_1fr] gap-20 items-start">
           <AnimateIn from="left">
             <p className="text-[#172E22] text-[10px] font-bold tracking-[2.5px] uppercase mb-4">La historia</p>
@@ -108,7 +108,7 @@ export default function NosotrosPage() {
       </section>
 
       {/* ── 3. FILOSOFÍA ── bg oscuro ───────────────────────── */}
-      <section className="bg-[#172E22] px-[52px] py-[88px]">
+      <section className="bg-[#172E22] px-5 sm:px-8 lg:px-[52px] py-16 sm:py-[88px]">
         <div className="max-w-5xl mx-auto">
           <AnimateIn>
             <p className="text-[#C8DC2E] text-[10px] font-bold tracking-[2.5px] uppercase mb-4">Cómo cocinamos</p>
@@ -136,7 +136,7 @@ export default function NosotrosPage() {
       </section>
 
       {/* ── 4. EL ESPACIO ── bg claro ───────────────────────── */}
-      <section className="bg-[#F0F4F0] px-[52px] py-[88px]">
+      <section className="bg-[#F0F4F0] px-5 sm:px-8 lg:px-[52px] py-16 sm:py-[88px]">
         <div className="max-w-5xl mx-auto grid md:grid-cols-[56fr_44fr] gap-16 items-center">
           <AnimateIn from="left" className="relative overflow-hidden rounded-[4px]" style={{ height: '460px' }}>
             <ParallaxImage speed={0.12}>
@@ -178,7 +178,7 @@ export default function NosotrosPage() {
           <Image src="/hero.webp" alt="Salón del restaurante Marqués" fill className="object-cover" style={{ objectPosition: 'center 70%' }} />
         </ParallaxImage>
         <div className="absolute inset-0" style={{ background: 'rgba(8,18,12,0.58)' }} />
-        <div className="relative h-full flex items-center px-[52px]">
+        <div className="relative h-full flex items-center px-5 sm:px-8 lg:px-[52px]">
           <AnimateIn>
             <blockquote className="max-w-[640px]">
               <span className="text-[#C8DC2E] text-[48px] font-heading font-bold leading-none opacity-60 select-none block mb-2">"</span>
@@ -194,7 +194,7 @@ export default function NosotrosPage() {
       </section>
 
       {/* ── 6. CTA ── bg crema, CONTRASTA con footer verde ─── */}
-      <section className="bg-[#F1EFE9] px-[52px] py-[72px] border-t border-[#D8D5CF]">
+      <section className="bg-[#F1EFE9] px-5 sm:px-8 lg:px-[52px] py-[72px] border-t border-[#D8D5CF]">
         <AnimateIn className="max-w-5xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-8">
           <div>
             <p className="text-[#172E22] text-[10px] font-bold tracking-[2.5px] uppercase mb-3">¿Quieres visitarnos?</p>

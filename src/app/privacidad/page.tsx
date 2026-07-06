@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function PrivacidadPage() {
   const year = new Date().getFullYear();
   return (
-    <section className="bg-[#F1EFE9] px-[52px] py-[88px]">
+    <section className="bg-[#F1EFE9] px-5 sm:px-8 lg:px-[52px] py-16 sm:py-[88px]">
       <div className="max-w-3xl mx-auto">
         <p className="text-[#172E22] text-[10px] font-bold tracking-[2.5px] uppercase mb-4">Legal</p>
         <h1 className="font-heading font-bold text-[42px] tracking-[-0.5px] text-[#172E22] mb-10">
@@ -29,7 +29,7 @@ export default function PrivacidadPage() {
 
           <div>
             <h2 className="font-heading font-bold text-[20px] text-[#172E22] mb-3">3. Finalidad y base legal</h2>
-            <p>Tus datos se tratan para: (a) gestionar tu reserva y comunicarte cambios — base legal: ejecución de un contrato; (b) enviarte información sobre nuestra carta y eventos si nos das tu consentimiento explícito — base legal: consentimiento.</p>
+            <p>Tus datos se tratan para: (a) gestionar tu reserva y comunicarte cambios — base legal: ejecución de un contrato; (b) enviarte información sobre nuestra carta y eventos si nos das tu consentimiento explícito — base legal: consentimiento.</p>
           </div>
 
           <div>

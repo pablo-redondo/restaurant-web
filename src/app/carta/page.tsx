@@ -85,7 +85,7 @@ export default function CartaPage() {
         </ParallaxImage>
         <div className="absolute inset-0" style={{ background: 'linear-gradient(115deg, rgba(8,18,12,0.94) 0%, rgba(8,18,12,0.80) 38%, rgba(8,18,12,0.30) 75%, transparent 100%)' }} />
 
-        <div className="relative h-full flex flex-col justify-end pb-14 px-[52px]">
+        <div className="relative h-full flex flex-col justify-end pb-14 px-5 sm:px-8 lg:px-[52px]">
           <p className="anim-fade-up text-[#C8DC2E] text-[11px] font-bold tracking-[3px] uppercase mb-4" style={{ animationDelay: '0.05s' }}>
             <TextScramble text="Cocina de temporada" delay={50} />
           </p>
@@ -100,7 +100,7 @@ export default function CartaPage() {
 
       {/* ── FRANJA DE CIFRAS ── #172E22, diferenciada con la línea oscura de la web ── */}
       <section className="bg-[#172E22]">
-        <div className="px-[52px] py-9 max-w-5xl mx-auto grid grid-cols-3 divide-x divide-white/10">
+        <div className="px-5 sm:px-8 lg:px-[52px] py-9 max-w-5xl mx-auto grid grid-cols-3 divide-x divide-white/10">
           {[
             { to: 37,  suffix: '',  decimals: 0, label: 'años en Madrid',        delay: 200 },
             { to: 4.8, suffix: '★', decimals: 1, label: 'valoración Google',     delay: 300 },
@@ -126,7 +126,7 @@ export default function CartaPage() {
           id={s.id}
           style={{ backgroundColor: s.bg, '--accent': s.accent } as React.CSSProperties}
         >
-          <div className="px-[52px] py-16">
+          <div className="px-5 sm:px-8 lg:px-[52px] py-16">
             <div className="max-w-5xl mx-auto">
               <AnimateIn>
                 <div className="flex items-end justify-between gap-4 mb-10">
@@ -193,7 +193,7 @@ export default function CartaPage() {
           <Image src="/hero.webp" alt="Interior Marqués" fill className="object-cover" style={{ objectPosition: 'center 80%' }} />
         </ParallaxImage>
         <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(8,18,12,0.92) 0%, rgba(8,18,12,0.72) 55%, rgba(8,18,12,0.46) 100%)' }} />
-        <div className="relative h-full px-[52px] flex items-center">
+        <div className="relative h-full px-5 sm:px-8 lg:px-[52px] flex items-center">
           <div className="max-w-5xl mx-auto w-full flex flex-col md:flex-row items-center justify-between gap-10">
             <AnimateIn>
               <p className="text-[#C8DC2E] text-[10px] font-bold tracking-[2.5px] uppercase mb-3">Maridaje perfecto</p>
@@ -214,7 +214,7 @@ export default function CartaPage() {
       </section>
 
       {/* ── ALÉRGENOS ── tarjeta destacada, sin línea separadora ── */}
-      <section className="bg-[#F5F2EA] px-[52px] py-16">
+      <section className="bg-[#F5F2EA] px-5 sm:px-8 lg:px-[52px] py-16">
         <div className="max-w-5xl mx-auto">
           <AnimateIn>
             <div className="bg-white rounded-[10px] border border-[#C4D5CA] px-9 py-9 md:px-12 md:py-10 flex flex-col md:flex-row md:items-center justify-between gap-9 shadow-[0_6px_24px_rgba(23,46,34,0.06)]">

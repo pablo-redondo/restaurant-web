@@ -3,7 +3,7 @@ import Link from 'next/link';
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="bg-[#0F1F17] px-[52px] pt-14 pb-7">
+    <footer className="bg-[#0F1F17] px-5 sm:px-8 lg:px-[52px] pt-14 pb-7">
       <div className="max-w-[1120px] mx-auto">
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-10 pb-9 border-b border-[#1E3527]">
           <div className="max-w-[280px]">

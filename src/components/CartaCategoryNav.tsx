@@ -26,7 +26,7 @@ export default function CartaCategoryNav({ categories }: { categories: Category[
       className="sticky top-[58px] z-40 border-b border-[#C4D5CA]"
       style={{ background: 'rgba(240,244,240,0.97)', backdropFilter: 'blur(14px)' }}
     >
-      <div className="max-w-5xl mx-auto px-[52px] overflow-x-auto">
+      <div className="max-w-5xl mx-auto px-5 sm:px-8 lg:px-[52px] overflow-x-auto">
         <ul className="flex gap-2 min-w-max justify-center">
           {categories.map((c, idx) => {
             const isActive = active === c.id;

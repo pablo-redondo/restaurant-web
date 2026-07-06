@@ -105,7 +105,7 @@ export default function HomePage() {
 
       {/* ── Editorial split ── banda crema con la foto enmarcada (rounded, con margen),
           para crear un corte claro bajo el hero y evitar que dos fotos oscuras se peguen ── */}
-      <section className="bg-[#F1EFE9] px-[52px] py-[88px]">
+      <section className="bg-[#F1EFE9] px-5 sm:px-8 lg:px-[52px] py-16 sm:py-[88px]">
         <div className="max-w-[1120px] mx-auto grid md:grid-cols-2 gap-12 md:gap-16 items-center">
           <AnimateIn from="left" className="relative overflow-hidden rounded-[8px] h-[300px] md:h-[460px] order-1 md:order-none">
             <ParallaxImage speed={0.18}>
@@ -143,7 +143,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Carta preview ── */}
-      <section className="bg-[#172E22] py-[88px] px-[52px]">
+      <section className="bg-[#172E22] py-16 sm:py-[88px] px-5 sm:px-8 lg:px-[52px]">
         <AnimateIn className="max-w-[1120px] mx-auto flex items-end justify-between mb-[52px]">
           <div>
             <p className="text-[#C8DC2E] text-[10px] font-bold tracking-[2.5px] uppercase mb-3">Nuestra carta</p>
@@ -186,7 +186,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Reviews ── */}
-      <section className="bg-[#F0F4F0] py-[88px] px-[52px]">
+      <section className="bg-[#F0F4F0] py-16 sm:py-[88px] px-5 sm:px-8 lg:px-[52px]">
         <div className="max-w-[1120px] mx-auto">
           <AnimateIn>
             <p className="text-[#172E22] text-[10px] font-bold tracking-[2.5px] uppercase mb-3">Lo que dicen</p>
