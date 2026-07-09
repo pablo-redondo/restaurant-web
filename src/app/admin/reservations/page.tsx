@@ -100,11 +100,12 @@ export default function AdminReservationsPage() {
         ) : filtered.length === 0 ? (
           <p className="text-[#5A6B60] p-8 text-center text-sm">No hay reservas.</p>
         ) : (
-          <table className="w-full">
+          <div className="overflow-x-auto">
+          <table className="w-full min-w-[720px]">
             <thead>
               <tr className="border-b border-[#C4D5CA]">
                 {['#', 'Cliente', 'Fecha · Hora', 'Mesa', 'Pax', 'Estado', 'Acciones'].map(h => (
-                  <th key={h} className="px-4 py-3 text-left text-[10px] font-bold text-[#5A6B60] uppercase tracking-[2px]">{h}</th>
+                  <th key={h} className="px-4 py-3 text-left text-[10px] font-bold text-[#5A6B60] uppercase tracking-[2px] whitespace-nowrap">{h}</th>
                 ))}
               </tr>
             </thead>
@@ -163,6 +164,7 @@ export default function AdminReservationsPage() {
               ))}
             </tbody>
           </table>
+          </div>
         )}
         {totalPages > 1 && (
           <div className="flex items-center justify-between px-4 py-3 border-t border-[#F0F4F0]">

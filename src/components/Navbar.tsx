@@ -79,21 +79,21 @@ export default function Navbar() {
     >
       {/* En móvil: flex con logo + hamburguesa. En md+: grid de 3 columnas con
           extremos iguales (1fr) para que el bloque central quede siempre centrado. */}
-      <nav className="px-5 sm:px-8 lg:px-[52px] h-full flex items-center justify-between md:grid md:grid-cols-[1fr_auto_1fr] md:gap-6">
+      <nav className="px-5 sm:px-8 lg:px-[52px] h-full flex items-center justify-between lg:grid lg:grid-cols-[1fr_auto_1fr] lg:gap-6">
         <Link
           href="/"
-          className="md:justify-self-start font-heading font-bold text-[17px] tracking-[2.5px] uppercase text-white hover:tracking-[3px] transition-all duration-300"
+          className="lg:justify-self-start font-heading font-bold text-[17px] tracking-[2.5px] uppercase text-white hover:tracking-[3px] transition-all duration-300"
         >
           MARQUÉS
         </Link>
 
-        <ul className="hidden md:flex items-center gap-9">
+        <ul className="hidden lg:flex items-center gap-9">
           {navLink('/nosotros', 'Nosotros')}
           {navLink('/carta',    'Carta')}
           {navLink('/contacto', 'Contacto')}
         </ul>
 
-        <div className="hidden md:flex justify-self-end items-center gap-3">
+        <div className="hidden lg:flex justify-self-end items-center gap-3">
           {user ? (
             <>
               {isAdmin && (
@@ -139,7 +139,7 @@ export default function Navbar() {
           aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen(o => !o)}
-          className="md:hidden relative w-9 h-9 flex flex-col items-center justify-center gap-[5px] -mr-1"
+          className="lg:hidden relative w-9 h-9 flex flex-col items-center justify-center gap-[5px] -mr-1"
         >
           <span className={`block h-[2px] w-6 bg-white rounded-full transition-all duration-300 ${menuOpen ? 'translate-y-[7px] rotate-45' : ''}`} />
           <span className={`block h-[2px] w-6 bg-white rounded-full transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
@@ -151,10 +151,10 @@ export default function Navbar() {
       {menuOpen && (
         <>
           <div
-            className="md:hidden fixed inset-0 top-[58px] bg-black/40"
+            className="lg:hidden fixed inset-0 top-[58px] bg-black/40"
             onClick={() => setMenuOpen(false)}
           />
-          <div className="md:hidden absolute top-[58px] inset-x-0 bg-[#172E22] border-t border-white/10 shadow-[0_16px_32px_rgba(0,0,0,0.35)] px-5 sm:px-8 pt-2 pb-6">
+          <div className="lg:hidden absolute top-[58px] inset-x-0 bg-[#172E22] border-t border-white/10 shadow-[0_16px_32px_rgba(0,0,0,0.35)] px-5 sm:px-8 pt-2 pb-6">
             {mobileLink('/nosotros', 'Nosotros')}
             {mobileLink('/carta',    'Carta')}
             {mobileLink('/contacto', 'Contacto')}

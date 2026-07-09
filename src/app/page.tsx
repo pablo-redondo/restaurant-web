@@ -77,27 +77,27 @@ export default function HomePage() {
               </Link>
             </MagneticEl>
           </div>
-          <div className="anim-fade-up mt-14 flex flex-wrap justify-center gap-10 sm:gap-16" style={{ animationDelay: '0.54s' }}>
-            <div className="group cursor-default">
-              <p className="font-heading font-bold text-[36px] text-white tabular-nums leading-none transition-all duration-300 group-hover:text-[#C8DC2E] group-hover:-translate-y-0.5">
+          <div className="anim-fade-up mt-12 sm:mt-14 grid grid-cols-3 gap-x-3 sm:flex sm:flex-wrap sm:justify-center sm:gap-16" style={{ animationDelay: '0.54s' }}>
+            <div className="group cursor-default text-center">
+              <p className="font-heading font-bold text-[28px] sm:text-[36px] text-white tabular-nums leading-none transition-all duration-300 group-hover:text-[#C8DC2E] group-hover:-translate-y-0.5">
                 <CountUp to={35} suffix="+" startDelay={650} />
               </p>
               <span className="block mx-auto mt-[10px] h-[2px] w-0 rounded-full bg-[#C8DC2E] transition-all duration-300 group-hover:w-7" />
-              <p className="text-[#8AB5A0] text-[10px] font-bold tracking-[1.5px] uppercase mt-[10px] transition-colors group-hover:text-[#C8D8CC]">Años de historia</p>
+              <p className="text-[#8AB5A0] text-[9.5px] sm:text-[10px] font-bold tracking-[1px] sm:tracking-[1.5px] uppercase mt-[10px] transition-colors group-hover:text-[#C8D8CC]">Años de historia</p>
             </div>
-            <div className="group cursor-default">
-              <p className="font-heading font-bold text-[36px] text-white tabular-nums leading-none transition-all duration-300 group-hover:text-[#C8DC2E] group-hover:-translate-y-0.5">
+            <div className="group cursor-default text-center">
+              <p className="font-heading font-bold text-[28px] sm:text-[36px] text-white tabular-nums leading-none transition-all duration-300 group-hover:text-[#C8DC2E] group-hover:-translate-y-0.5">
                 <CountUp to={4.8} suffix="★" decimals={1} startDelay={700} />
               </p>
               <span className="block mx-auto mt-[10px] h-[2px] w-0 rounded-full bg-[#C8DC2E] transition-all duration-300 group-hover:w-7" />
-              <p className="text-[#8AB5A0] text-[10px] font-bold tracking-[1.5px] uppercase mt-[10px] transition-colors group-hover:text-[#C8D8CC]">Valoración media</p>
+              <p className="text-[#8AB5A0] text-[9.5px] sm:text-[10px] font-bold tracking-[1px] sm:tracking-[1.5px] uppercase mt-[10px] transition-colors group-hover:text-[#C8D8CC]">Valoración media</p>
             </div>
-            <div className="group cursor-default">
-              <p className="font-heading font-bold text-[36px] text-white tabular-nums leading-none transition-all duration-300 group-hover:text-[#C8DC2E] group-hover:-translate-y-0.5">
+            <div className="group cursor-default text-center">
+              <p className="font-heading font-bold text-[28px] sm:text-[36px] text-white tabular-nums leading-none transition-all duration-300 group-hover:text-[#C8DC2E] group-hover:-translate-y-0.5">
                 <CountUp to={2000} suffix="+" locale="es-ES" startDelay={750} />
               </p>
               <span className="block mx-auto mt-[10px] h-[2px] w-0 rounded-full bg-[#C8DC2E] transition-all duration-300 group-hover:w-7" />
-              <p className="text-[#8AB5A0] text-[10px] font-bold tracking-[1.5px] uppercase mt-[10px] transition-colors group-hover:text-[#C8D8CC]">Clientes al mes</p>
+              <p className="text-[#8AB5A0] text-[9.5px] sm:text-[10px] font-bold tracking-[1px] sm:tracking-[1.5px] uppercase mt-[10px] transition-colors group-hover:text-[#C8D8CC]">Clientes al mes</p>
             </div>
           </div>
         </div>
