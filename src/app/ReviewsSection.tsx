@@ -4,7 +4,6 @@ import { reviewsApi } from '@/lib/api';
 import type { Review } from '@/types';
 import AnimateIn from '@/components/AnimateIn';
 
-const AVATARS = ['#2A4A38', '#1A3050', '#3A3020', '#172E22', '#402028', '#1A2A40'];
 const TIMEOUT_MS = 5000;
 
 type Status = 'loading' | 'done' | 'empty';
@@ -51,22 +50,22 @@ export default function ReviewsSection() {
 
   return (
     <div>
-      {/* Rating summary */}
+      {/* Resumen de valoración — integrado y monocromo, en la paleta del sitio */}
       {status === 'done' ? (
-        <div className="inline-flex items-center gap-4 mt-5 mb-11 bg-white border border-[#E4EDE8] rounded-full pl-5 pr-7 py-3 shadow-[0_4px_20px_rgba(23,46,34,0.05)]">
-          <span className="font-heading font-bold text-[38px] leading-none text-[#172E22]">
+        <div className="flex items-center gap-4 mt-6 mb-12">
+          <span className="font-heading font-bold text-[46px] leading-none text-[#172E22]">
             {avg !== null ? avg.toFixed(1) : '—'}
           </span>
-          <div className="text-[13px] leading-[1.5]">
-            <span className="text-[#B07010] text-[15px] tracking-[3px]">{avgStars}</span><br />
-            <span className="text-[#5A6B60] text-[12px]">
-              {total !== null ? `${total} reseñas verificadas` : 'Reseñas verificadas'}
-            </span>
+          <div className="leading-tight">
+            <div className="text-[#172E22] text-[16px] tracking-[3px]">{avgStars}</div>
+            <p className="text-[#5A6B60] text-[13px] mt-1.5">
+              {total !== null ? `Sobre ${total} reseñas verificadas` : 'Reseñas verificadas'}
+            </p>
           </div>
         </div>
       ) : (
         /* Indicador discreto mientras carga — sin tarjetas fantasma */
-        <div className="flex items-center gap-3 mt-4 mb-10 text-[#8A9C90] text-[13px]">
+        <div className="flex items-center gap-3 mt-6 mb-12 text-[#8A9C90] text-[13px]">
           <span className="flex gap-1 items-center">
             {[0, 1, 2].map(i => (
               <span
@@ -89,27 +88,22 @@ export default function ReviewsSection() {
             const date    = new Date(r.created_at).toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
             return (
               <AnimateIn key={r.id} delay={i * 55} className="h-full">
-                <div className="relative bg-white border border-[#E4EDE8] rounded-[12px] p-7 h-full flex flex-col overflow-hidden hover:border-[#C8DC2E]/50 hover:shadow-[0_12px_32px_rgba(23,46,34,0.10)] hover:-translate-y-1 transition-all duration-300 group">
+                <div className="relative bg-white border border-[#DDE6DE] rounded-[14px] p-7 h-full flex flex-col overflow-hidden hover:border-[#C8DC2E]/50 hover:shadow-[0_14px_34px_rgba(23,46,34,0.10)] hover:-translate-y-1 transition-all duration-300 group">
+                  {/* Barra superior lima al hover — mismo patrón que las tarjetas de la carta */}
                   <span className="absolute top-0 left-0 right-0 h-[3px] bg-[#C8DC2E] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" />
-                  <div className="flex items-start justify-between mb-5">
-                    <span className="text-[#B07010] text-[13px] tracking-[2px]">{rStars}</span>
-                    <span className="font-heading font-bold text-[#C8DC2E] text-[44px] leading-[0.7] opacity-30 group-hover:opacity-60 transition-opacity select-none">&rdquo;</span>
-                  </div>
+                  <span className="text-[#172E22] text-[15px] tracking-[3px] mb-5">{rStars}</span>
                   {r.comment && (
-                    <p className="text-[#4A5A50] text-[14px] leading-[1.8] mb-6 flex-1">
+                    <p className="text-[#3F5A4B] text-[15px] leading-[1.85] mb-7 flex-1">
                       &ldquo;{r.comment}&rdquo;
                     </p>
                   )}
                   <div className="flex items-center gap-3 mt-auto pt-5 border-t border-[#EDF2EF]">
-                    <div
-                      className="w-10 h-10 rounded-full flex items-center justify-center text-[13px] font-bold text-white shrink-0"
-                      style={{ background: AVATARS[i % AVATARS.length] }}
-                    >
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center text-[14px] font-heading font-bold text-[#C8DC2E] bg-[#172E22] shrink-0">
                       {initial}
                     </div>
                     <div>
-                      <p className="text-[13.5px] font-semibold text-[#172E22]">{r.user_name ?? 'Cliente'}</p>
-                      <p className="text-[11px] text-[#8A9E90] mt-0.5 capitalize">{date}</p>
+                      <p className="text-[14px] font-semibold text-[#172E22]">{r.user_name ?? 'Cliente'}</p>
+                      <p className="text-[11.5px] text-[#8A9E90] mt-0.5 capitalize">{date}</p>
                     </div>
                   </div>
                 </div>
