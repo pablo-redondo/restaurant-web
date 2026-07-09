@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ReservationsPage from './page';
-import { tablesApi, reservationsApi } from '@/lib/api';
+import { tablesApi, reservationsApi, ApiRequestError } from '@/lib/api';
 import { useAuth } from '@/context/AuthContext';
 
 // Estos son los dos componentes clave del flujo de reserva: el formulario de
@@ -10,6 +10,9 @@ import { useAuth } from '@/context/AuthContext';
 // depender de restaurant-api real, y useAuth para controlar el estado de sesión.
 
 jest.mock('@/lib/api', () => ({
+  // Se conservan las funciones/clases reales (ApiRequestError, describeApiError)
+  // y solo se mockean los objetos de API que hacen peticiones de red.
+  ...jest.requireActual('@/lib/api'),
   tablesApi: { list: jest.fn() },
   reservationsApi: { create: jest.fn() },
 }));
@@ -39,6 +42,12 @@ function selectDateAndTime() {
   return enabledDay;
 }
 
+async function goToAvailability(user: ReturnType<typeof userEvent.setup>) {
+  await user.click(selectDateAndTime());
+  await user.click(screen.getByRole('button', { name: '13:00' }));
+  await user.click(screen.getByRole('button', { name: 'Continuar' }));
+}
+
 describe('Flujo de reserva — formulario y listado de disponibilidad', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -59,17 +68,16 @@ describe('Flujo de reserva — formulario y listado de disponibilidad', () => {
     expect(continuar).toBeEnabled();
   });
 
-  it('muestra el listado de disponibilidad tras elegir fecha/hora, filtrando mesas inactivas', async () => {
-    // Nota: el paso 2 (donde vive el mensaje "Buscando mesas disponibles...")
-    // solo se activa DESPUÉS de que tablesApi.list resuelve (ver goToStep2 en
-    // page.tsx: `setStep(2)` corre tras el finally del fetch). Es decir, ese
-    // estado de carga es efectivamente inalcanzable con el control flow
-    // actual: el usuario se queda en el paso 1 sin ningún indicador mientras
-    // la API responde. Se señala como hallazgo en docs/AUDIT.md; este test
-    // cubre el resultado (listado correcto, mesas inactivas filtradas) que sí
-    // es observable.
+  it('avanza al paso 2 de inmediato y muestra el estado de carga mientras busca mesas (regresión del bug de control de flujo)', async () => {
+    // Antes, `setStep(2)` corría DESPUÉS de que tablesApi.list resolviera, así
+    // que el usuario se quedaba en el paso 1 sin ningún indicador mientras la
+    // API respondía: el texto "Buscando mesas disponibles..." nunca llegaba a
+    // pintarse. Ahora el paso cambia de inmediato y la carga ocurre ya dentro
+    // del paso 2 — este test usa una promesa controlada manualmente para
+    // comprobar que ese estado intermedio es real y visible.
     mockedUseAuth.mockReturnValue({ user: null, loading: false });
-    mockedTablesList.mockResolvedValue({ tables: [ACTIVE_INTERIOR_TABLE, INACTIVE_TABLE], total: 2 });
+    let resolveList!: (v: { tables: typeof ACTIVE_INTERIOR_TABLE[]; total: number }) => void;
+    mockedTablesList.mockReturnValue(new Promise((resolve) => { resolveList = resolve; }));
 
     const user = userEvent.setup();
     render(<ReservationsPage />);
@@ -78,14 +86,40 @@ describe('Flujo de reserva — formulario y listado de disponibilidad', () => {
     await user.click(screen.getByRole('button', { name: '13:00' }));
     await user.click(screen.getByRole('button', { name: 'Continuar' }));
 
+    // El paso 1 ya no está (el título de "Fecha" desaparece) y, en su lugar,
+    // se ve el estado de carga del paso 2, con el aviso de cold start (es la
+    // primera petición de la página).
+    expect(screen.getByText('Buscando mesas disponibles...')).toBeInTheDocument();
+    expect(screen.getByText(/Conectando con el servidor/)).toBeInTheDocument();
+
+    resolveList({ tables: [ACTIVE_INTERIOR_TABLE, INACTIVE_TABLE], total: 2 });
+
     // Solo se lista la mesa activa; la #9 (inactiva) debe quedar filtrada.
     await waitFor(() => {
       expect(screen.getByText('Mesa 3')).toBeInTheDocument();
     });
     expect(screen.queryByText('Mesa 9')).not.toBeInTheDocument();
+    expect(screen.queryByText('Buscando mesas disponibles...')).not.toBeInTheDocument();
     expect(mockedTablesList).toHaveBeenCalledWith(
       expect.objectContaining({ time: '13:00', guests: 2 })
     );
+  });
+
+  it('el aviso de cold start no se repite en una segunda búsqueda de la misma visita', async () => {
+    mockedUseAuth.mockReturnValue({ user: null, loading: false });
+    mockedTablesList.mockResolvedValue({ tables: [ACTIVE_INTERIOR_TABLE], total: 1 });
+
+    const user = userEvent.setup();
+    render(<ReservationsPage />);
+
+    await goToAvailability(user);
+    await waitFor(() => screen.getByText('Mesa 3'));
+
+    // Volvemos al paso 1 y repetimos la búsqueda.
+    await user.click(screen.getByRole('button', { name: 'Atrás' }));
+    await user.click(screen.getByRole('button', { name: 'Continuar' }));
+
+    expect(screen.queryByText(/Conectando con el servidor/)).not.toBeInTheDocument();
   });
 
   it('muestra un mensaje claro cuando no hay mesas disponibles en la zona', async () => {
@@ -95,12 +129,56 @@ describe('Flujo de reserva — formulario y listado de disponibilidad', () => {
     const user = userEvent.setup();
     render(<ReservationsPage />);
 
-    await user.click(selectDateAndTime());
-    await user.click(screen.getByRole('button', { name: '13:00' }));
-    await user.click(screen.getByRole('button', { name: 'Continuar' }));
+    await goToAvailability(user);
 
     await waitFor(() => {
       expect(screen.getByText('No hay mesas disponibles en interior.')).toBeInTheDocument();
+    });
+  });
+
+  it('si falla la red al buscar disponibilidad, distingue el error de un listado vacío y permite reintentar', async () => {
+    mockedUseAuth.mockReturnValue({ user: null, loading: false });
+    mockedTablesList.mockRejectedValueOnce(
+      new ApiRequestError('network', 'No se pudo conectar con el servidor. Comprueba tu conexión e inténtalo de nuevo.')
+    );
+    mockedTablesList.mockResolvedValueOnce({ tables: [ACTIVE_INTERIOR_TABLE], total: 1 });
+
+    const user = userEvent.setup();
+    render(<ReservationsPage />);
+
+    await goToAvailability(user);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText('No se pudo conectar con el servidor. Comprueba tu conexión e inténtalo de nuevo.')
+      ).toBeInTheDocument();
+    });
+    // No debe confundirse con el estado vacío legítimo.
+    expect(screen.queryByText('No hay mesas disponibles en interior.')).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Reintentar' }));
+
+    await waitFor(() => {
+      expect(screen.getByText('Mesa 3')).toBeInTheDocument();
+    });
+    expect(mockedTablesList).toHaveBeenCalledTimes(2);
+  });
+
+  it('si la API responde con un error 5xx al buscar disponibilidad, muestra un mensaje genérico de servidor', async () => {
+    mockedUseAuth.mockReturnValue({ user: null, loading: false });
+    mockedTablesList.mockRejectedValue(
+      new ApiRequestError('http', 'Internal Server Error', { status: 500 })
+    );
+
+    const user = userEvent.setup();
+    render(<ReservationsPage />);
+
+    await goToAvailability(user);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText('El servidor ha tenido un problema al procesar la solicitud. Inténtalo de nuevo en unos segundos.')
+      ).toBeInTheDocument();
     });
   });
 
@@ -111,9 +189,7 @@ describe('Flujo de reserva — formulario y listado de disponibilidad', () => {
     const user = userEvent.setup();
     render(<ReservationsPage />);
 
-    await user.click(selectDateAndTime());
-    await user.click(screen.getByRole('button', { name: '13:00' }));
-    await user.click(screen.getByRole('button', { name: 'Continuar' }));
+    await goToAvailability(user);
     await waitFor(() => screen.getByText('Mesa 3'));
     await user.click(screen.getByText('Mesa 3').closest('button')!);
     await user.click(screen.getByRole('button', { name: 'Continuar' }));
@@ -133,9 +209,7 @@ describe('Flujo de reserva — formulario y listado de disponibilidad', () => {
     const user = userEvent.setup();
     render(<ReservationsPage />);
 
-    await user.click(selectDateAndTime());
-    await user.click(screen.getByRole('button', { name: '13:00' }));
-    await user.click(screen.getByRole('button', { name: 'Continuar' }));
+    await goToAvailability(user);
     await waitFor(() => screen.getByText('Mesa 3'));
     await user.click(screen.getByText('Mesa 3').closest('button')!);
     await user.click(screen.getByRole('button', { name: 'Continuar' }));
@@ -151,14 +225,14 @@ describe('Flujo de reserva — formulario y listado de disponibilidad', () => {
   it('si la API rechaza la reserva, muestra el mensaje de error y no navega a la pantalla de éxito', async () => {
     mockedUseAuth.mockReturnValue({ user: { id: 1, name: 'Ana', role: 'customer' }, loading: false });
     mockedTablesList.mockResolvedValue({ tables: [ACTIVE_INTERIOR_TABLE], total: 1 });
-    mockedReservationsCreate.mockRejectedValue({ error: 'La mesa ya está reservada en ese horario' });
+    mockedReservationsCreate.mockRejectedValue(
+      new ApiRequestError('http', 'La mesa ya está reservada en ese horario', { status: 409 })
+    );
 
     const user = userEvent.setup();
     render(<ReservationsPage />);
 
-    await user.click(selectDateAndTime());
-    await user.click(screen.getByRole('button', { name: '13:00' }));
-    await user.click(screen.getByRole('button', { name: 'Continuar' }));
+    await goToAvailability(user);
     await waitFor(() => screen.getByText('Mesa 3'));
     await user.click(screen.getByText('Mesa 3').closest('button')!);
     await user.click(screen.getByRole('button', { name: 'Continuar' }));

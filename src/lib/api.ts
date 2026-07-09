@@ -5,6 +5,54 @@ function getToken(): string | null {
   return localStorage.getItem('token');
 }
 
+export type ApiErrorKind = 'network' | 'invalid_response' | 'http';
+
+/**
+ * Error unificado para toda petición a la API. Distingue tres causas:
+ *  - 'network': fetch() no llegó a completarse (sin conexión, CORS, DNS, API caída).
+ *  - 'invalid_response': el servidor respondió pero el cuerpo no es JSON válido
+ *    (p. ej. una página de error HTML de Render/Vercel en un 502/504).
+ *  - 'http': la API respondió con un JSON válido pero un status de error (4xx/5xx).
+ *
+ * Mantiene `error` (y `errors`, para errores de validación) como propiedades
+ * planas por compatibilidad: el código existente que hace
+ * `catch (err) { (err as {error?: string}).error }` sigue funcionando igual
+ * que antes, sin necesidad de tocar cada punto de consumo.
+ */
+export class ApiRequestError extends Error {
+  kind: ApiErrorKind;
+  status?: number;
+  error: string;
+  errors?: { field: string; message: string }[];
+
+  constructor(
+    kind: ApiErrorKind,
+    message: string,
+    opts?: { status?: number; errors?: { field: string; message: string }[] }
+  ) {
+    super(message);
+    this.name = 'ApiRequestError';
+    this.kind = kind;
+    this.error = message;
+    this.status = opts?.status;
+    this.errors = opts?.errors;
+  }
+}
+
+/** Traduce un error de request() a un mensaje listo para mostrar al usuario. */
+export function describeApiError(err: unknown): string {
+  if (err instanceof ApiRequestError) {
+    if (err.kind === 'network' || err.kind === 'invalid_response') return err.message;
+    // 'http': para 5xx mostramos un mensaje genérico (el cuerpo puede no ser
+    // útil para el usuario final); para 4xx respetamos el mensaje de la API.
+    if (err.status && err.status >= 500) {
+      return 'El servidor ha tenido un problema al procesar la solicitud. Inténtalo de nuevo en unos segundos.';
+    }
+    return err.message;
+  }
+  return 'Ha ocurrido un error inesperado. Inténtalo de nuevo.';
+}
+
 async function request<T>(
   path: string,
   options: RequestInit = {}
@@ -16,9 +64,35 @@ async function request<T>(
   };
   if (token) headers['Authorization'] = `Bearer ${token}`;
 
-  const res = await fetch(`${BASE_URL}${path}`, { ...options, headers });
-  const data = await res.json();
-  if (!res.ok) throw data;
+  let res: Response;
+  try {
+    res = await fetch(`${BASE_URL}${path}`, { ...options, headers });
+  } catch {
+    throw new ApiRequestError(
+      'network',
+      'No se pudo conectar con el servidor. Comprueba tu conexión e inténtalo de nuevo.'
+    );
+  }
+
+  let data: unknown;
+  try {
+    data = await res.json();
+  } catch {
+    throw new ApiRequestError(
+      'invalid_response',
+      'El servidor ha devuelto una respuesta inesperada. Inténtalo de nuevo en unos segundos.',
+      { status: res.status }
+    );
+  }
+
+  if (!res.ok) {
+    const body = data as { error?: string; errors?: { field: string; message: string }[] };
+    throw new ApiRequestError('http', body?.error ?? 'Ha ocurrido un error.', {
+      status: res.status,
+      errors: body?.errors,
+    });
+  }
+
   return data as T;
 }
 

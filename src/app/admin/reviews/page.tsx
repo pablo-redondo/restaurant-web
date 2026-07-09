@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { reviewsApi } from '@/lib/api';
+import { useCallback, useEffect, useState } from 'react';
+import { reviewsApi, describeApiError } from '@/lib/api';
 import type { Review } from '@/types';
+import ErrorState from '@/components/ErrorState';
 
 const BG_COLORS = ['#2A4A38', '#172E22', '#5A4A2A', '#C85A1E', '#8B2020', '#1A3050'];
 const STAR_FILTERS = ['Todas', '┅5', '★ 4', '★ 3', '★ 1-2'] as const;
@@ -13,17 +14,22 @@ export default function AdminReviewsPage() {
   const [avg,        setAvg]        = useState<number | null>(null);
   const [total,      setTotal]      = useState(0);
   const [loading,    setLoading]    = useState(true);
+  const [error,      setError]      = useState<string | null>(null);
   const [starFilter, setStarFilter] = useState<StarFilter>('Todas');
   const [search,     setSearch]     = useState('');
   const [sortOrder,  setSortOrder]  = useState<'newest' | 'oldest'>('newest');
 
-  useEffect(() => {
+  const load = useCallback(() => {
+    setLoading(true);
+    setError(null);
     reviewsApi.list({ limit: 100 }).then(({ reviews, average_rating, total }) => {
       setReviews(reviews);
       setAvg(average_rating !== null ? Number(average_rating) : null);
       setTotal(total);
-    }).catch(() => {}).finally(() => setLoading(false));
+    }).catch((err) => setError(describeApiError(err))).finally(() => setLoading(false));
   }, []);
+
+  useEffect(() => { load(); }, [load]);
 
   const filtered = reviews.filter(r => {
     if (starFilter === '┅5'   && r.rating !== 5) return false;
@@ -100,6 +106,8 @@ export default function AdminReviewsPage() {
       <div className="flex flex-col gap-3">
         {loading ? (
           <p className="text-[#5A6B60] text-sm text-center py-8">Cargando reseñas...</p>
+        ) : error ? (
+          <ErrorState message={error} onRetry={load} />
         ) : sorted.length === 0 ? (
           <p className="text-[#5A6B60] text-sm text-center py-8">No hay reseñas.</p>
         ) : sorted.map((r: Review, i: number) => {

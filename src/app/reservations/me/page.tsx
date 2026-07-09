@@ -1,11 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
-import { reservationsApi } from '@/lib/api';
+import { reservationsApi, describeApiError } from '@/lib/api';
 import type { Reservation } from '@/types';
 import ReservationCard from '@/components/ReservationCard';
+import ErrorState from '@/components/ErrorState';
 
 const STATUS_OPTIONS = [
   { value: '', label: 'Todas' },
@@ -19,6 +20,7 @@ export default function MyReservationsPage() {
   const router = useRouter();
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState('');
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
@@ -27,17 +29,20 @@ export default function MyReservationsPage() {
     if (!authLoading && !user) router.push('/login');
   }, [user, authLoading, router]);
 
-  useEffect(() => {
+  const load = useCallback(() => {
     if (!user) return;
     setLoading(true);
+    setError(null);
     reservationsApi.listMine({ status: statusFilter || undefined, page })
       .then(({ reservations }) => {
         setReservations(reservations);
         setHasMore(reservations.length === 10);
       })
-      .catch(() => {})
+      .catch((err) => setError(describeApiError(err)))
       .finally(() => setLoading(false));
   }, [user, statusFilter, page]);
+
+  useEffect(() => { load(); }, [load]);
 
   if (authLoading || !user) return null;
 
@@ -65,6 +70,8 @@ export default function MyReservationsPage() {
 
       {loading ? (
         <p className="text-[#5A6B60] py-8 text-center">Cargando...</p>
+      ) : error ? (
+        <ErrorState message={error} onRetry={load} />
       ) : reservations.length === 0 ? (
         <div className="text-center py-16">
           <p className="text-[#5A6B60] mb-4">No tienes reservas{statusFilter ? ' con este estado' : ''}.</p>

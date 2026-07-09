@@ -1,11 +1,17 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
-import { tablesApi, reservationsApi } from '@/lib/api';
+import { tablesApi, reservationsApi, describeApiError } from '@/lib/api';
 import type { Table } from '@/types';
 import BackButton from '@/components/BackButton';
+import ErrorState from '@/components/ErrorState';
+
+/** Aviso de cold start: solo se muestra en la primera petición de la página
+ * (la API en Render "duerme" tras un rato de inactividad y la primera
+ * respuesta puede tardar varios segundos). */
+const COLD_START_HINT = 'Conectando con el servidor. Puede tardar unos segundos si es la primera visita.';
 
 const PENDING_RESERVATION_KEY = 'pendingReservation';
 
@@ -114,12 +120,18 @@ export default function ReservationsPage() {
   const [locationTab, setLocationTab] = useState<'interior' | 'terraza'>('interior');
   const [tables, setTables] = useState<Table[]>([]);
   const [loadingTables, setLoadingTables] = useState(false);
+  const [tablesError, setTablesError] = useState('');
   const [selectedTable, setSelectedTable] = useState<Table | null>(null);
   const [notes, setNotes] = useState('');
   const [booking, setBooking] = useState(false);
   const [bookingError, setBookingError] = useState('');
   const [success, setSuccess] = useState(false);
   const [reservationId, setReservationId] = useState<number | null>(null);
+
+  // Se lee sin re-render: solo decide si mostrar el aviso de cold start en la
+  // primerísima petición que hace la página (tablesApi.list o, si se llega a
+  // este componente ya en el paso 3 tras volver de login, reservationsApi.create).
+  const isFirstRequestRef = useRef(true);
 
   useEffect(() => {
     if (authLoading || !user) return;
@@ -142,15 +154,33 @@ export default function ReservationsPage() {
     } catch { /* draft corrupto, se ignora */ }
   }, [user, authLoading]);
 
-  const goToStep2 = async () => {
-    if (!date || !time) return;
+  // Carga las mesas disponibles para la fecha/hora/comensales actuales. Se
+  // separa de goToStep2 para poder usarla también como acción de "Reintentar"
+  // sin depender de que el usuario vuelva al paso 1 y pulse Continuar de nuevo.
+  const loadTables = useCallback(async () => {
     setLoadingTables(true);
+    setTablesError('');
     try {
       const res = await tablesApi.list({ date, time, guests });
       setTables(res.tables.filter(t => t.is_active));
-    } catch { setTables([]); }
-    finally { setLoadingTables(false); }
+    } catch (err) {
+      setTablesError(describeApiError(err));
+      setTables([]);
+    } finally {
+      setLoadingTables(false);
+      isFirstRequestRef.current = false;
+    }
+  }, [date, time, guests]);
+
+  const goToStep2 = () => {
+    // Antes, el paso avanzaba a 2 solo DESPUÉS de que la petición terminara,
+    // así que el usuario se quedaba en el paso 1 sin ningún indicador visible
+    // mientras se buscaban mesas (el texto "Buscando..." vivía en el bloque
+    // del paso 2, nunca llegaba a pintarse). Ahora se avanza de inmediato y
+    // la carga ocurre ya dentro del paso 2, donde el estado sí es visible.
+    if (!date || !time || loadingTables) return;
     setStep(2);
+    loadTables();
   };
 
   const handleBook = async () => {
@@ -170,9 +200,11 @@ export default function ReservationsPage() {
       setReservationId(reservation.id);
       setSuccess(true);
     } catch (err: unknown) {
-      const e = err as { error?: string };
-      setBookingError(e?.error ?? 'Error al reservar');
-    } finally { setBooking(false); }
+      setBookingError(describeApiError(err));
+    } finally {
+      setBooking(false);
+      isFirstRequestRef.current = false;
+    }
   };
 
   const filteredTables = tables.filter(t => t.location === locationTab);
@@ -274,7 +306,16 @@ export default function ReservationsPage() {
               ))}
             </div>
             {loadingTables ? (
-              <p className="text-[#5A6B60] py-8 text-center">Buscando mesas disponibles...</p>
+              <div className="py-8 text-center">
+                <p className="text-[#5A6B60]">Buscando mesas disponibles...</p>
+                {isFirstRequestRef.current && (
+                  <p className="text-[#8A9C90] text-xs mt-2">{COLD_START_HINT}</p>
+                )}
+              </div>
+            ) : tablesError ? (
+              <div className="bg-white border border-[#C4D5CA] rounded-card">
+                <ErrorState message={tablesError} onRetry={loadTables} />
+              </div>
             ) : filteredTables.length === 0 ? (
               <div className="text-center py-12 bg-white border border-[#C4D5CA] rounded-card">
                 <p className="text-[#5A6B60]">No hay mesas disponibles en {locationTab}.</p>
@@ -326,6 +367,9 @@ export default function ReservationsPage() {
               className="px-8 py-3 rounded-btn bg-[#172E22] text-white font-semibold text-sm hover:bg-[#1A3D2D] disabled:opacity-50 transition-colors">
               {booking ? 'Enviando...' : !user ? 'Inicia sesión para reservar' : 'Solicitar reserva'}
             </button>
+            {booking && isFirstRequestRef.current && (
+              <p className="text-[#8A9C90] text-xs mt-2">{COLD_START_HINT}</p>
+            )}
           </div>
         )}
 

@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { reservationsApi } from '@/lib/api';
+import { reservationsApi, describeApiError } from '@/lib/api';
 import type { Reservation } from '@/types';
+import ErrorState from '@/components/ErrorState';
 
 function formatDate(dateStr: string) {
   const d = new Date(String(dateStr).substring(0, 10) + 'T12:00:00');
@@ -21,6 +22,7 @@ const LIMIT = 10;
 export default function AdminReservationsPage() {
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [loading,      setLoading]      = useState(true);
+  const [error,        setError]        = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState('');
   const [dateFilter,   setDateFilter]   = useState('');
   const [search,       setSearch]       = useState('');
@@ -29,6 +31,7 @@ export default function AdminReservationsPage() {
 
   const load = () => {
     setLoading(true);
+    setError(null);
     reservationsApi.listAll({
       status: statusFilter || undefined,
       date:   dateFilter   || undefined,
@@ -37,7 +40,7 @@ export default function AdminReservationsPage() {
     }).then((res) => {
       setReservations(res.reservations);
       setTotal(res.total);
-    }).catch(() => {}).finally(() => setLoading(false));
+    }).catch((err) => setError(describeApiError(err))).finally(() => setLoading(false));
   };
 
   useEffect(() => { load(); }, [statusFilter, dateFilter, page]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -98,6 +101,8 @@ export default function AdminReservationsPage() {
       <div className="bg-white border border-[#C4D5CA] rounded-[4px] overflow-hidden">
         {loading ? (
           <p className="text-[#5A6B60] p-8 text-center text-sm">Cargando...</p>
+        ) : error ? (
+          <ErrorState message={error} onRetry={load} />
         ) : filtered.length === 0 ? (
           <p className="text-[#5A6B60] p-8 text-center text-sm">No hay reservas.</p>
         ) : (

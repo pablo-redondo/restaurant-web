@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { reservationsApi, tablesApi, reviewsApi } from '@/lib/api';
+import { reservationsApi, tablesApi, reviewsApi, describeApiError } from '@/lib/api';
 import type { Reservation } from '@/types';
+import ErrorState from '@/components/ErrorState';
 
 interface DashStats {
   todayCount: number;
@@ -27,8 +28,10 @@ const CHART_LABELS = ['L 10', 'M 11', 'X 12', 'J 13', 'V 14', 'S 15', 'D 16'];
 export default function AdminDashboard() {
   const [stats, setStats] = useState<DashStats | null>(null);
   const [todayRes, setTodayRes] = useState<Reservation[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  const load = useCallback(() => {
+    setError(null);
     const today = new Date().toISOString().split('T')[0];
     Promise.all([
       reservationsApi.listAll({ date: today, limit: 50 }),
@@ -44,8 +47,10 @@ export default function AdminDashboard() {
         avgRating:    reviewData.average_rating !== null ? Number(reviewData.average_rating) : null,
       });
       setTodayRes(todayData.reservations.slice(0, 3));
-    }).catch(() => {});
+    }).catch((err) => setError(describeApiError(err)));
   }, []);
+
+  useEffect(() => { load(); }, [load]);
 
   const totalTables  = stats?.totalTables  ?? 10;
   const activeTables = stats?.activeTables ?? 7;
@@ -57,7 +62,11 @@ export default function AdminDashboard() {
     <div>
       {/* Stat cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-[18px]">
-        {!stats
+        {error ? (
+          <div className="col-span-2 lg:col-span-4 bg-white border border-[#C4D5CA] rounded-[4px]">
+            <ErrorState message={error} onRetry={load} />
+          </div>
+        ) : !stats
           ? Array.from({ length: 4 }).map((_, i) => (
               <div key={i} className="bg-white border border-[#C4D5CA] rounded-[4px] p-[18px_20px] h-[100px] animate-pulse" />
             ))
@@ -81,8 +90,9 @@ export default function AdminDashboard() {
         }
       </div>
 
-      {/* Charts grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-[14px]">
+      {/* Charts grid — se omite si falló la carga: mostrar el anillo de ocupación
+          con los valores por defecto sería engañoso junto al ErrorState de arriba. */}
+      {!error && <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-[14px]">
         {/* Bar chart */}
         <div className="bg-white border border-[#C4D5CA] rounded-[4px] p-5">
           <div className="flex justify-between items-center mb-4">
@@ -176,7 +186,7 @@ export default function AdminDashboard() {
             </div>
           </div>
         </div>
-      </div>
+      </div>}
     </div>
   );
 }

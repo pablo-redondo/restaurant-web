@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { tablesApi } from '@/lib/api';
+import { useCallback, useEffect, useState } from 'react';
+import { tablesApi, describeApiError } from '@/lib/api';
 import type { Table } from '@/types';
+import ErrorState from '@/components/ErrorState';
 
 type ZoneFilter = 'all' | 'interior' | 'terraza';
 
@@ -33,6 +34,7 @@ function TableCard({ table, onToggle }: { table: Table; onToggle: (t: Table) => 
 export default function AdminTablesPage() {
   const [tables,      setTables]      = useState<Table[]>([]);
   const [loading,     setLoading]     = useState(true);
+  const [error,       setError]       = useState<string | null>(null);
   const [filter,      setFilter]      = useState<ZoneFilter>('all');
   const [showAdd,     setShowAdd]     = useState(false);
   const [newNumber,   setNewNumber]   = useState('');
@@ -41,11 +43,16 @@ export default function AdminTablesPage() {
   const [creating,    setCreating]    = useState(false);
   const [createError, setCreateError] = useState('');
 
-  useEffect(() => {
+  const load = useCallback(() => {
+    setLoading(true);
+    setError(null);
     tablesApi.list({ includeInactive: true })
       .then(({ tables }) => setTables(tables))
+      .catch((err) => setError(describeApiError(err)))
       .finally(() => setLoading(false));
   }, []);
+
+  useEffect(() => { load(); }, [load]);
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -147,6 +154,8 @@ export default function AdminTablesPage() {
 
       {loading ? (
         <p className="text-[#5A6B60] text-sm">Cargando mesas...</p>
+      ) : error ? (
+        <ErrorState message={error} onRetry={load} />
       ) : (
         <>
           {interior.length > 0 && (
