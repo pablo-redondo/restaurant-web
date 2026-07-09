@@ -54,10 +54,11 @@ function LoginForm() {
           )}
 
           <div>
-            <label className="block text-[11px] font-bold text-[#5A6B60] uppercase tracking-[2px] mb-2 font-body">
+            <label htmlFor="login-email" className="block text-[11px] font-bold text-[#5A6B60] uppercase tracking-[2px] mb-2 font-body">
               Email
             </label>
             <input
+              id="login-email"
               type="email"
               required
               value={email}
@@ -68,10 +69,11 @@ function LoginForm() {
           </div>
 
           <div>
-            <label className="block text-[11px] font-bold text-[#5A6B60] uppercase tracking-[2px] mb-2 font-body">
+            <label htmlFor="login-password" className="block text-[11px] font-bold text-[#5A6B60] uppercase tracking-[2px] mb-2 font-body">
               Contraseña
             </label>
             <input
+              id="login-password"
               type="password"
               required
               value={password}

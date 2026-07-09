@@ -314,8 +314,8 @@ export default function ReservationsPage() {
               ))}
             </div>
             <div className="mb-6">
-              <label className="block text-[11px] font-bold text-[#5A6B60] uppercase tracking-[2px] mb-2 font-body">Notas (opcional)</label>
-              <textarea rows={3} maxLength={500} value={notes} onChange={e => setNotes(e.target.value)}
+              <label htmlFor="reservation-notes" className="block text-[11px] font-bold text-[#5A6B60] uppercase tracking-[2px] mb-2 font-body">Notas (opcional)</label>
+              <textarea id="reservation-notes" rows={3} maxLength={500} value={notes} onChange={e => setNotes(e.target.value)}
                 className="w-full border border-[#C4D5CA] rounded-btn px-4 py-3 text-[#172E22] text-[14px] placeholder-[#C4D5CA] focus:outline-none focus:border-[#172E22] transition-colors resize-none"
                 placeholder="Alergia al gluten, silla para bebé, ocasión especial..." />
             </div>

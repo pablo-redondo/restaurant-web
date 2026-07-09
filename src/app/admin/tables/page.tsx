@@ -115,18 +115,18 @@ export default function AdminTablesPage() {
           <h3 className="text-[11px] font-bold text-[#5A6B60] uppercase tracking-[2px] mb-4">Nueva mesa</h3>
           <form onSubmit={handleCreate} className="flex flex-wrap gap-3 items-end">
             <div>
-              <label className="block text-[10px] font-bold text-[#5A6B60] uppercase tracking-[1.5px] mb-1">Número</label>
-              <input type="number" min={1} required value={newNumber} onChange={e => setNewNumber(e.target.value)}
+              <label htmlFor="table-number" className="block text-[10px] font-bold text-[#5A6B60] uppercase tracking-[1.5px] mb-1">Número</label>
+              <input id="table-number" type="number" min={1} required value={newNumber} onChange={e => setNewNumber(e.target.value)}
                 className="w-24 border border-[#C4D5CA] rounded-[3px] px-3 py-2 text-[#172E22] text-sm outline-none focus:border-[#172E22]" />
             </div>
             <div>
-              <label className="block text-[10px] font-bold text-[#5A6B60] uppercase tracking-[1.5px] mb-1">Capacidad</label>
-              <input type="number" min={1} max={20} required value={newCapacity} onChange={e => setNewCapacity(e.target.value)}
+              <label htmlFor="table-capacity" className="block text-[10px] font-bold text-[#5A6B60] uppercase tracking-[1.5px] mb-1">Capacidad</label>
+              <input id="table-capacity" type="number" min={1} max={20} required value={newCapacity} onChange={e => setNewCapacity(e.target.value)}
                 className="w-24 border border-[#C4D5CA] rounded-[3px] px-3 py-2 text-[#172E22] text-sm outline-none focus:border-[#172E22]" />
             </div>
             <div>
-              <label className="block text-[10px] font-bold text-[#5A6B60] uppercase tracking-[1.5px] mb-1">Zona</label>
-              <select value={newLocation} onChange={e => setNewLocation(e.target.value as 'interior' | 'terraza')}
+              <label htmlFor="table-zone" className="block text-[10px] font-bold text-[#5A6B60] uppercase tracking-[1.5px] mb-1">Zona</label>
+              <select id="table-zone" value={newLocation} onChange={e => setNewLocation(e.target.value as 'interior' | 'terraza')}
                 className="border border-[#C4D5CA] rounded-[3px] px-3 py-2 text-[#172E22] text-sm bg-white outline-none">
                 <option value="interior">Interior</option>
                 <option value="terraza">Terraza</option>

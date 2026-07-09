@@ -50,15 +50,16 @@ export default function RegisterPage() {
           )}
 
           {[
-            { label: 'Nombre completo', type: 'text', value: name, set: setName, placeholder: 'Juan García', min: undefined },
-            { label: 'Email', type: 'email', value: email, set: setEmail, placeholder: 'tu@email.com', min: undefined },
-            { label: 'Contraseña (mín. 6 car.)', type: 'password', value: password, set: setPassword, placeholder: '••••••', min: 6 },
-          ].map(({ label, type, value, set, placeholder, min }) => (
-            <div key={label}>
-              <label className="block text-[11px] font-bold text-[#5A6B60] uppercase tracking-[2px] mb-2 font-body">
+            { id: 'register-name', label: 'Nombre completo', type: 'text', value: name, set: setName, placeholder: 'Juan García', min: undefined },
+            { id: 'register-email', label: 'Email', type: 'email', value: email, set: setEmail, placeholder: 'tu@email.com', min: undefined },
+            { id: 'register-password', label: 'Contraseña (mín. 6 car.)', type: 'password', value: password, set: setPassword, placeholder: '••••••', min: 6 },
+          ].map(({ id, label, type, value, set, placeholder, min }) => (
+            <div key={id}>
+              <label htmlFor={id} className="block text-[11px] font-bold text-[#5A6B60] uppercase tracking-[2px] mb-2 font-body">
                 {label}
               </label>
               <input
+                id={id}
                 type={type}
                 required
                 value={value}

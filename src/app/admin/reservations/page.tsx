@@ -62,8 +62,9 @@ export default function AdminReservationsPage() {
       {/* Filter bar */}
       <div className="bg-white border border-[#C4D5CA] rounded-[4px] p-3 px-4 mb-3 flex flex-wrap gap-2 items-center">
         <div className="flex items-center gap-1.5 bg-[#F0F4F0] border border-[#C4D5CA] rounded-[3px] px-3 py-[7px] text-[13px] flex-1 min-w-[180px]">
-          <span className="text-[#5A6B60]">🔍</span>
+          <span aria-hidden="true" className="text-[#5A6B60]">🔍</span>
           <input
+            aria-label="Buscar reservas por nombre o email"
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Buscar por nombre o email…"

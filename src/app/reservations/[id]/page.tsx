@@ -133,8 +133,9 @@ export default function ReservationDetailPage() {
                 <StarRating value={rating} onChange={setRating} size="lg" />
               </div>
               <div>
-                <label className="block text-[11px] font-bold text-[#5A6B60] uppercase tracking-[2px] mb-2 font-body">Comentario (opcional)</label>
+                <label htmlFor="review-comment" className="block text-[11px] font-bold text-[#5A6B60] uppercase tracking-[2px] mb-2 font-body">Comentario (opcional)</label>
                 <textarea
+                  id="review-comment"
                   rows={3}
                   maxLength={1000}
                   value={comment}
