@@ -8,7 +8,7 @@ Este repositorio **no es un ejercicio aislado**: es la mitad cliente de un siste
 ┌─────────────────────┐        HTTPS / REST + JWT        ┌──────────────────────┐
 │   restaurant-web      │ ───────────────────────────────▶ │   restaurant-api       │
 │   Next.js 14 (App)    │ ◀─────────────────────────────── │   Express + PostgreSQL │
-│   Vercel               │           JSON                    │   Render                │
+│   Vercel               │           JSON                    │   Fly.io                │
 └─────────────────────┘                                    └──────────────────────┘
 ```
 
@@ -17,11 +17,11 @@ Este repositorio **no es un ejercicio aislado**: es la mitad cliente de un siste
 | | |
 |---|---|
 | **Web** | [restaurant-web-lilac.vercel.app](https://restaurant-web-lilac.vercel.app) |
-| **API** | [restaurant-api-v5rh.onrender.com](https://restaurant-api-v5rh.onrender.com) |
-| **Docs de la API (Swagger)** | [restaurant-api-v5rh.onrender.com/api-docs](https://restaurant-api-v5rh.onrender.com/api-docs) |
+| **API** | [restaurant-api-yibc4a.fly.dev](https://restaurant-api-yibc4a.fly.dev) |
+| **Docs de la API (Swagger)** | [restaurant-api-yibc4a.fly.dev/api-docs](https://restaurant-api-yibc4a.fly.dev/api-docs) |
 | **Repo del backend** | [github.com/pablo-redondo/restaurant-api](https://github.com/pablo-redondo/restaurant-api) |
 
-> La API corre en el plan gratuito de Render y "duerme" tras un rato de inactividad: la primera petición tras un periodo sin uso puede tardar unos segundos (cold start) mientras el contenedor arranca.
+> La API corre en Fly.io y puede "dormir" tras un rato de inactividad: la primera petición tras un periodo sin uso puede tardar unos segundos (cold start) mientras la máquina arranca.
 
 ## 📸 Capturas
 
@@ -60,7 +60,7 @@ Este repositorio **no es un ejercicio aislado**: es la mitad cliente de un siste
 - **Tailwind CSS** para estilos
 - **JWT** guardado en `localStorage`, adjuntado como `Authorization: Bearer` en cada petición a la API
 - Consumo de API vía `fetch` con un cliente propio (`src/lib/api.ts`), sin librerías de data-fetching de terceros
-- Desplegado en **Vercel**; la API en **Render**
+- Desplegado en **Vercel**; la API en **Fly.io**
 
 El backend (**[restaurant-api](https://github.com/pablo-redondo/restaurant-api)**) está construido con Node.js, Express, TypeScript, PostgreSQL, autenticación JWT, validación con `express-validator`, rate limiting y documentación Swagger — con su propia suite de tests.
 
@@ -99,7 +99,7 @@ Toda la comunicación con el backend pasa por una única variable de entorno:
 ```bash
 # .env.local
 NEXT_PUBLIC_API_URL=http://localhost:3000   # API en local
-# NEXT_PUBLIC_API_URL=https://restaurant-api-v5rh.onrender.com   # API en producción
+# NEXT_PUBLIC_API_URL=https://restaurant-api-yibc4a.fly.dev   # API en producción
 ```
 
 Al ser una variable `NEXT_PUBLIC_*`, se incluye en el bundle del cliente — el navegador llama directamente a la API, no hay proxy ni API routes intermedias en este repo. Si no se define, `src/lib/api.ts` cae por defecto a `http://localhost:3000`.
@@ -109,7 +109,7 @@ Para desarrollar contra la API local:
 2. Deja `NEXT_PUBLIC_API_URL` sin definir, o apúntala explícitamente a esa URL.
 3. Arranca este proyecto con `npm run dev`.
 
-Para probar contra la API real desplegada en Render, usa la URL de producción de arriba — es la misma API que usa la demo en vivo.
+Para probar contra la API real desplegada en Fly.io, usa la URL de producción de arriba — es la misma API que usa la demo en vivo.
 
 ## 📁 Estructura del proyecto
 
@@ -124,8 +124,8 @@ src/
 
 ## ☁️ Despliegue
 
-- **Frontend**: Vercel, despliegue automático desde `main`. La variable `NEXT_PUBLIC_API_URL` se define en la configuración del proyecto en Vercel (ver `vercel.json`) apuntando a la API en Render.
-- **Backend**: Render, despliegue automático desde `main` de [restaurant-api](https://github.com/pablo-redondo/restaurant-api). Un workflow de GitHub Actions (`.github/workflows/keepalive.yml`) hace ping periódico a `/health` para mitigar el cold start del plan gratuito.
+- **Frontend**: Vercel, despliegue automático desde `main`. La variable `NEXT_PUBLIC_API_URL` se define en la configuración del proyecto en Vercel (ver `vercel.json`) apuntando a la API en Fly.io.
+- **Backend**: Fly.io, despliegue desde [restaurant-api](https://github.com/pablo-redondo/restaurant-api). Un workflow de GitHub Actions (`.github/workflows/keepalive.yml`) hace ping periódico a `/health` para mitigar el cold start de la máquina.
 
 ## 📄 Licencia
 

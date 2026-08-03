@@ -11,4 +11,4 @@ jobs:
     steps:
       - name: Ping API
         run: |
-          curl -sf https://restaurant-api-v5rh.onrender.com/health || true
+          curl -sf https://restaurant-api-yibc4a.fly.dev/health || true

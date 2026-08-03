@@ -9,7 +9,7 @@ import BackButton from '@/components/BackButton';
 import ErrorState from '@/components/ErrorState';
 
 /** Aviso de cold start: solo se muestra en la primera petición de la página
- * (la API en Render "duerme" tras un rato de inactividad y la primera
+ * (la API en Fly.io "duerme" tras un rato de inactividad y la primera
  * respuesta puede tardar varios segundos). */
 const COLD_START_HINT = 'Conectando con el servidor. Puede tardar unos segundos si es la primera visita.';
 

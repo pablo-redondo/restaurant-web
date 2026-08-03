@@ -11,7 +11,7 @@ export type ApiErrorKind = 'network' | 'invalid_response' | 'http';
  * Error unificado para toda petición a la API. Distingue tres causas:
  *  - 'network': fetch() no llegó a completarse (sin conexión, CORS, DNS, API caída).
  *  - 'invalid_response': el servidor respondió pero el cuerpo no es JSON válido
- *    (p. ej. una página de error HTML de Render/Vercel en un 502/504).
+ *    (p. ej. una página de error HTML de Fly.io/Vercel en un 502/504).
  *  - 'http': la API respondió con un JSON válido pero un status de error (4xx/5xx).
  *
  * Mantiene `error` (y `errors`, para errores de validación) como propiedades
