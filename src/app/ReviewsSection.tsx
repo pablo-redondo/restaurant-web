@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { reviewsApi } from '@/lib/api';
 import type { Review } from '@/types';
 import AnimateIn from '@/components/AnimateIn';

@@ -181,7 +181,7 @@ export default function NosotrosPage() {
         <div className="relative h-full flex items-center px-5 sm:px-8 lg:px-[52px]">
           <AnimateIn>
             <blockquote className="max-w-[640px]">
-              <span className="text-[#C8DC2E] text-[48px] font-heading font-bold leading-none opacity-60 select-none block mb-2">"</span>
+              <span className="text-[#C8DC2E] text-[48px] font-heading font-bold leading-none opacity-60 select-none block mb-2">&ldquo;</span>
               <p className="font-heading font-bold text-[clamp(20px,2.6vw,32px)] leading-[1.25] text-white mb-5">
                 Cocinar bien es dar lo mejor de uno mismo en cada plato. No hay otra fórmula.
               </p>

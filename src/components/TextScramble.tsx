@@ -55,7 +55,8 @@ export default function TextScramble({ text, className = '', delay = 0 }: Props)
         if (entry.isIntersecting && !started.current) {
           started.current = true;
           obs.disconnect();
-          delay > 0 ? setTimeout(run, delay) : run();
+          if (delay > 0) setTimeout(run, delay);
+          else run();
         }
       },
       { threshold: 0.2 }
