@@ -1,4 +1,4 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3000';
+import { getApiBaseUrl } from './apiUrl';
 
 function getToken(): string | null {
   if (typeof window === 'undefined') return null;
@@ -66,7 +66,7 @@ async function request<T>(
 
   let res: Response;
   try {
-    res = await fetch(`${BASE_URL}${path}`, { ...options, headers });
+    res = await fetch(`${getApiBaseUrl()}${path}`, { ...options, headers });
   } catch {
     throw new ApiRequestError(
       'network',
